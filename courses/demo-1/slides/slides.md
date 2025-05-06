@@ -1,7 +1,6 @@
 # Welcome
 
-This is a Reveal.js presentation written in **Markdown**.
-This should kill the server
+This is a CLEAN Reveal.js presentation written in **Markdown**.
 
 ---
 
@@ -9,7 +8,7 @@ This should kill the server
 
 - Bullet 1
 - Bullet 2
-- This is an action update test but the fifth time
+- Another Bullet
 
 --
 
