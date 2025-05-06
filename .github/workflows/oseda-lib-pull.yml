@@ -40,9 +40,9 @@ jobs:
             done
 
             echo "Killing existing Node/npm processes..."
-            # better way of doing this
-            pkill -f node || true
-            pkill -f npm || true
+
+            kill $(pgrep node)
+            kill $(pgrep npm)
 
             echo "Restarting backend..."
             cd ~/oseda-core/backend
