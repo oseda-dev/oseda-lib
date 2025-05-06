@@ -1,6 +1,6 @@
 # Welcome
 
-This is a CLEAN Reveal.js presentation written in **Markdown**.
+This is a Normal Reveal.js presentation written in **Markdown**.
 
 ---
 
@@ -9,6 +9,7 @@ This is a CLEAN Reveal.js presentation written in **Markdown**.
 - Bullet 1
 - Bullet 2
 - Another Bullet
+- Bullet 4
 
 --
 
