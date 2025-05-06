@@ -2,15 +2,13 @@
 
 This is a Reveal.js presentation written in **Markdown**.
 
-This is an action update test but the fourth time
-
 ---
 
 ## Slide 2
 
 - Bullet 1
 - Bullet 2
-- Bullet 3
+- This is an action update test but the fifth time
 
 --
 
