@@ -1,6 +1,6 @@
 # Welcome
 
-This is a Eigth Reveal.js presentation written in **Markdown**.
+This is a Ninth Reveal.js presentation written in **Markdown**.
 
 ---
 
