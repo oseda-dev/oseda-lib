@@ -1,6 +1,6 @@
 # Welcome
 
-This is a Last test Reveal.js presentation written in **Markdown**.
+This is a fully actionized test Reveal.js presentation written in **Markdown**.
 
 ---
 
