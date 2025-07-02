@@ -3,7 +3,7 @@ run-name: OSEDA check command
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    branches: [main]
 
 jobs:
   check:
