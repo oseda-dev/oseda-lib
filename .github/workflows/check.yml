@@ -1,0 +1,42 @@
+name: Check
+run-name: OSEDA check command
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout cli
+        uses: actions/checkout@v4
+
+      - name: set up rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: stable
+
+      - name: install oseda from crates.io
+        run: cargo install oseda-cli
+
+      - name: run check command
+        id: check_script
+        run: |
+          oseda check
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+
+      - name: fail early if check failed
+        if: steps.check_script.outputs.exit_code != '0'
+        run: exit 1
+
+      - name: Request changes on PR
+        if: steps.check_script.outputs.exit_code != '0'
+        uses: peter-evans/review-comment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event: REQUEST_CHANGES
+          body: |
+            Your PR failed `oseda check`. Please make the necessary changes.
