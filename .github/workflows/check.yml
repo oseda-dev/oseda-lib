@@ -2,9 +2,8 @@ name: Check
 run-name: OSEDA check command
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    types: [opened, synchronize]
 
 jobs:
   check:
