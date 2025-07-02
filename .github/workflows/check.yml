@@ -16,22 +16,23 @@ jobs:
       - name: Checkout cli
         uses: actions/checkout@v4
 
-      - name: set up rust
-        uses: actions/setup-rust@v1
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
         with:
-          rust-version: stable
+          toolchain: stable
+          override: true
 
-      - name: install oseda from crates.io
+      - name: Install oseda from crates.io
         run: cargo install oseda-cli
 
-      - name: run check command
+      - name: Run check command
         id: check_script
         continue-on-error: true
         run: |
           oseda check
           echo "exit_code=$?" >> $GITHUB_OUTPUT
 
-      - name: fail early if check failed
+      - name: Fail early if check failed
         if: steps.check_script.outputs.exit_code != '0'
         run: exit 1
 
