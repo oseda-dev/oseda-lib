@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  pull-requests: write
+  pull-requests: write # needed to post comment
 
 jobs:
   check:
@@ -32,15 +32,20 @@ jobs:
           oseda check
           echo "exit_code=$?" >> $GITHUB_OUTPUT
 
-      - name: Fail early if check failed
+      - name: Comment on PR if check failed
+        if: steps.check_script.outputs.exit_code != '0'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          body='Your PR failed `oseda check`. Please make the necessary changes.'
+          curl -s -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"body\":\"$body\"}" \
+            "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments"
+
+      - name: Fail the job if check failed
         if: steps.check_script.outputs.exit_code != '0'
         run: exit 1
-
-      - name: Request changes on PR
-        if: steps.check_script.outputs.exit_code != '0'
-        uses: peter-evans/review-comment@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event: REQUEST_CHANGES
-          body: |
-            Your PR failed `oseda check`. Please make the necessary changes.
