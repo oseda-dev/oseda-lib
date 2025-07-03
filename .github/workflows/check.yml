@@ -44,7 +44,7 @@ jobs:
 
           echo "added directory was: "
           echo ${ADDED_DIR}
-          cd "courses/${ADDED_DIR}"
+          cd "${ADDED_DIR}"
 
           oseda check
           echo "exit_code=$?" >> $GITHUB_OUTPUT
