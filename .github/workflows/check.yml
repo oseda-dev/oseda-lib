@@ -26,20 +26,27 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Fetch base branch
-        run: git fetch origin main
-
-      - name: Run check command
-        id: check_script
-        continue-on-error: true
+      - name: Fetch base branch (main)
         run: |
-          ADDED_DIR=$(git diff --name-status origin/main...HEAD | \
-                      awk '$1 == "A" {print $2}' | \
-                      grep -o '^courses/[^/]\+' | \
-                      sort -u | \
-                      head -n 1)
+          git fetch origin main
 
-          echo "added directory was: ${ADDED_DIR}"
+      - name: Get added directory
+        id: check_script
+        run: |
+          # Get the merge base between main and the PR branch
+          BASE=$(git merge-base origin/main HEAD)
+
+          echo "Base commit: $BASE"
+          echo "Head commit: $(git rev-parse HEAD)"
+
+          # List files added since that base
+          ADDED_DIR=$(git diff --name-status $BASE HEAD | \
+            awk '$1 == "A" {print $2}' | \
+            grep -o '^courses/[^/]\+' | \
+            sort -u | \
+            head -n 1)
+
+          echo "added directory was: $ADDED_DIR"
 
           if [[ -z "$ADDED_DIR" ]]; then
             echo "No added directory found. Exiting."
@@ -47,8 +54,7 @@ jobs:
           fi
 
           cd "$ADDED_DIR"
-
-          oseda check --skip-git
+          oseda check
           echo "exit_code=$?" >> $GITHUB_OUTPUT
 
       - name: Comment on PR if check failed
