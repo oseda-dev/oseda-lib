@@ -6,19 +6,23 @@ on:
     branches: [main]
 
 permissions:
-  pull-requests: write # needed to post comment
+  pull-requests: write
 
 jobs:
   check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR code
+      - name: Checkout PR code with full history
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0 # fetch full depth of PR, hope this works
+
+      - name: Fetch base branch
+        run: git fetch origin main
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -26,20 +30,18 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Fetch base branch (main)
-        run: |
-          git fetch origin main
+      - name: Install oseda from crates.io
+        run: cargo install oseda-cli
 
-      - name: Get added directory
+      - name: Run check command
         id: check_script
+        continue-on-error: true
         run: |
-          # Get the merge base between main and the PR branch
           BASE=$(git merge-base origin/main HEAD)
 
           echo "Base commit: $BASE"
           echo "Head commit: $(git rev-parse HEAD)"
 
-          # List files added since that base
           ADDED_DIR=$(git diff --name-status $BASE HEAD | \
             awk '$1 == "A" {print $2}' | \
             grep -o '^courses/[^/]\+' | \
@@ -64,7 +66,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          body='Your PR failed `oseda check`. Please make the necessary changes.'
+          body='❌ Your PR failed `oseda check`. Please fix the issues and push again.'
           curl -s -X POST \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Content-Type: application/json" \
