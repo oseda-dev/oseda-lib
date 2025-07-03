@@ -1,2 +1,2 @@
 # oseda-lib
-Course Library for OSEDA
+Library for OSEDA
