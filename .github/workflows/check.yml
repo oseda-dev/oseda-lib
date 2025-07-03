@@ -7,22 +7,20 @@ on:
 
 permissions:
   pull-requests: write
+  contents: read
 
 jobs:
   check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR code with full history
+      - name: Checkout PR code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0 # fetch full depth of PR, hope this works
-
-      - name: Fetch base branch
-        run: git fetch origin main
+          fetch-depth: 1
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -33,20 +31,17 @@ jobs:
       - name: Install oseda from crates.io
         run: cargo install oseda-cli
 
-      - name: Run check command
+      - name: Find added directory and run check
         id: check_script
         continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BASE=$(git merge-base origin/main HEAD)
+          FILES=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
+            | jq -r '.[].filename')
 
-          echo "Base commit: $BASE"
-          echo "Head commit: $(git rev-parse HEAD)"
-
-          ADDED_DIR=$(git diff --name-status $BASE HEAD | \
-            awk '$1 == "A" {print $2}' | \
-            grep -o '^courses/[^/]\+' | \
-            sort -u | \
-            head -n 1)
+          ADDED_DIR=$(echo "$FILES" | grep '^courses/' | sed 's|^\(courses/[^/]*\)/.*|\1|' | sort -u | head -n 1)
 
           echo "added directory was: $ADDED_DIR"
 
