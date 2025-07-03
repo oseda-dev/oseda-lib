@@ -25,6 +25,10 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
+      - name: Install serve globally
+        # this is probably bad, but this *should* enable you to `serve [DIR]` instead of just a file
+        run: npm install -g serve
+
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
