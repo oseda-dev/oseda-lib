@@ -51,7 +51,7 @@ jobs:
           fi
 
           cd "$ADDED_DIR"
-          oseda check
+          oseda check --skip-git
           echo "exit_code=$?" >> $GITHUB_OUTPUT
 
       - name: Comment on PR if check failed
