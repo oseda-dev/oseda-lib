@@ -35,10 +35,15 @@ jobs:
         run: |
           # pain -> just get the first item,  grep the courses stuff out, get the first
           # https://stackoverflow.com/questions/65944700/how-to-run-git-diff-in-github-actions
+          #
+
           ADDED_DIR=$(git diff --name-status origin/main...HEAD | \
                       awk '$1 == "A" {print $2}' | \
                       grep -o '^courses/[^/]\+' | \
                       sort -u)
+
+          echo "added directory was: "
+          echo ${ADDED_DIR}
           cd "courses/${ADDED_DIR}"
 
           oseda check
