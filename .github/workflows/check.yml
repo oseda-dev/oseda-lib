@@ -26,27 +26,29 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Install oseda from crates.io
-        run: cargo install oseda-cli
+      - name: Fetch base branch
+        run: git fetch origin main
 
       - name: Run check command
         id: check_script
         continue-on-error: true
         run: |
-          # pain -> just get the first item,  grep the courses stuff out, get the first
-          # https://stackoverflow.com/questions/65944700/how-to-run-git-diff-in-github-actions
-          #
-
           ADDED_DIR=$(git diff --name-status origin/main...HEAD | \
                       awk '$1 == "A" {print $2}' | \
                       grep -o '^courses/[^/]\+' | \
-                      sort -u)
+                      sort -u | \
+                      head -n 1)
 
-          echo "added directory was: "
-          echo ${ADDED_DIR}
-          cd "${ADDED_DIR}"
+          echo "added directory was: ${ADDED_DIR}"
 
-          oseda check
+          if [[ -z "$ADDED_DIR" ]]; then
+            echo "No added directory found. Exiting."
+            exit 1
+          fi
+
+          cd "$ADDED_DIR"
+
+          oseda check --skip-git
           echo "exit_code=$?" >> $GITHUB_OUTPUT
 
       - name: Comment on PR if check failed
