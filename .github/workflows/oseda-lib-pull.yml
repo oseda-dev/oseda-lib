@@ -22,7 +22,11 @@ jobs:
           script: |
             echo "Pulling latest oseda-lib..."
             cd ~/oseda-lib
-            git pull
+
+            # fully reset to origin?
+            git reset --hard origin/main
+            git clean -fdx
+
 
             cd courses
             echo "Building courses with npx vite build..."
