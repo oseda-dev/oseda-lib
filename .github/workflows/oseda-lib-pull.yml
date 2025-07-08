@@ -24,9 +24,9 @@ jobs:
             cd ~/oseda-lib
 
             # fully reset to origin?
+            git fetch origin
             git reset --hard origin/main
             git clean -fdx
-
 
             cd courses
             echo "Building courses with npx vite build..."
