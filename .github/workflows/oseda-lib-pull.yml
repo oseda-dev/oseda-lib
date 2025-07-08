@@ -22,7 +22,7 @@ jobs:
           script: |
             echo "Pulling latest oseda-lib..."
             cd ~/oseda-lib
-            git pull
+            git reset --hard
 
             cd courses
             echo "Building courses with npx vite build..."
