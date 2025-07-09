@@ -36,6 +36,7 @@ jobs:
                 echo "Installing and building $dir"
                 cd "$dir"
                 npm install
+                npm install vite@5
                 npx vite build
                 cd ..
               else
