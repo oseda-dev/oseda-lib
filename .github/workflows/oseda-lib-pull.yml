@@ -21,12 +21,16 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "Pulling latest oseda-lib..."
-            cd ~/oseda-lib
 
-            # fully reset to origin?
-            git fetch origin
-            git reset --hard origin/main
-            git clean -fdx
+            # # fully reset to origin?
+            # git fetch origin
+            # git reset --hard origin/main
+            # git clean -fdx
+
+            rm -rf oseda-lib
+            git clone git@github.com:oseda-dev/oseda-lib.git
+            cd oseda-lib
+            cd ~/oseda-lib
 
             cd courses
             echo "Building courses with npx vite build..."
