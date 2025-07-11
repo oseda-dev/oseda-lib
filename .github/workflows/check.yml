@@ -72,7 +72,7 @@ jobs:
           fi
 
           echo "Running oseda check..."
-          oseda check --skip-git || {
+          oseda check || {
             echo "oseda check failed."
             echo "Directory contents:"
             ls -al
