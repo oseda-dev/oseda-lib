@@ -1,0 +1,875 @@
+<section class="center-slide">
+    <h1>Intro To Rust!</h1>
+    <p>Pioneering Open Source</p>
+    <p class="move-up-1">with Reese Hatfield</p>
+</section>
+
+<section>
+    <h1>Who is this for</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>Students</li>
+            <li>Developers</li>
+            <li>Engineers</li>
+        </ul>
+        <img src="person.png"
+    </div>
+</section>
+
+<section>
+    <h1>Rust</h1>
+    <div class="move-up-2 horizontal-container">
+        <ul>
+            <li>Programming Language</li>
+            <li>Many advantages over other language</li>
+            <li>Makes C++ nervous</li>
+        </ul>
+        <img src="rustwhite.png" alt="Rust Logo">
+    </div>
+</section>
+
+<section>
+    <h1>Ferris!</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>Awesome Mascot</li>
+            <li>Ferris!</li>
+            <li>Favorite Crustacean</li>
+        </ul>
+        <img src="ferris.png" alt="Ferris">
+    </div>
+</section>
+
+
+<section>
+    <h1>White House</h1>
+    <div class="horizontal-container move-up-3">
+        
+        <ul>
+            <li>Over 50% of CVEs are memory-safety bugs</li>
+            <li>National security nightmare</li>
+            <li>Feb. 2024 Press Release</li>
+        </ul>
+        <img src="whitehouse.png">
+    </div>
+</section>
+
+<section>
+    <img class="move-up-1" src="press-release.png" alt="Press Release">
+</section>
+
+<section>
+    <h1>Errors</h1>
+    <div class="horizontal-container move-up-2">
+
+        <ul>
+            <li>Programming errors</li>
+            <li>Developers are not infallible</li>
+            <li>Basic memory errors</li>
+        </ul>
+
+        <img src="keyboard.png">
+    </div>
+</section>
+
+<section>
+    <h1>Javascript Errors</h1>
+    <ul>
+        <li>What does this look like?</li>
+    </ul>
+    <pre><code data-line-numbers="-1|1|2" class="language-javascript move-up-1">const arr = ["alice", "bob", "charlie"];
+console.log(arr[5])</code></pre>
+    <ul>
+        <li>
+            Result:
+        </li>
+    </ul>
+    <pre class="fragment"><code class="move-up-1">Undefined</code></pre>
+</section>
+
+<section>
+    <h1>What's worse?</h1>
+    <div class="horizontal-container move-up-2">
+
+        <ul>
+            <li>Only thing worse than an error</li>
+            <li>No error at all!</li>
+            <li>Engineers &gt; Web Developers!</li>
+        </ul>
+        <img src="x.png">
+    </div>
+</section>
+
+<section>
+    <h1>MatLab Errors</h1>
+
+    <ul>
+        <li>Similar syntax</li>
+    </ul>
+    <pre><code data-line-numbers="-1|1|2" class="language-matlab move-up-1">arr = ["alice", "bob", "charlie"]
+x = arr(5)</code></pre>
+    <ul>
+        <li>Result:</li>
+    </ul>
+    <pre class="fragment"><code class="move-up-1">Index exceeds the number of array elements.
+Index must not exceed 3.
+Error in file (line 2)
+x = arr(5);</code></pre>
+</section>
+
+<section>
+    <h1>This is good!</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>An error was caught</li>
+            <li>Informed the developer</li>
+            <li>But *who* caught this error?</li>
+            <li class="fragment">Can we do better?</li>
+        </ul>
+        <img class="fragment" style="margin: 0 0 -10em 0;" src="ferris.png" alt="Ferris">
+    </div>
+</section>
+
+<section>
+    <h1>Small Beginnings</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Before we tackle how Rust handles this</li>
+            <li>First Rust program</li>
+            <li><code>cargo init</code></li>
+            <li><code>cargo run</code></li>
+        </ul>
+        <img src="cargo.png" alt="Cargo">
+    </div>
+</section>
+
+<section>
+    <h1>Greatness</h1>
+    <pre class="move-up-1"><code data-line-numbers="-1|1|2|3|-1" class="language-rust">fn main() {
+    let greeting = "Hello, world!";
+    println!("{}", greeting);
+}</code></pre>
+<div class=" move-up-1 horizontal-container">
+    <ul>
+        <li>Main function</li>
+        <li>Bindings via <code>let</code></li>
+        <li>Print to <code>stdout</code></li>
+    </ul>
+    <img src="ferris.png" alt="Ferris">
+</div>
+</section>
+
+<section>
+    <h1>Arrays</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|2|3|-1" class="language-rust">fn main() {
+    let arr = ["alice", "bob", "charlie"];
+    let x = arr[5];
+}</code></pre>
+    <span></span>
+    <ul>
+        <li>Similar to MatLab</li>
+        <li>Arrays with [ ]'s</li>
+        <li>Inferred → Strong + Static</li>
+        <li>Compiler knows the size</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="no-wrap">Compile Time Error</h1>
+    <img class="move-up-2" src="rust-error.png" alt="Rust Error">
+    <span></span>
+    <ul>
+        <li>Program <strong>never</strong> actually ran</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Anatomy of a Compiler Error</h1>
+    <ul>
+        <li>Compiler knows more than you do</li>
+        <li>Safety as a feature</li>
+        <li>"This will panic at runtime"</li>
+        <li>You live in <strong>compiler-land</strong> before runtime</li>
+        <li>The compiler <em>is your pair programmer</em></li>
+    </ul>
+</section>
+
+<section>
+    <h1>Rust Philosophy</h1>
+    <div class="move-up-3 horizontal-container">
+        <ul>
+            <li>Make the compiler do the heavy lifting</li>
+            <li>Catch bugs before the code runs</li>
+            <li>Safety <em>without</em> sacrificing control</li>
+        </ul>
+        <img src="thinking.png">
+    </div>
+</section>
+
+<section>
+    <h1>Data + Compiler</h1>
+    <pre class="move-up-3"><code data-line-numbers="-1|2|3|-1" class="language-rust">fn main() {
+    let x = 5;
+    x += 1;
+}</code></pre>
+<span></span>
+<ul>
+    <li>We forgot something</li>
+    <li>Safety is a priority</li>
+    <li>Tell Rust when data is mutable</li>
+</ul>
+
+</section>
+
+
+<section>
+    <h1 class="no-wrap">Compiler Messages</h1>
+    <img class="move-up-2" src="mut-error.png" alt="Mut Error">
+    <ul>
+        <li>Legitimately useful help message</li>
+    </ul>
+</section>
+
+<section>
+    <pre><code data-line-numbers="-1|2|-1" class="language-rust">fn main() {
+    let mut x = 5;
+    x += 1;
+}</code></pre>
+
+    <div class="horizontal-container">
+
+        <ul class="move-up-1">
+            <li>Opt-in philosophy</li>
+            <li>Safety as a feature</li>
+            <li>Allows the data's binding to mutate it how it pleases</li>
+        </ul>
+        <img class="move-up-1" src="point.png">
+    </div>
+</section>
+
+<section>
+    <h1>Stack Overflow</h1>
+    <h1 class="no-wrap move-up-1">Most-Loved Language</h1>
+    <span></span>
+    <ul>
+        <li class="fragment">2016 → Rust</li>
+        <li class="fragment">2017 → Rust</li>
+        <li class="fragment">2018 → ...</li>
+        <li class="fragment">2023 → Rust</li>
+        <li class="fragment">2024 → Rust</li>
+    </ul>
+</section>
+
+<section>
+    <h1>The Billion Dollar Mistake</h1>
+    <div class="move-up-2 horizontal-container">
+        <ul>
+            <li>Tony Hoare</li>
+            <li>ALGOL, 1965</li>
+            <li>"Simply because it was so easy to implement"</li>
+            <li class="fragment">NULL</li>
+        </ul>
+        <img class"move-up-1" src="null.png">
+    </div>
+</section>
+
+<section>
+    <h1>No Concept of <code>NULL</code></h1>
+    <ul>
+        <li>Rust does NOT have a null type</li>
+        <li>No NULL → Less Memory errors</li>
+        <li>But things don't always strictly "exist"?</li>
+        <li>How does Rust accomplish this?</li>
+    </ul>
+</section>
+
+<section>
+    <h1>The Type System</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Algebraic Types</li>
+            <li>Lets the compiler do the work</li>
+            <li>Extensive Enums</li>
+            <li>C-Style* structs</li>
+        </ul>
+        <img src="gears.png">
+    </div>
+</section>
+
+<section>
+    <h1>Enums</h1>
+    <div class="move-up-2 horizontal-container">
+        <ul>
+            <li>NOT just named integers</li>
+            <li>Compiler knows every enum type</li>
+            <li>Provable</li>
+            <li>"Sum Type"</li>
+        </ul>
+        <img src="Enum.png">
+    </div>
+</section>
+
+<section>
+    <h1>Classic Example</h1>
+    <pre class="move-up-2"><code data-line-numbers class="language-rust">enum Direction {
+    North,
+    South,
+    East,
+    West,
+}</code></pre>
+    <span></span>
+    <ul>
+        <li>The compiler knows that if you have a Direction</li>
+        <li>It <em>must</em> be one of those 4 types</li>
+        <li>Sum of the number of enumerations</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Structs</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>Groups related data together</li>
+            <li>Non mutually-exclusive</li>
+            <li>"Product Type"</li>
+        </ul>
+        <img src="graph.png">
+    </div>
+
+</section>
+
+<section>
+    <h1>Simple Color</h1>
+    <pre class="move-up-3"><code data-line-numbers="-1|1-5|7-9|-1" class="language-rust">struct Color{
+  r: bool,
+  g: bool,
+  b: bool,
+}
+
+let black = Color { r: false, g: false, b: false };
+let blue  = Color { r: false, g: false, b: true };
+let white = Color { r: true,  g: true,  b: true };</code></pre>
+
+    <ul>
+        <li>If you have a Color:</li>
+        <li>It <em>must</em> be one of those 8 types</li>
+        <li>Product of the number of enumerations</li>
+    </ul>
+    <!-- todo image here -->
+</section>
+
+<section>
+    <h1>Match</h1>
+    <div class=" move-up-1 horizontal-container">
+
+        <ul>
+            <li><code>match</code> keyword</li>
+            <li>An <em>exhaustive</em> advanced switch</li>
+            <li>Only possible via algebraic types</li>
+        </ul>
+        <img src="lever.png">
+    </div>
+
+</section>
+
+<section>
+    <pre><code data-line-numbers class="language-rust">let x = match get_direction() {
+    Direction::North => 1,
+    Direction::East => 2,
+    Direction::South => 3,
+};</code></pre>
+    <span></span>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Exhaustion is a feature</li>
+            <li>Prevents bugs</li>
+            <li>Always ensure your code functions as intended</li>
+            <li>Localize state management</li>
+        </ul>
+        <img src="check.png">
+    </div>
+</section>
+
+<section>
+    <h1>Compile Error</h1>
+    <img class="move-up-1" src="west-not-covered.png" alt="West Not Covered">
+    <img src="cover-west.png" alt="Cover West">
+</section>
+
+
+<section>
+    <h1>Simple Fix</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|5|-1" class="language-rust">let x = match get_direction() {
+    Direction::North => 1,
+    Direction::East => 2,
+    Direction::South => 3,
+    Direction::West => 4
+};</code></pre>
+    <span></span>
+    <ul>
+        <li>Happy Compiler</li>
+        <li>Proved every case</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Type Composition</h1>
+    <div class="move-up-2 horizontal-container">
+
+        <ul>
+            <li>Model your data</li>
+            <li>Without classes</li>
+            <li>Complex relations</li>
+        </ul>
+        <img src="animals.png">
+    </div>
+</section>
+
+<section>
+    <h1>Cats?</h1>
+    <pre class="move-up-4"><code data-line-numbers class="language-rust">struct FakeCat {
+  alive: bool,
+  hungry: bool,
+}</code></pre>
+
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>Copies OOP paradigms</li>
+            <li>But are there really 4 types of cats?</li>
+            <li class="fragment">Can a dead cat be hungry?</li>
+        </ul>
+        <img src="DeadCat.png">
+    </div>
+</section>
+
+<section>
+    <h1 class="no-wrap">Build a Better Type</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|2|-1" class="language-rust">enum RealCat {
+    Alive { hungry: bool },
+    Dead,
+}</code></pre>
+    <span></span>
+    <ul>
+        <li>Composition → better modeling</li>
+        <li>Real life is not classes</li>
+        <li>Real life is data</li>
+        <li>Encode real data with your own, specific type system</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="no-wrap">Covering Your Bases</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|2|3|4|-1" class="language-rust">let status = match getCat() {
+    RealCat::Alive { hungry: true } => "Feed me!",
+    RealCat::Alive { hungry: false } => "Doing great",
+    RealCat::Dead => ":(",
+}</code></pre>
+    <span></span>
+    <ul>
+        <li>Algebraic types</li>
+        <li>Provably exhaustive</li>
+        <li>Encoded only the necessary state</li>
+        <li class="fragment">Build your own type system → NULL?</li>
+    </ul>
+</section>
+
+<section>
+    <h1>The <code>Option</code> Type</h1>
+    <ul>
+        <li>Explicit: <code>Some(T)</code> or <code>None</code></li>
+        <li>Forces handling of missing values</li>
+        <li>Compiler ensures you check it</li>
+    </ul>
+    <pre><code data-line-numbers="" class="language-rust">pub enum Option&lt;T&gt; {
+    None,
+    Some(T),
+}</code></pre>
+</section>
+
+<section>
+    <h1>None</h1>
+    <pre class="move-up-3"><code data-line-numbers="-1|1-4|6-9|-1" class="language-rust">fn find_user_id(name: &str) -> Option&lt;i32&gt; {
+    // or return Some(user)
+    return None;
+}
+fn main() {
+    match find_user_id("Alice") {
+        Some(id) => println!("Found user with id {id}"),
+        None => println!("User not found"),
+    }
+}</code></pre>
+    <ul>
+        <li>None only exists where it needs to</li>
+        <li>Limited scope → handled immediately</li>
+        <li class="fragment">Never NULL → but what about errors?</li>
+    </ul>
+</section>
+
+<section>
+    <h1>The <code>Result</code> Type</h1>
+    <ul>
+        <li>Explicit: <code>Ok(T)</code> or <code>Err(T)</code></li>
+        <li>Errors are expected</li>
+        <li>They are not an "exception"</li>
+    </ul>
+    <pre><code data-line-numbers class="language-rust">enum Result&lt;T, E&gt; {
+    Ok(T),
+    Err(E),
+}</code></pre>
+</section>
+
+<section>
+    <h1>Error Handling</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|1-6|3|5|9-12|-1"  class="language-rust">fn divide(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
+    if b == 0 { 
+        return Err("cannot divide by zero".to_string()); 
+    } 
+    Ok(a / b)
+}
+
+fn main() {
+    let x = match divide(10, 2) {
+        Ok(result) =&gt; result * 2,
+        Err(err) =&gt; 0,
+    };
+}</code></pre>
+</section>
+
+<section>
+    <h1>Chaining</h1>
+<pre class="move-up-4"><code data-line-numbers="-1|1-6|8-11|9|10|-1" class="language-rust">fn divide(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
+    if b == 0 { 
+        return Err("cannot divide by zero".to_string()); 
+    } 
+    return Ok(a / b);
+}
+
+fn do_math() -&gt; Result&lt;i32, String&gt; {
+    let temp = divide(15, 3)?; 
+    return Ok(temp);
+}
+
+</code></pre>
+    <ul>
+        <li>? → early return if Err()</li>
+        <li>? → get value    if Ok()</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Memory Management</h1>
+    <ul>
+        <li>No garbage collector</li>
+        <li>No manual <code>free()</code></li>
+        <li>Ownership & Borrowing system</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Ownership Rules</h1>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Each value has one owner</li>
+            <li>Ownership is transferred on assignment</li>
+            <li>When the owner goes out of scope → value freed</li>
+        </ul>
+        <img src="hand-pass.png">
+    </div>
+</section>
+
+<section>
+    <h1>Ownership Ideas</h1>
+    <pre class="move-up-3"><code data-line-numbers="-1|1-3|6|8,1-3|10|-1" class="language-rust">fn greet(name: String) {
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let name = String::from("Bob");
+
+    greet(name);
+
+    println!("You greeted {}", name);
+}
+    </code></pre>
+    <span></span>
+    <ul>
+        <li>`let` is a binding</li>
+        <li>Variable Owns → Some Data</li>
+    </ul>
+</section>
+
+
+<section class="center-slide move-up-3">
+    <pre><code data-line-numbers="-1|1-3,8,10|-1" class="language-rust">fn greet(name: String) {
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let name = String::from("Bob");
+
+    greet(name);
+
+    println!("You greeted {}", name);
+}
+    </code></pre>
+    <img class="move-up-1" src="borrow-after-move.png">
+</section>
+
+
+<section>
+    <pre><code data-line-numbers="-1|1, 8|-1" class="language-rust">fn greet(name: &String) {
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let name = String::from("Bob");
+
+    greet(&name);
+
+    println!("You greeted {}", name);
+}
+    </code></pre>
+    <ul>
+        <li>Lets pass a reference instead</li>
+        <li>Compiler needs to know this</li>
+        <li>Change the signature</li>
+        <li>Immutable Borrow</li>
+    </ul>
+</section>
+<!-- Maybe show the happy output here? -->
+
+
+
+<section>
+    <pre><code data-line-numbers="-1|1-3, 8-10|-1" class="language-rust">fn greet(name: &String) {
+
+    name = &name.to_uppercase();
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let name = String::from("Bob");
+
+    greet(&name);
+
+    println!("You greeted {}", name);
+}
+    </code></pre>
+    <ul>
+        <li>Attempting to edit name</li>
+        <li>But main() never promised this</li>
+        <li>Compiler Error</li>
+    </ul>
+</section>
+
+<section class="center-slide move-up-2">
+    <pre><code data-line-numbers class="language-rust">fn greet(name: &String) {
+    name = &name.to_uppercase();
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let name = String::from("Bob");
+    greet(&name);
+    println!("You greeted {}", name);
+}
+    </code></pre>
+
+    <img class="move-up-1" src="immutable-assign.png">
+</section>
+
+
+<section>
+    <pre><code data-line-numbers="-1|1,7,8|-1" class="language-rust move-up-2">fn greet(name: &mut String) {
+    *name = name.to_uppercase();
+    println!("Hello, {}!", name);
+}
+
+fn main() {
+    let mut name = String::from("Bob");
+    greet(&mut name);
+    println!("You greeted {}", name);
+}
+    </code></pre>
+    <ul>
+        <li>Opt in to `mut`</li>
+        <li>Call site changes</li>
+        <li>1 Mutable reference </li>
+        <li>∞ *Immutable* references</li>
+        <li>1 Owner</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Why have all that?</h1>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Strict State Management</li>
+            <li>Prevent Bugs</li>
+            <li>No manual memory management</li>
+            <li>No garbage collector</li>
+        </ul>
+        <img src="trash.png">
+    </div>
+</section>
+
+
+<section>
+    <h1>No-Cost Abstractions</h1>
+    <ul>
+        <li>High-level code that compiles to low-level performance</li>
+        <li>Zero runtime overhead for iterators, generics, traits</li>
+        <li>"You don’t pay for what you don’t use"</li>
+    </ul>
+</section>
+
+<!-- <section>
+    <h1>First-class Functions</h1>
+    <ul>
+        <li>Functions can be passed, returned, and composed</li>
+        <li>Built into the type system</li>
+    </ul>
+</section> -->
+
+<section>
+    <h1>Macros</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Works with the type system</li>
+            <li>Operate on Rust tokens</li>
+            <li>Compile-time code generation</li>
+            <li>Enables <code>println!</code>, <code>vec!</code>, <code>format!</code></li>
+            <li>Powerful but safe</li>
+        </ul>
+        <img class="move-up-3" src="macro_rules.png">
+    </div>
+
+</section>
+
+
+
+<section>
+    <h1>Macro Definition</h1>
+    <pre class="move-up-4"><code data-line-numbers="-1|1-5|7-9|-1" class="language-rust">macro_rules! say_hello {
+    () => {
+        println!("Hello, world!");
+    };
+}
+
+fn main() {
+    say_hello!();
+}</code></pre>
+    <ul>
+        <li>Simple example</li>
+        <li>Can pass token stream</li>
+        <li>Turtles all the way down</li>
+        <li>Forward-growth mindset</li>
+    </ul>
+</section>
+
+
+<section>
+    <h1 class="no-wrap">Macro Examples</h1>
+    <pre class="move-up-2"><code data-line-numbers="-1|2|4-5|7|-1" class="language-rust">fn main() {
+    let names = vec!("Alice", "Bob", "Charlie");
+
+    let x = true;   
+    assert!(x, "x wasn't true!");
+    
+    println!("{:?}", names);
+}
+    </code></pre>
+    <span></span>
+    <ul>
+        <li>Vector of data</li>
+        <li>Simple Assertions</li>
+        <li>Powerful, relevant, forever</li>
+    </ul>
+</section>
+
+
+<section>
+    <h1>Cargo</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Rust’s package manager + build system</li>
+            <li>Handles dependencies, testing, documentation</li>
+            <li>Enables Rust's rich, stable ecosystem</li>
+        </ul>
+        <img src="boxes.png">
+    </div>
+</section>
+
+
+
+<section class="move-up-1">
+    <pre><code data-line-numbers class="language-bash">[package]
+name = "IntroToRust"
+version = "0.1.0"
+edition = "2021"
+authors = ["Reese Hatfield &lt;reese@example.com&gt;"]
+description = "Introductory Rust code snippets"
+license = "MIT"
+
+[dependencies]
+rand = "0.8"
+chrono = "0.4"</code></pre>
+
+
+    <ul>
+        <li>Cargo.toml</li>
+        <li>cargo run → Run project</li>
+        <li>cargo test → Test project</li>
+        <li>cargo publish → Publish to an extensive ecosystem</li>
+    </ul>
+</section>
+
+<section>
+    <h1 class="no-wrap">Universal Language</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Systems Programming</li>
+            <li>Web (WASM)</li>
+            <li>Backend Services</li>
+            <li>Embedded + IoT</li>
+            <li>Games + Engines</li>
+        </ul>
+        <img src="yinyang.png">
+    </div>
+</section>
+
+<section>
+    <h1 class="no-wrap">Famous Rust Users</h1>
+    <div class="horizontal-container">
+        <ul>
+            <li>Microsoft</li>
+            <li>Google</li>
+            <li>AWS</li>
+            <li>Cloudflare</li>
+            <li>Your next company</li>
+        </ul>
+        <img src="logos.png">
+    </div>
+</section>
+
+<section>
+    <h1>Why Rust?</h1>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Safety without GC</li>
+            <li>Performance without pain</li>
+            <li>Compiler is your friend</li>
+            <li>Strong type system</li>
+            <li>Active community</li>
+        </ul>
+        <img src="ferris.png">
+    </div>
+</section>
+
+<section class="center-slide">
+    <h1>Thank You!</h1>
+    <p>Questions?</p>
+</section>
