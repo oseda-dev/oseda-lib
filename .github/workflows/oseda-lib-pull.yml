@@ -53,6 +53,7 @@ jobs:
             kill $(pgrep node)
             kill $(pgrep npm)
 
-            nohup ./run.sh prod > out.log 2>&1 &
             cd ~/oseda-core
+            nohup ./run.sh prod > out.log 2>&1 &
+            
             echo "Deployment complete."
