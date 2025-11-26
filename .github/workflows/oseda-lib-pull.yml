@@ -53,14 +53,6 @@ jobs:
             kill $(pgrep node)
             kill $(pgrep npm)
 
-            echo "Restarting backend..."
-            cd ~/oseda-core/backend
-            npm install
-            nohup ./run-backend.sh > backend.log 2>&1 &
-
-            echo "Restarting frontend..."
-            cd ../frontend
-            npm install
-            nohup ./run-frontend-actually.sh > frontend.log 2>&1 &
-
+            nohup ./run.sh prod > out.log 2>&1 &
+            cd ~/oseda-core
             echo "Deployment complete."
