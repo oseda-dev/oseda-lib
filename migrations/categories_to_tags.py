@@ -2,11 +2,13 @@
 
 import json, glob
 from pathlib import Path
+
 # run me from top level oseda-lib dir
 for course in Path("./courses").iterdir():
-    print(f"{course}")
+    oseda_conf_file = f"{course}/oseda-config.json"
+    
+    j = json.load(open(oseda_conf_file))
+    j['tags'] = j.pop('categories')
+    json.dump(j, open(f,'w'), indent=2)
+    
 
-# for f in glob.glob('*.json'):
-#     j=json.load(open(f))
-#     j['newField']=j.pop('oldField')
-#     json.dump(j,open(f,'w'),indent=2)
