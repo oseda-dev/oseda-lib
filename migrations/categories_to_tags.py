@@ -8,7 +8,7 @@ for course in Path("./courses").iterdir():
     oseda_conf_file = f"{course}/oseda-config.json"
     
     j = json.load(open(oseda_conf_file))
-    j['tags'] = j.pop('categories')
-    json.dump(j, open(f,'w'), indent=2)
+    j['tags'] = j.pop('category')
+    json.dump(j, open(oseda_conf_file,'w'), indent=2)
     
 

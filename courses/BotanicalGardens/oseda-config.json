@@ -1,9 +1,9 @@
 {
   "title": "BotanicalGardens",
   "author": "ReeseHatfield",
-  "category": [
-    "Science"
-  ],
   "last_updated": "2025-11-26T21:41:51.195600391Z",
-  "color": "#008000"
+  "color": "#008000",
+  "tags": [
+    "Science"
+  ]
 }

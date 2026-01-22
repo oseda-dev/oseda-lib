@@ -1,10 +1,9 @@
 {
   "title": "PlasticsAndTheirUses",
   "author": "ReeseHatfield",
-  "category": [
-    "ComputerScience"
-  ],
   "last_updated": "2025-07-09T00:10:12.009530562Z",
-  "color" : "#4287f5"
-
+  "color": "#4287f5",
+  "tags": [
+    "ComputerScience"
+  ]
 }
