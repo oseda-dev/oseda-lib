@@ -1,9 +1,9 @@
 {
   "title": "IntroToRust",
   "author": "ReeseHatfield",
-  "category": [
-    "ComputerScience"
-  ],
   "last_updated": "2025-11-12T14:52:18.608425697Z",
-  "color": "#FFA500"
+  "color": "#FFA500",
+  "tags": [
+    "ComputerScience"
+  ]
 }

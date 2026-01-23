@@ -1,9 +1,9 @@
 {
   "title": "Puzzles",
   "author": "ReeseHatfield",
-  "category": [
-    "Aerospace"
-  ],
   "last_updated": "2025-11-26T21:54:33.483747297Z",
-  "color": "#000000"
+  "color": "#000000",
+  "tags": [
+    "Aerospace"
+  ]
 }
