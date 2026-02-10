@@ -1,0 +1,15 @@
+{
+  "title": "TagTest",
+  "author": "ReeseHatfield",
+  "tags": [
+    "Economics",
+    "Engineering",
+    "Geography",
+    "LanguageArts",
+    "LiberalArts",
+    "Politics"
+  ],
+  "last_updated": "2026-02-10T00:27:25.937541569Z",
+  "color": "#008000",
+  "description": "A test of many tags, with a full deployment test using the deploy script and fork"
+}
