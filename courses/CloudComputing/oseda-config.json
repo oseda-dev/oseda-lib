@@ -1,0 +1,10 @@
+{
+  "title": "CloudComputing",
+  "author": "ReeseHatfield",
+  "last_updated": "2025-07-08T23:35:13.890968259Z",
+  "color": "#4287f5",
+  "tags": [
+    "ComputerScience"
+  ],
+  "description": "This course teaches how to deploy and scale applications in the cloud. It covers core cloud services and architectures."
+}
