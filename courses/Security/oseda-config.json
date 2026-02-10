@@ -1,10 +1,10 @@
 {
-  "title": "TestCourse4",
+  "title": "Security",
   "author": "22lavonne",
   "last_updated": "2025-07-08T23:35:13.890968259Z",
   "color": "#4287f5",
   "tags": [
     "ComputerScience"
   ],
-  "description": ""
+  "description": "This course introduces common security threats and defenses. It emphasizes practical protection techniques."
 }
