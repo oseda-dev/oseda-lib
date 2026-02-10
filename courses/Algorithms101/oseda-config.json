@@ -4,7 +4,12 @@
   "last_updated": "2025-07-08T23:35:13.890968259Z",
   "color": "#4287f5",
   "tags": [
-    "ComputerScience"
+    "Economics",
+    "Engineering",
+    "Geography",
+    "LanguageArts",
+    "LiberalArts",
+    "Politics"  
   ],
   "description": "This course studies common algorithms and problem-solving patterns. It analyzes efficiency and tradeoffs."
 }
