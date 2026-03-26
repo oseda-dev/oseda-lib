@@ -1,0 +1,543 @@
+
+<section class="center-slide">
+    <h1>Private LLMs + OSS</h1>
+    <p>Privacy, Control, and Openness</p>
+    <p class="move-up-1">with Reese Hatfield</p>
+</section>
+
+<section>
+    <h1>Who is this for</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>Students</li>
+            <li>Developers</li>
+            <li>Researchers</li>
+            <li>Anyone who uses LLMs</li>
+        </ul>
+        <img src="people.png">
+    </div>
+</section>
+
+<section>
+    <h1>LLMs (really)</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Predicts next token</li>
+            <li>Massive training data</li>
+            <li>Feels "intelligent*"</li>
+        </ul>
+        <img width="400px" src="thinking.png">
+    </div>
+</section>
+
+<section>
+    <h1>LLM usecases</h1>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <!-- chat gpt -->
+            <li>Web apps</li> 
+            <!-- gpt api -->
+            <li>Cloud APIs</li>
+            <li>Closed systems</li>
+            <li>Ways you may not know</li>
+            <li class="fragment">Your data leaves your machine</li>
+        </ul>
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">☁️</span>
+                <!-- just wrap emoji with something that looks nice -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="center-slide">
+    <h1>Black Box Models</h1>
+        <div style="flex-shrink: 0; width: 220px; height: 240px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px; backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.7);">
+            <div style="font-size: 5em; color: #ffb86c; font-weight: 200; line-height: 1; text-shadow: 0 0 30px rgba(255,184,108,0.3);">?</div>
+            <div style="font-size: 0.35em; opacity: 0.5; margin-top: 2px; font-family: 'Fira Code', monospace; letter-spacing: 3px;">CLOSED MODEL</div>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h1>The Tradeoff</h1>
+    <div class="horizontal-container move-up-1">
+
+        <ul>
+            <li>Convenience</li>
+            <li>Power</li>
+            <li class="fragment">Privacy?</li>
+            <li class="fragment">Control?</li>
+            <li class="fragment">Why are we doing this?</li>
+        </ul>
+        <div style="flex-shrink: 0; width: 220px; height: 240px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px; backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.7);">
+            <div style="font-size: 5em; color: #ffb86c; font-weight: 200; line-height: 1; text-shadow: 0 0 30px rgba(255,184,108,0.3);">?</div>
+            <div style="font-size: 0.35em; opacity: 0.5; margin-top: 2px; font-family: 'Fira Code', monospace; letter-spacing: 3px;">CLOSED MODEL</div>
+        </div>
+
+    </div>
+</section>
+
+<!-- i want a slide about specification over personalization -->
+
+<section>
+    <h1>Specialization</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li>LLMs are good at specific tasks</li>
+            <li>Hard to google problems</li>
+            <li>Requires a compromise</li>
+            <li>Who gets that data?</li>
+        </ul>
+        <img height="300px" src="target.png">
+    </div>
+</section>
+
+<section>
+    <h1>OpenAI investors</h1>
+    <div class="horizontal-container move-up-1">
+    <ul>
+        <li class="fragment fade-in-then-semi-out">
+            SoftBank — <span class="fragment highlight-green">$64 Billion</span>
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+            Amazon — <span class="fragment highlight-blue">$50 Billion*</span>
+        </li>
+        <li class="fragment fade-in-then-semi-out">
+            Microsoft — <span class="fragment highlight-red">$13 Billion</span>
+        </li>
+    </ul>        
+    <img src="amazon.png">
+    </div>
+</section>
+
+<section>
+    <h1 style="margin-bottom: 40px;">Workflow</h1>
+    
+    <div class="move-up-2" style="display: flex; justify-content: center; align-items: center; gap: 60px; height: 500px; transform: scale(1.2); transform-origin: center;">
+        
+        <div style="flex-shrink: 0; text-align: center;">
+            <div style="width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff79c6; display: flex; align-items: center; justify-content: center; background: rgba(255, 121, 198, 0.08); box-shadow: 0 0 40px rgba(255, 121, 198, 0.4);">
+                <span style="font-family: 'Fira Code', monospace; font-size: 1em; font-weight: bold; color: #ff79c6;">YOU</span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 30px; width: 120px;">
+            <div style="position: relative; width: 100%; height: 3px; background: linear-gradient(90deg, #ffb86c, transparent);">
+                <div style="position: absolute; right: -5px; top: -6px; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 10px solid #ffb86c;"></div>
+                <span style="position: absolute; top: -20px; left: 0; font-size: 0.35em; color: #ffb86c; font-weight: bold; letter-spacing: 2px;">PROMPT</span>
+            </div>
+            <div style="position: relative; width: 100%; height: 3px; background: linear-gradient(-90deg, #50fa7b, transparent);">
+                <div style="position: absolute; left: -5px; top: -6px; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-right: 10px solid #50fa7b;"></div>
+                <span style="position: absolute; bottom: -20px; right: 0; font-size: 0.35em; color: #50fa7b; font-weight: bold; letter-spacing: 2px;">REPLY</span>
+            </div>
+        </div>
+
+        <div style="flex-shrink: 0; width: 220px; height: 240px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px; backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.7);">
+            <div style="font-size: 5em; color: #ffb86c; font-weight: 200; line-height: 1; text-shadow: 0 0 30px rgba(255,184,108,0.3);">?</div>
+            <div style="font-size: 0.35em; opacity: 0.5; margin-top: 2px; font-family: 'Fira Code', monospace; letter-spacing: 3px;">CLOSED MODEL</div>
+        </div>
+
+        <div style="position: relative; width: 140px; height: 4px; background: repeating-linear-gradient(90deg, #ff5555, #ff5555 12px, transparent 12px, transparent 20px);">
+             <div style="position: absolute; right: -10px; top: -8px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid #ff5555;"></div>
+             <span style="position: absolute; top: -30px; left: 0; width: 180px; font-size: 0.4em; color: #ff5555; font-weight: bold; letter-spacing: 1.5px;">DATA EXPORT</span>
+        </div>
+
+        <div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 15px; opacity: 0.35; align-items: flex-start;">
+            <div style="width: 45px; height: 45px; background: rgba(255,255,255,0.9); border-radius: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 5px;">
+                <div style="background: #f25022;"></div><div style="background: #7fbb00;"></div>
+                <div style="background: #00a4ef;"></div><div style="background: #ffb900;"></div>
+            </div>
+            <div style="height: 12px; width: 60px; background: #f8f8f2; border-radius: 3px;"></div>
+            <div style="height: 12px; width: 80px; background: #f8f8f2; border-radius: 3px;"></div>
+        </div>
+    </div>
+</section>
+<!-- spend some time with 3b1b review of transformers -->
+<section>
+    <h1>Internals</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Neural Network</li>
+            <li>Graph Structure</li>
+            <li>Weighted Edges</li>
+            <li>Make decisions</li>
+        </ul>
+        <img height="350px" width="450px" src="NeuralNetwork.png">
+    </div>
+</section>
+
+<section>
+    <h1>The Neuron</h1>
+    <div class="horizontal-container move-up-1">
+        <ul style="font-size: 0.85em;">
+            <li>The fundamental "unit" of an LLM</li>
+            <li><strong>Input:</strong> Receives data from other neurons</li>
+            <li><strong>Weight:</strong> Decides how much that input "matters"</li>
+            <li><strong>Activation:</strong> Fires if the signal is strong enough</li>
+        </ul>
+        <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 50%; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; border: 2px solid #ff79c6; box-shadow: 0 0 20px rgba(255,121,198,0.2);">
+            <div style="text-align: center;">
+                <span style="display: block; font-size: 0.6em; opacity: 0.8;">Sum + Bias</span>
+                <b style="font-size: 1.5em;">Σ</b>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <h1>Math of Weights</h1>
+    <ul class="move-up-1">
+        <li>Every "connection" is a floating-point number.</li>
+    </ul>
+    <div class="horizontal-container">
+        <ul style="font-size: 0.85em;">
+            <li>Input <b>x</b> is multiplied by weight <b>w</b></li>
+            <li>Output: <b>y = σ(wx + b)</b></li>
+            <li>Billions of these happen <i>per token</i></li>
+        </ul>
+        <div style="background: rgba(255,255,255,0.05); padding: 22px 28px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(5px); width: fit-content;">
+            <p style="margin-top: 0; font-weight: bold; font-size: 0.7em; color: #ff79c6; margin-bottom: 15px; text-align: center; letter-spacing: 0.05em;">Weight Matrix (W)</p>
+            <code style="font-size: 0.6em; line-height: 1.5; display: block; font-family: 'Fira Code', monospace; white-space: pre; color: #f8f8f2; letter-spacing: 0.02em;">[  0.01, -0.23,  0.45 ]<br>[  0.88,  0.12, -0.01 ]<br>[ -0.42,  0.99,  0.07 ]</code>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1>VRAM Bottleneck</h1>
+    <ul>
+        <li>Weights ⇒ Parameters</li>
+        <li>A 7B model has 7 billion parameters</li>
+        <li>At FP16 (Full precision):</li>
+        <li class="fragment">7B * 2 bytes = *14GB VRAM*</li>
+        <li class="fragment">Most consumer GPUs have 8GB - 12GB</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Quantization</h1>
+    <ul>
+        <li>Compressing weights to fit your hardware</li>
+        <div class="fragment">
+            <li>Convert 16-bit floats to 4-bit integers</li>
+            <li>Reduces memory from 14GB ⇒ ~5GB</li>
+            <li>Minimal loss in performance</li>
+            <li class="fragment">Modern LLM viability</li>
+        </div>
+    </ul>
+</section>
+
+<section>
+    <h1 class="no-wrap">Attention</h1>
+    <div class="move-up-1 horizontal-container">
+        <ul>
+            <li><strong>Self-Attention:</strong> Weights that score word relevance</li>
+            <li><strong>Feed Forward:</strong> Processing the context</li>
+            <li>Weights define the "knowledge"</li>
+            <li>"Training" refers to deriving these weights</li>
+        </ul>
+        <!-- invert to fix colors, was made for light mode -->
+        <img class="move-up-1 move-up-1" src="transformer-trans.png" style="width: 300px; filter: invert(1);">
+    </div>
+</section>
+
+<section>
+    <h1>Local Models</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Pull these weights yourself</li>
+            <li>Run on your machine</li>
+            <li>No internet required</li>
+            <li>Full control + Specialization</li>
+            <li>Cut out the middleman</li>
+        </ul>
+        <img width="300px" src="computer.png">
+    </div>
+</section>
+
+<section>
+    <h1>Meet Ollama</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Run LLMs locally</li>
+            <li>Simple CLI</li>
+            <li>Built-in model management</li>
+        </ul>
+        <img src="ollama.png">
+    </div>
+</section>
+
+<section class="center-slide">
+    <h1>Live Demo</h1>
+    <p>Local LLM in ~10 seconds</p>
+</section>
+
+<section>
+    <h1>Prompt</h1>
+    <ul>
+       <li>Next Token Predictors</li>
+       <li>Repository</li>
+    </ul>
+    <pre><code class="language-bash" data-line-numbers="-1|1|3|-1">  ollama run llama3
+
+  >>>> What is the Ollama CLI
+    </code></pre>
+    <!-- i dont think there is a better way to do this unfortunately -->
+    <p>
+        <span class="fragment">The</span>
+        <span class="fragment">Ollama</span>
+        <span class="fragment">CLI</span>
+        <span class="fragment">is</span>
+        <span class="fragment">a</span>
+        <span class="fragment">tool</span>
+        <span class="fragment">for</span>
+        <span class="fragment">running</span>
+        <span class="fragment">local</span>
+        <span class="fragment">LLMs</span>
+    </p>
+</section>
+
+<section>
+    <h1>What Just Happened?</h1>
+    <div class="horizontal-container move-up-1"> 
+        <ul>
+            <li>No API call</li>
+            <li>No cloud</li>
+            <li>Fully local inference</li>
+            <li>Load Balanced</li>
+        </ul>
+
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">🖥️</span>
+                <!-- just wrap emoji with something that looks nice -->
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="center-slide">
+    <h1>How does this work?</h1>
+    <!-- something else here -->
+</section>
+
+
+<section>
+    <h1 >The Weights</h1>
+    <div class="move-up-2" style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 50px;">
+        <div style="text-align: left; flex: 1;">
+            <p style="font-size: 1.0em; color: #f8f8f2;">A pre-trained set of <b>Connection Strengths</b></p>
+            <ul style="font-size: 0.8em; margin-top: 20px; line-height: 1.6;">
+                <li>Hundreds of Millions of Parameters</li>
+                <li>Billions of floating-point numbers</li>
+                <li class="fragment">OpenAI hides these behind an API</li>
+            </ul>
+        </div>
+        <br>
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">⚖️</span>
+                <!-- just wrap emoji with something that looks nice -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1>Open Weights</h1>
+    <div class="move-up-2" style="width: 1000px; margin-top: 50px; padding: 40px; border-left: 5px solid #50fa7b; background: rgba(80, 250, 123, 0.05);">
+        <h3 style="text-align: left; margin-bottom: 20px;">If the weights are open:</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; text-align: left;">
+            <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                <p style="font-weight: bold; color: #f1fa8c;">Reproducibility</p>
+                <p style="font-size: 0.7em;">You just need a <b>weight file</b>.</p>
+            </div>
+            <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                <p style="font-weight: bold; color: #8be9fd;">Portability</p>
+                <p style="font-size: 0.7em;">Produced on any device, regardless of OS</p>
+            </div>
+            <div style="padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                <p style="font-weight: bold; color: #8be9fd;">Transparency</p>
+                <p style="font-size: 0.7em;">Can peek inside, trace through weights</p>
+            </div>
+
+        </div>
+    </div>
+    <p class="fragment move-up-1" style="margin-top: 70px; font-style: italic; font-size: 1.2em;">Democratization</p>
+</section>
+
+<section>
+    <h1>This is Powerful</h1>
+
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>No rate limits</li>
+            <li>No cost per request</li>
+            <li>No data leakage</li>
+            <li class="fragment">You own the stack</li>
+        </ul>
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">🛠️</span>
+                <!-- just wrap emoji with something that looks nice -->
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h1>Explainable AI</h1>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Understand outputs</li>
+            <li>Trust the system</li>
+            <li>Debug behavior</li>
+            <li>Derive Conclusion Pathways</li>
+        </ul>
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">🔍</span>
+                <!-- just wrap emoji with something that looks nice -->
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h1>The Problem</h1>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Black box models</li>
+            <li>Hard to trust</li>
+            <li>Hard to audit</li>
+            <li>Explainability aims to fix this</li>
+            <li>See chain-of-thought models</li>
+        </ul>
+        
+        <div style="flex-shrink: 0; width: 220px; height: 240px; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 32px; backdrop-filter: blur(15px); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.7);">
+            <div style="font-size: 5em; color: #ffb86c; font-weight: 200; line-height: 1; text-shadow: 0 0 30px rgba(255,184,108,0.3);">?</div>
+            <div style="font-size: 0.35em; opacity: 0.5; margin-top: 2px; font-family: 'Fira Code', monospace; letter-spacing: 3px;">CLOSED MODEL</div>
+        </div>
+    </div>
+
+</section>
+
+<section>
+    <h1>Open Weights</h1>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Model parameters available</li>
+            <li>Not just API access</li>
+            <li>Inspect + Modify</li>
+            <li>One step closer to XAI</li>
+            <li>Explain yourself (!)</li>
+        </ul>
+
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3em;">⚖️</span>
+                <!-- just wrap emoji with something that looks nice -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1>Why Open Matters</h1>
+
+    <div class="move-up-2 horizontal-container">
+        <ul>
+            <li>Reproducibility</li>
+            <li>Security</li>
+            <li>Innovation</li>
+        </ul>
+        <img width="350px" src="unlocked.png">
+    </div>
+</section>
+
+<section>
+    <h1 class="no-wrap"> “Open” is not open</h1>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Elephant in the room</li>
+            <li>Pre-Trained Weights</li>
+            <li>Are those weights truly repoducable?</li>
+            <li>Post-hoc explanations</li>
+        </ul>
+    
+        <div style="width: 150px; position: relative; height: 300px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <!-- just wrap emoji with something that looks nice -->
+                <span style="font-size: 3em;">🐘</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h1 class="no-wrap">Truly Open Source</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Provide training data</li>
+            <li>Open Data</li>
+            <li>Code that trained it</li>
+            <li>Reproduce the weights from scratch</li>
+        </ul>
+        <img width="350px" src="osi.png">
+    </div>
+</section>
+
+<section>
+    <h1>OSS LLMs</h1>
+    
+    <div class="horizontal-container">
+        <ul>
+            <li>System Prompt</li>
+            <li>Seed text ⇒ tell it what it is</li>
+            <li>Olmo 3 (OSS + OW)</li>
+            <li>Llama 3 (OW only)</li>
+        </ul>
+        <img width="350px" src="olmo.png">
+    </div>
+</section>
+
+<section>
+    <h1>The Future</h1>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Better local models</li>
+            <li>Cheaper hardware</li>
+            <li>Energy Efficiency</li>
+            <li>Choice of Generation</li>
+        </ul>
+        <img width="350px" src="thunder.png">
+    </div>
+</section>
+
+<section class="center-slide">
+    <h1>Takeaways</h1>
+    <ul>
+        <li>Local ⇒ Control</li>
+        <li>Ollama ⇒ Simple OW</li>
+        <li>Open weights ⇒ Power</li>
+        <li>Explainability Matters</li>
+    </ul>
+</section>
+
+<section class="center-slide">
+    <h1>Thank You!</h1>
+    <p>Questions?</p>
+</section>
