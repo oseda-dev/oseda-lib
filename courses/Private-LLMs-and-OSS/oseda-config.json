@@ -5,7 +5,7 @@
     "ComputerScience",
     "Politics"
   ],
-  "last_updated": "2026-03-21T00:48:05.539951153Z",
+  "last_updated": "2026-03-26T00:26:21.799585339Z",
   "color": "#0000FF",
   "description": "Discussion of core advantages of running local LLMS, particularly with Ollama, and how they enable a more privacy-centric approach to machine learning, importance of explainable AI, open weights movement and the future of the open-source."
 }

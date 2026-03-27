@@ -1,3 +1,17 @@
+/* 
+.reveal .fragment,
+.reveal section {
+    will-change: auto !important;
+}
+
+.reveal .fragment {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.reveal .fragment-small {
+    will-change: opacity, transform;
+} */
+
 
 /* sensible styles */
 .reveal section {
