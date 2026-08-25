@@ -22,3 +22,5 @@ To show off that you are an author of an Oseda course, add the following badge t
 ```bash
 [![Oseda Author](https://img.shields.io/badge/Oseda%20Author-8A2BE2)](https://github.com/oseda-dev/oseda)
 ```
+
+Pull Request Template based on [typst/packages template](https://github.com/typst/packages/blob/main/.github/pull_request_template.md)
