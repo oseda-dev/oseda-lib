@@ -2,11 +2,10 @@ name: Check
 run-name: OSEDA check command
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [main]
 
 permissions:
-  pull-requests: write
   contents: read
 
 jobs:
@@ -17,17 +16,7 @@ jobs:
       - name: Checkout PR code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 1
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Install serve globally
-        # this is probably bad, but this *should* enable you to `serve [DIR]` instead of just a file
-        run: npm install -g serve
+          fetch-depth: 0 # needed for run local git diff against main
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -44,22 +33,15 @@ jobs:
           node-version: "20"
 
       - name: Detect course directory and run check
-        id: check_script
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          FILES=$(curl -s -H "Authorization: token $GH_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
-            | jq -r '.[].filename')
-
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
           ADDED_DIR=$(echo "$FILES" | grep '^courses/' | sed 's|^\(courses/[^/]*\)/.*|\1|' | sort -u | head -n 1)
 
-          echo "added directory was: $ADDED_DIR"
+          echo "Added directory: $ADDED_DIR"
 
           if [[ -z "$ADDED_DIR" ]]; then
-            echo "No added directory found. Exiting."
-            exit 1
+            echo "No changes found under courses/. Skipping check."
+            exit 0
           fi
 
           cd "$ADDED_DIR"
@@ -72,31 +54,4 @@ jobs:
           fi
 
           echo "Running oseda check..."
-          oseda check || {
-            echo "oseda check failed."
-            echo "Directory contents:"
-            ls -al
-            echo "npm-debug.log (if exists):"
-            cat npm-debug.log 2>/dev/null || true
-            exit 1
-          }
-
-          echo "exit_code=0" >> $GITHUB_OUTPUT
-
-      - name: Comment on PR if check failed
-        if: steps.check_script.outcome == 'failure'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
-        run: |
-          body='Your PR failed `oseda check`. Please fix the issues and push again.'
-          curl -s -X POST \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d "{\"body\":\"$body\"}" \
-            "https://api.github.com/repos/$REPO/issues/$PR_NUMBER/comments"
-
-      - name: Fail the job if check failed
-        if: steps.check_script.outcome == 'failure'
-        run: exit 1
+          oseda check
