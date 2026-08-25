@@ -20,6 +20,6 @@ These things need to be checked for a new course to be merged. If you're just su
 
 I have read and followed the submission guidelines and, in particular, I
 
-- [ ] have chosen [an appropriate open source license](https://github.com/typst/packages/blob/main/docs/licensing.md) and added a `LICENSE` file
+- [ ] have chosen [an appropriate open source license](https://opensource.org/licenses) and added a `LICENSE` file
 - [ ] have ensured that I have the rights to re-distribute all material
 - [ ] tested my presentation locally on my system and it worked
