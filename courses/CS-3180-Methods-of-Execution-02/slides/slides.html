@@ -1,0 +1,493 @@
+
+<section>
+    <h1>Methods of Execution</h1>
+    <h2>CS-3180</h2>
+</section>
+
+
+<section>
+    <h2>Languages</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Now that we "know" what a programming language is</li>
+            <li>We can talk about how they actually work</li>
+            <li>What are we actually doing?</li>
+        </ul>
+    </div>
+</section>
+<section>
+    <h2>Code</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Generally speaking, we interact with source code</li>
+            <li>Pass that source code to another program</li>
+            <li>Then read its output</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="100">🖥️</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="center-slide">
+        <h2>Pipeline</h2>
+        <img src="pipeline.svg">
+    </div>
+</section>
+
+<section>
+    <h2>Pipeline</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Executor expects code in a particular format</li>
+            <li>This is often thought of as a black box</li>
+            <li>"Run button"</li>
+            <li>Generally, we will be discouraging this</li>
+        </ul>
+        <img width="300" src="run.svg">
+    </div>
+</section>
+
+<section>
+    <h2>Methods of Execution</h2>
+    <div>
+        <ul>
+            <img height="200" src="pipeline.svg">
+            <li>We will be looking inside the "black box"</li>
+            <li>The executor is usually just a program on your system</li>
+            <li>`python3`, `java`, `node`, `gcc`</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Methods of Execution</h2>
+    <div>
+        <ul>
+            <li>Let's look at the differences when we execute these binaries</li>
+            <li class="fragment" data-fragment-index="2">Java -> Error</li>
+            <li class="fragment" data-fragment-index="2">Python -> Gives us an interactive environment</li>
+            <li class="fragment" data-fragment-index="3">Tells us something about how they are executed</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Learn Some Python</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Before we can really dive into demonstrating why, you'll need to learn some Python</li>
+            <li>You'll need to write in python for your first few projects</li>
+            <li>So let's cover some, see how far we get</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="100">🐍</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Learn Some Python</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Python is generally an easier language to learn*</li>
+            <li>Depending on your background</li>
+            <li>You'll likely pick it up quickly</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="100">🐍</text>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2>Learn Some Python</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>We'll write our code in a `.py` file</li>
+            <li>Usually within a virtual environment*</li>
+            <li>Pass the code to `python` (or `python3)</li>
+        </ul>
+        <pre><code class="language-bash">
+➜ ls
+main.py
+➜ cat main.py
+print("Hello World")
+➜ python main.py
+Hello World        
+    </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Variables</h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>We already saw a Hello World</li>
+            <li>Let's talk about variables</li>
+            <li>Just name it, assign it, and hope it works</li>
+            <li>More on this next class</li>
+        </ul>
+        <pre><code class="language-python" data-trim data-noescape>
+            a = 5
+            b = 6
+            c = a + b
+            print(c)
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Strings</h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Variables can have multiple types</li>
+            <li>F-Strings are a very useful concept</li>
+            <li>Allow formatting and direct variable printing</li>
+            <li>f"Hello {name}"</li>
+        </ul>
+        <pre><code class="language-python" data-trim data-noescape>
+            first_name = "John"
+            last_name = "Johnson"
+            name = f"{first_name} {last_name}"
+            print(f"Hello, {name}")
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Functions</h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Skipping to functions for now (more later)</li>
+            <li>Declare functions with `def` keyword </li>
+            <li>Parameters after (who needs types anyway?) </li>
+            <li>Use `return` keyword </li>
+            <li>Whitespace matters</li>
+        </ul>
+        <pre><code class="language-python" data-trim data-noescape>
+def add(a, b):
+    return a + b
+
+result = add(1, 2)
+print(f"Result was: {result}")
+        </code></pre>
+    </div>
+</section>
+
+
+<section>
+    <h2>Java Functions </h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>How would you do this in Java?</li>
+            <li>Methods... 🤓</li>
+            <li>*Explicit*</li>
+        </ul>
+        <pre><code class="language-java" data-trim data-noescape>
+class Main {
+    
+    public static int add(int a, int b){
+        return a + b;
+    }
+    
+    public static void main(String[] args){
+        int result = add(1, 2);
+        System.out.println("Result was: " 
+            + result);
+    }
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Java Functions </h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Let's change one thing</li>
+            <li>Order of the two methods</li>
+            <li> Main <-> Add </li>
+        </ul>
+        <pre><code class="language-java" data-trim data-noescape>
+class Main {
+    
+    public static void main(String[] args){
+        int result = add(1, 2);
+        System.out.println("Result was: " 
+            + result);
+    }
+
+    public static int add(int a, int b){
+        return a + b;
+    }
+
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Functions</h2>
+
+    <div class="horizontal-container">
+        <ul>
+            <li>Let's do the same in Python</li>
+            <li>We don't have a main method yet, but it's conceptually identical</li>
+        </ul>
+        <pre><code class="language-python" data-trim data-noescape>
+result = add(1, 2)
+print(f"Result was: {result}")
+
+def add(a, b):
+    return a + b
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Error</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Runtime error specifically</li>
+            <li>Python doesn't know `add` exists yet</li>
+            <li>Yet Java does</li>
+            <li>It appears as though Java is looking ahead to see what functions are valid</li>
+            <li>Header files beware</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Interpreted Languages</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>The `python` binary <br> is an Interpreter</li>
+            <li>It will execute your <br> code line by line</li>
+            <li>By the time it gets to the <br> call, it hasn't defined `add`</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 670px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="60" fill="white">Src ->Interpreter -> Out</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>REPLs</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Interpreted languages like Python, often ship with REPLs</li>
+            <li>Read, Evaluate, Print, Loop</li>
+            <li>Which is what we get when we type `python` directly</li>
+        </ul>
+        <img src="repl.svg" width="400" alt="Circle of REPL">
+    </div>
+</section>
+
+<section>
+    <h2>Compiled Languages</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Java and C(++) are compiled languages</li>
+            <li>A compiler turns source code into a form closer to machine code</li>
+            <li>BEFORE it is actually executed</li>
+            <li>Let's look at some C code to see this process</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+        <div class="horizontal-container">
+            <ul>
+                <li>Pass our code to `gcc`</li>
+                <li>Produces an executable file</li>
+                <li>Executable -> Machine Code</li>
+            </ul>
+            <pre><code class="language-c" data-trim data-noescape>
+#include &lt;stdio.h>
+
+int main(){
+    printf("Hello, World!");
+
+    return 0;
+}
+        </code></pre>
+        </div>
+  
+        <pre><code>
+gcc main.c -o main.exe
+➜ ./main.exe 
+Hello, World!%
+➜                                        
+        </code></pre>
+</section>
+
+
+<section>
+    <h2>Java's Compilation Process</h2>
+    <ul>
+        <li>Java does things a bit differently</li>
+        <li>JDK contains multiple binaries</li>
+        <li>`javac`: Compile Java code</li>
+        <li>`java`: Execute compiled Java code</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Java's Compilation Process</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>`javac`: Produces Java ByteCode</li>
+            <li>`java`: Executes the bytecode in a "VM"</li>
+            <li>Bytecode is still *closer* to machine code than source code</li>
+            <li>This is how Java can see `add`</li>
+        </ul>
+        <img width="460" src="java-compilation.svg" alt="Summary of Java Compilation">
+    </div>
+</section>
+
+<section>
+    <h2>Multi-Pass Compilation</h2>
+    <ul>
+        <li>Java compiler will pass over your code multiple times</li>
+        <li>Will still read the whole thing at once</li>
+        <li>C's compiler actually will not do this</li>
+        <li>Hence why header files exist</li>
+        <li>Some interpreted languages can get away with this</li>
+        <li>Javascript -> Hoisting</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Interpreter Quirks</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Because interpreters can't look ahead</li>
+            <li>Just execute sequentially</li>
+            <li>The concept of a `main` is basically made up</li>
+            <li>But it is often best practice</li>
+            <li>Let's see that in Python</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>__name__</h2>
+    <div class="move-up-1">
+        Check if the current file is being executed directly with __name__
+    </div>
+    <pre class="move-up-2"><code class="language-python">
+def main():
+    print("hello world")
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+    <ul>
+        <li>If this feels a little wrong</li>
+        <li>That's okay, we will revisit next time</li>
+        <li>MUST go at the end</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Compilers are strict</h2>
+    <ul>
+        <li>Compilers get to REQUIRE a main</li>
+        <li>I.e. don't produce an executable, UNLESS all requirements are fulfilled</li>
+        <li>Interpreters => FAFO</li>
+        <li>Produce errors at compile-time</li>
+        <li>Instead of *exclusively* run-time like interpreters</li>
+    </ul>
+</section>
+
+<section>
+
+    <h2>Is one better?</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Generally python is used for quick scripting</li>
+            <li>Compilers can do some crazy optimizations</li>
+            <li>Compilers are generally slow</li>
+            <li>But the compiled code can execute much quicker</li>
+            <li>Any reason why you would want an interpreted language?</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Compiler Complications</h2>
+    <ul>
+        <li>The truth is, most interpreted languages have some sort of in-line compiler</li>
+        <li>Python does (depending on the implementation) e.g. pycache</li>
+        <li>Lisp, Javascript, etc.</li>
+        <li>Just-in-Time compiler</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Aside: Transpilers</h2>
+    <ul>
+        <li>Distinguish between High and Low level languages</li>
+        <li>High Level -> Java, Python, etc.</li>
+        <li>Low Level -> Assembly, C, etc.</li>
+        <li>Transpilers take something of the same level to the same level</li>
+        <li>Except people often just call them compilers anyway?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Compilers:</li>
+            <li>Turn High -> Low</li>
+            <li>Read the whole file at once</li>
+            <li>Produce a new file</li>
+            <li>Generally Faster</li>
+        </ul>
+
+        <ul>
+            <li>Interpreters:</li>
+            <li>Read and execute line by line</li>
+            <li>Can be ran in a REPL</li>
+            <li>Generally slower</li>
+        </ul>
+    </div>
+    Like all things, we are skipping much nuance
+</section>
+
+<section>
+    <h1>
+        Questions?
+    </h1>
+</section>
+<!-- there is defintely more I wanna talk about here -->
