@@ -3,9 +3,10 @@
   "author": "ReeseHatfield",
   "tags": [
     "ComputerScience",
-    "Engineering"
+    "Engineering",
+    "WSU-CS-3180"
   ],
-  "last_updated": "2026-08-25T01:26:16.785380295Z",
+  "last_updated": "2026-08-16T00:47:56.498376326Z",
   "color": "#00FFFF",
-  "description": "A discussion of methods of how different programming langauges execute through compilers and interpreters"
+  "description": "A discussion of methods of how different programming langauges execute through compilers and interpreters."
 }

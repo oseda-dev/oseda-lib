@@ -24,4 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     center: false,
     slideNumber: true,
   });
+  
+
+  window.Reveal = deck
 });
