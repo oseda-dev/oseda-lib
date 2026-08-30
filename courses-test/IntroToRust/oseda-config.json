@@ -4,7 +4,8 @@
   "last_updated": "2025-11-12T14:52:18.608425697Z",
   "color": "#FFA500",
   "tags": [
-    "ComputerScience"
+    "ComputerScience",
+    "Rust"
   ],
   "description": "This course is an introduction for programming in Rust for an ACM speaker series."
 }
