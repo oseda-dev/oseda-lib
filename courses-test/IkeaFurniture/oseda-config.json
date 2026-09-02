@@ -8,5 +8,6 @@
   ],
   "last_updated": "2026-02-10T13:03:12.766754969Z",
   "color": "#008000",
-  "description": "A course that focuses on building Ikea furniture and all of the idiosyncricies that come with it"
+  "description": "A course that focuses on building Ikea furniture and all of the idiosyncricies that come with it",
+  "license": "Apache-2.0"
 }

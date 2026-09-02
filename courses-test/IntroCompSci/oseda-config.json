@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course introduces core programming concepts and computational thinking. It focuses on variables, control flow, and problem solving."
+  "description": "This course introduces core programming concepts and computational thinking. It focuses on variables, control flow, and problem solving.",
+  "license": "Apache-2.0"
 }

@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course introduces common security threats and defenses. It emphasizes practical protection techniques."
+  "description": "This course introduces common security threats and defenses. It emphasizes practical protection techniques.",
+  "license": "Apache-2.0"
 }

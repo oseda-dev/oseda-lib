@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course introduces how images and scenes are rendered on computers. It explores rendering pipelines and transformations."
+  "description": "This course introduces how images and scenes are rendered on computers. It explores rendering pipelines and transformations.",
+  "license": "Apache-2.0"
 }

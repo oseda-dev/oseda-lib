@@ -8,5 +8,6 @@
     "Engineering",
     "Networking"
   ],
-  "description": "This course focuses on Raspberry Pis. Focuses on Pi5 programming and development"
+  "description": "This course focuses on Raspberry Pis. Focuses on Pi5 programming and development",
+  "license": "Apache-2.0"
 }

@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course focuses on touching grass. And really just going outside in general"
+  "description": "This course focuses on touching grass. And really just going outside in general",
+  "license": "Apache-2.0"
 }

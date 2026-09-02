@@ -6,5 +6,6 @@
   "tags": [
     "Biology"
   ],
-  "description": "This course focuses on designing user-centered experiences. It applies research methods and usability principles."
+  "description": "This course focuses on designing user-centered experiences. It applies research methods and usability principles.",
+  "license": "Apache-2.0"
 }

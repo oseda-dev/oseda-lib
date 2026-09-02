@@ -6,5 +6,6 @@
   "tags": [
     "Aerospace"
   ],
-  "description": "This course discusses jigsaw puzzles. Specifically, different techniques to solve them"
+  "description": "This course discusses jigsaw puzzles. Specifically, different techniques to solve them",
+  "license": "Apache-2.0"
 }

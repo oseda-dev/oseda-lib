@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course examines how software interacts with hardware. It covers memory, processes, and performance basics."
+  "description": "This course examines how software interacts with hardware. It covers memory, processes, and performance basics.",
+  "license": "Apache-2.0"
 }

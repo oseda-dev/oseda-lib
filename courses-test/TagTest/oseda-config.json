@@ -11,5 +11,6 @@
   ],
   "last_updated": "2026-02-10T00:27:25.937541569Z",
   "color": "#008000",
-  "description": "A test of many tags, with a full deployment test using the deploy script and fork"
+  "description": "A test of many tags, with a full deployment test using the deploy script and fork",
+  "license": "Apache-2.0"
 }

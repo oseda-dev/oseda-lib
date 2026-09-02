@@ -6,5 +6,6 @@
   "tags": [
     "Biology"
   ],
-  "description": "This course explores foundational ideas behind artificial intelligence. It explains models, learning approaches, and limitations."
+  "description": "This course explores foundational ideas behind artificial intelligence. It explains models, learning approaches, and limitations.",
+  "license": "Apache-2.0"
 }

@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course discusses how plastics are really cool. They're actually really good for the environment."
+  "description": "This course discusses how plastics are really cool. They're actually really good for the environment.",
+  "license": "Apache-2.0"
 }

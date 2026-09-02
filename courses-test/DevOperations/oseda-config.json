@@ -6,5 +6,6 @@
   "tags": [
     "Biology"
   ],
-  "description": "This course introduces tools and practices for automated deployment. It focuses on reliability and delivery speed."
+  "description": "This course introduces tools and practices for automated deployment. It focuses on reliability and delivery speed.",
+  "license": "Apache-2.0"
 }

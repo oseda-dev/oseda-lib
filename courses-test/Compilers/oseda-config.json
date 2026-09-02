@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course focuses on compilers and lexers. Throughout this course, you will build your own programming language."
+  "description": "This course focuses on compilers and lexers. Throughout this course, you will build your own programming language.",
+  "license": "Apache-2.0"
 }

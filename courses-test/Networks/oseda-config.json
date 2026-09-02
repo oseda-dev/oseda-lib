@@ -8,5 +8,6 @@
     "Rust",
     "Networking"
   ],
-  "description": "This course explains how data moves between machines. It covers protocols, routing, and reliability."
+  "description": "This course explains how data moves between machines. It covers protocols, routing, and reliability.",
+  "license": "Apache-2.0"
 }

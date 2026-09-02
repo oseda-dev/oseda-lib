@@ -7,5 +7,6 @@
     "ComputerScience",
     "Networking"
   ],
-  "description": "This course teaches how to deploy and scale applications in the cloud. It covers core cloud services and architectures."
+  "description": "This course teaches how to deploy and scale applications in the cloud. It covers core cloud services and architectures.",
+  "license": "Apache-2.0"
 }
