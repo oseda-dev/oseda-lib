@@ -5,7 +5,8 @@
   "color": "#FF0000",
   "tags": [
     "ComputerScience",
-    "Engineering"
+    "Engineering",
+    "Networking"
   ],
   "description": "This course focuses on Raspberry Pis. Focuses on Pi5 programming and development"
 }

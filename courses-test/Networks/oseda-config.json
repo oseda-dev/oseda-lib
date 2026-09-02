@@ -5,7 +5,8 @@
   "color": "#4287f5",
   "tags": [
     "ComputerScience",
-    "Rust"
+    "Rust",
+    "Networking"
   ],
   "description": "This course explains how data moves between machines. It covers protocols, routing, and reliability."
 }
