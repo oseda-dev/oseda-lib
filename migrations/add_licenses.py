@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-path = "./courses-test" # change me to migrate test
+path = "./courses" # change me to migrate tests and prod
 for course in Path(path).iterdir():
     oseda_conf_file = course / "oseda-config.json"
 

@@ -6,5 +6,6 @@
   "tags": [
     "ComputerScience"
   ],
-  "description": "This course is an introduction for programming in Rust for an ACM speaker series."
+  "description": "This course is an introduction for programming in Rust for an ACM speaker series.",
+  "license": "Apache-2.0"
 }

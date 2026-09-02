@@ -8,5 +8,6 @@
   ],
   "last_updated": "2026-08-16T00:47:56.498376326Z",
   "color": "#00FFFF",
-  "description": "A discussion of methods of how different programming langauges execute through compilers and interpreters."
+  "description": "A discussion of methods of how different programming langauges execute through compilers and interpreters.",
+  "license": "Apache-2.0"
 }
