@@ -1,0 +1,330 @@
+
+<section>
+    <h1>Syntax and Design</h1>
+    <h2>CS-3180</h2>
+</section>
+
+
+<section>
+    <h2>Where are we at?</h2>
+    <ul>
+        <li>Languages can either be compiled or interpreted</li>
+        <li>Or something in between</li>
+        <li>What other considerations go into a language?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Design</h2>
+    <div class="move-up-1">
+        What actually differentiates these two pieces of code?
+    </div>
+    <pre class="move-up-1"><code class="language-java">
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+    </code></pre>
+
+    <pre><code class="language-python">
+print("Hello, World!")
+    </code></pre>
+</section>
+
+<section>
+    <h2> Design</h2>
+    <ul>
+        <li>The rules of each language are different</li>
+        <li>Arrange the words differently</li>
+        <li>Structure + combination of symbols -> SYNTAX</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Keywords</h2>
+    <ul>
+        <li>Languages often have special, reserved words</li>
+        <li>Directives to the language as it runs</li>
+        <li>Let's pick some apart in a Java program</li>
+        <li>"Syntax Highlighting" makes this easier</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Keywords</h2>
+    <ul>
+        <li>On a word-by-word basis</li>
+        <li>Some of these are more fundamental</li>
+        <li>Some are words that *we* create</li>
+        <li>Let's look at a list of Java keywords</li>
+        <pre><code class="python">
+import keyword
+print(keyword.kwlist)
+        </code></pre>
+    </ul>
+</section>
+
+
+<!-- make the code take up full screen -->
+<style>
+  .full-width pre {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  .full-width pre code {
+    max-height: none !important;
+  }
+</style>
+
+<section class="full-width" style="width: 100% !important; max-width: none !important;">
+    <pre class="move-up-1"><code class="language-java">
+public class Example {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter your birth year: ");
+        int birthYear = scanner.nextInt();
+
+        int currentYear = 2026;
+        int age = currentYear - birthYear;
+
+        System.out.println("You are approximately " + age);
+
+        // comment example
+        if (age >= 18) {
+            System.out.println("Status: You are an adult.");
+        } else {
+            System.out.println("Status: You are a child.");
+        }
+    }
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Standard Library</h2>
+    <ul>
+        <li>Things that "feel" reserved but are not</li>
+        <li>E.g. extremely common functions</li>
+        <li>Are often implemented in a library that ships with the language itself</li>
+        <li>Often written IN the target language (E.g. String)</li>
+        <li>Let's look at that example again</li>
+    </ul>
+</section>
+
+<section class="full-width" style="width: 100% !important; max-width: none !important;">
+    <pre class="move-up-1"><code class="language-java">
+public class Example {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter your birth year: ");
+        int birthYear = scanner.nextInt();
+
+        int currentYear = 2026;
+        int age = currentYear - birthYear;
+
+        System.out.println("You are approximately " + age);
+
+        // comment example
+        if (age >= 18) {
+            System.out.println("Status: You are an adult.");
+        } else {
+            System.out.println("Status: You are a child.");
+        }
+    }
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Design</h2>
+    <ul>
+        <li>Languages have similar concepts</li>
+        <li>Implemented with different syntax</li>
+        <li>To learn more Python, let's compare a few of them</li>
+        <li>From a perspective of syntax comparison</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Python Conditionals</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Whitespace sensitive</li>
+            <li>`if`, `elif`, `else`: keywords</li>
+            <li>Colon after statement</li>
+            <li>No parentheses</li>
+            <li class="fragment">Thoughts?</li>
+        </ul>
+        <pre><code class="language-python">
+if color == "red":
+    print("Stop")
+elif color == "yellow":
+    print("Slow down")
+elif color == "green":
+    print("Go")
+else:
+    print("Invalid signal")
+        </code></pre>
+    </div>    
+</section>
+
+<section>
+    <h2>Java Conditionals</h2>
+    <pre><code class="language-java">
+if ("red".equals(color)) {
+    System.out.println("Stop");
+} else if ("yellow".equals(color)) {
+    System.out.println("Slow down");
+} else if ("green".equals(color)) {
+    System.out.println("Go");
+} else {
+    System.out.println("Invalid signal");
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Python Loops</h2>
+    <pre><code class="language-python">
+for i in range(5):
+    print(i)
+
+names = ["Alice", "Bob", "Charlie"]
+for name in names:
+    print(name)
+
+while True:
+    print("hi!")
+    </code></pre>  
+</section>
+
+<section>
+    <h2>Java Loops</h2>    
+    <pre><code class="language-java">
+for (int i = 0; i &lt; 5; i++) {
+    System.out.println(i);
+}
+
+List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie");
+for (String name : names) {
+    System.out.println(name);
+}
+
+while (true) {
+    System.out.println("hi!");
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Python Lists</h2>
+    <pre><code class="python">
+fruits = ["apple", "banana", "cherry"]
+print(fruits[0])   # apple
+print(fruits[-1])  # cherry -> last item
+
+numbers = [1, 2]
+numbers.append(3) # -> [1, 2, 3]
+numbers.insert(1, 99) # 'insert_at_index' -> [1, 99, 2, 3]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Interesting Question</h2>
+    <ul>
+        <li>Do you think it is possible for a language to have NO keywords at all?</li>
+        <li class="fragment" data-fragment-index="1">What would that even look like?</li>
+        <li class="fragment" data-fragment-index="2">It would have to be almost 100% std. library</li>
+        <li class="fragment" data-fragment-index="2">Lisp accomplishes this</li>
+    </ul>
+</section>
+
+<section>
+    <img src="langs-by-kw.png">
+    https://github.com/e3b0c442/keywords
+</section>
+
+<section>
+    <h2>Paradigms Design</h2>
+    <ul>
+        <li>Total keyword count says something about the language</li>
+        <li>Bigger Picture =></li>
+        <li>Paradigm: High level way of conceptualizing the organization and execution of your program</li>
+        <li>Almost every modern language is "multi-paradigm"</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Paradigms</h2>
+    <ul>
+        <li>Generally two main groups</li>
+        <li>Imperative => (Procedural, Object Oriented)</li>
+        <li>Step-by-step instructions to follow</li>
+        <br>
+        <li>Declarative => (Functional, Logical) </li>
+        <li>Describe the result you want</li>
+        <br>
+        <li>Skipping details for now, I will call this out as it arises</li>    
+    </ul>
+</section>
+
+<section>
+    <img class="move-up-1" height="450" src="paradigms.png">
+    Skipping over many details here
+    <br>
+    Python -> Generally Procedural
+    <br>
+    Java -> Generally Object-Oriented
+</section>
+
+<section>
+    <h2>Other Considerations</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Language Ecosystem</li>
+            <li>Build System?</li>
+        </ul>
+        <ul>
+            <li>Dependency Management</li>
+            <li>Concurrency Model</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Type System!</h2>
+    <div>
+        <ul>
+            <li>Elephant in the room</li>
+            <li>Languages take a different approach to variable types</li>
+            <li>Some are much more loose with the rules than others</li>
+            <li>Next lecture, we will dive head first into this</li>
+        </ul>
+    </div>
+</section>
+
+
+<section>
+    <h1>Questions?</h1>
+</section>
+<!-- conditionals list and loops -->
+
+<!-- How languages are defined (decoupled implmentation from document) -->
+<!-- Keywords -->
+<!-- https://github.com/e3b0c442/keywords -->
+<!-- Concurrency model? -->
+<!-- A little about Memory considerations -->
+<!-- Type system LAST ->transition into next lecture -->
