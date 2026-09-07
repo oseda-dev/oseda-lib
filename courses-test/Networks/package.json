@@ -12,11 +12,11 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "vite": "^5.4.21"
   },
   "dependencies": {
     "reveal.js": "^5.2.1",
-    "serve": "^14.2.4",
-    "vite-plugin-singlefile": "^2.2.0"
+    "serve": "^14.2.4"
   }
 }
