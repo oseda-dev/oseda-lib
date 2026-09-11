@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-04-Intro-To-Types",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-08-30T16:55:22.029597736Z",
+  "color": "#00FFFF",
+  "description": "A brief introduction to type systems in different programming languages",
+  "license": "Apache-2.0"
+}
