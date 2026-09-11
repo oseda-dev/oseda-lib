@@ -3,10 +3,11 @@
   "author": "ReeseHatfield",
   "tags": [
     "ComputerScience",
-    "Education"
+    "Education",
+    "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-07T22:49:24.042035722Z",
-  "color": "#00FFFF",
+  "last_updated": "2026-09-11T12:27:16.390661052Z",
+  "color": "#000080",
   "description": "A discussion of dynamic code execution with eval() and compiler optimizations.",
   "license": "Apache-2.0"
 }
