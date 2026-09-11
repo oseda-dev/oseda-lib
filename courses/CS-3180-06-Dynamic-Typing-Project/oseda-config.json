@@ -3,9 +3,10 @@
   "author": "ReeseHatfield",
   "tags": [
     "ComputerScience",
-    "Engineering"
+    "Engineering",
+    "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-03T13:17:12.772244254Z",
+  "last_updated": "2026-09-11T12:26:57.882871522Z",
   "color": "#00FFFF",
   "description": "A simple guided exercise in dynamic typing in python. Details the creation and thought process behind a small calculator",
   "license": "Apache-2.0"
