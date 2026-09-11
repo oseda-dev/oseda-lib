@@ -3,9 +3,10 @@
   "author": "ReeseHatfield",
   "tags": [
     "ComputerScience",
-    "Engineering"
+    "Engineering",
+    "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-01T20:28:05.227250040Z",
+  "last_updated": "2026-09-11T12:26:48.024009014Z",
   "color": "#00FFFF",
   "description": "A discussion of the many nuances included in a programming language's type system",
   "license": "Apache-2.0"
