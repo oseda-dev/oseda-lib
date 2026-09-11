@@ -1,0 +1,392 @@
+<section>
+    <h1>Dynamic Typing Project</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Perils</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Perils of dynamic typing</li>
+            <li>Causes a lot of problems</li>
+            <li>Seemingly Ill-defined behavior</li>
+        </ul>
+        <img src="js.png" width="250">
+    </div>
+</section>
+
+<section>
+    <h2>Benefits</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Dynamic typing is not *entirely* evil</li>
+            <li>As much as it pains me to say</li>
+            <li>Let's build a project:</li>
+            <li>Practice more python</li>
+            <li>Take advantage of dyn. typing</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Calculator</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Ever used DESMOS?</li>
+            <li>Desmos supports variables</li>
+            <li>Aim for something similar</li>
+            <li>Minus any of the graphing stuff</li>
+        </ul>
+        <div class="horizontal-container">
+            <ul></ul>
+            <div
+                style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <div
+                    style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;">
+                </div>
+                <div
+                    style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                    <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                        <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80"
+                            fill="white">🖩</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Supports:</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Strings</li>
+            <li>Numbers</li>
+            <li>Variables</li>
+            <li>Addition</li>
+            <li class="fragment">Multiplication? (time permitting)</li>
+        </ul>
+        <div class="horizontal-container">
+            <ul></ul>
+            <div
+                style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <div
+                    style="width: 350px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;">
+                </div>
+                <div
+                    style="width: 250px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                    <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                        <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80"
+                            fill="white">str, int, + </text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Input/Output</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Input: data from a file</li>
+            <li>Parse it line-by-line</li>
+            <li>Output: State of all variables</li>
+        </ul>
+        <div
+            style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div
+                style="width: 150px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;">
+            </div>
+            <div
+                style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="60"
+                        fill="white">📄</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Design</h2>
+    <ul>
+        <li>Before we can start this</li>
+        <li>Spend time designing our input</li>
+        <li>Call this input our "specification"</li>
+        <li>Hopefully, design should be easy to parse</li>
+        <li>First, define our syntax</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Design</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Easiest to just show you the goal</li>
+            <li>Then, we can work backwards</li>
+            <li>Show some simplification</li>
+        </ul>
+        <pre><code class="language-bash">a:5
+b:6
+c:a + b
+d:'hello'
+e:d + a
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Output</h2>
+    <div class="horizontal-container">
+        <pre><code class="language-bash">a:5
+b:6
+c:a + b
+d:'hello'
+e:d + a
+            </code></pre>
+
+        <pre><code>{
+    'a': 5, 
+    'b': 6, 
+    'c': 11, 
+    'd': 'hello', 
+    'e': 'hello5'
+}
+            </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Start Small</h2>
+    <ul>
+        <li>Read the file</li>
+        <li>Would like to get this in a more useful format</li>
+        <li>Get rid of newlines</li>
+        <li>Useful features: </li>
+        <li>with, open(), as, readlines(), strip()</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Comprehensions</h2>
+    <ul>
+        <li>Once we've read the lines</li>
+        <li>May need to preprocess them</li>
+        <pre><code class="language-python">
+for line in lines:
+    line = line.strip()
+        </code></pre>
+        <li>But *line* is not a reference to its original data</li>
+        <li>It's a copy</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Comprehensions</h2>
+    <ul>
+        <li>Iteration Abstracts are common in high level languages</li>
+        <li>Python's are called Comprehensions</li>
+        <li>result = [(OUTPUT) (ITERABLE) (CONDITIONAL)]</li>
+        <li>Similar things exist for dictionaries</li>
+    </ul>
+    <!-- narrow, put at bottom -->
+    <!-- legally distinct graphic -->
+    <div
+        style="background-color: #00000000; padding: 24px; font-family: 'Courier New', Courier, monospace; font-weight: bold; color: #ffffff; display: inline-flex; flex-direction: column; align-items: center; gap: 12px; box-sizing: border-box;">
+
+        <div style="display: flex; align-items: center; font-size: 20px;">
+            <span>[</span>
+            <span style="background-color: #a2e89d; color: #000000; padding: 4px 6px;">x+2</span>
+            <span style="background-color: #ff9999; color: #000000; padding: 4px 8px;">for x in range(0,10)</span>
+            <span style="background-color: #87cefa; color: #000000; padding: 4px 8px;">if x%2 == 0</span>
+            <span>]</span>
+        </div>
+
+        <div style="display: flex; align-items: center; font-size: 18px;">
+            <span style="background-color: #a2e89d; color: #000000; padding: 4px 8px;">Give me this</span>
+            <span style="background-color: #ff9999; color: #000000; padding: 4px 22px;">in this collection</span>
+            <span style="background-color: #87cefa; color: #000000; padding: 4px 8px;">under these conditions</span>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2>Vocabulary</h2>
+    <div class="horizontal-container move-up-1">
+        <ul>
+            <li>Literals:</li>
+            <li>Fixed value in source "code"</li>
+            <li>Expressions:</li>
+            <li>Bits of code that will evaluate to a result</li>
+            <li>Variables:</li>
+            <li>Symbolic label for data 🤓</li>
+            <li>https://xkcd.com/1339/</li>
+        </ul>
+    </div>
+
+</section>
+
+<section>
+    <h2>Simplifying Assumptions</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Expressions -> Always two variables</li>
+            <li>New Line -> New variable</li>
+            <li>Only supporting + operator (?)</li>
+            <li>Only Support Strings(' ') and int</li>
+            <li>Assume correct usage</li>
+            <li>https://xkcd.com/1339/</li>
+        </ul>
+        <img src="https://imgs.xkcd.com/comics/when_you_assume_2x.png" width="250">
+
+    </div>
+</section>
+
+<section>
+    <h2>Line Processing</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Delimiter:</li>
+            <li>A boundary character</li>
+            <li>Our ":" delimits: </li>
+            <li>What part is a variable</li>
+            <li>And what part is data</li>
+        </ul>
+        <pre><code class="language-bash">a:5
+b:6
+c:a + b
+[VARIABLE]: [LITERAL/EXPRESSION]
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Two Cases</h2>
+    <ul>
+        <li>After a variable</li>
+        <li>The data is EITHER:</li>
+        <li>Expression -> Evaluate -> Store</li>
+        <li>Literal -> Store</li>
+        <br>
+        <li>Let's also create a place to store things</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Python Dictionaries</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Declared with {}</li>
+            <li>Store Key-Value pairs</li>
+            <li>"Associative Array"</li>
+            <li>We'll likely need an empty one</li>
+            <li>Use global keyword for outside scope</li>
+        </ul>
+        <pre><code class="language-python">
+fav_colors = {
+    "Alice": 1,
+    "Bob": 3.14,
+    "Charlie": "Eight" 
+}
+
+print(fav_colors["Alice"])
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Parsing</h2>
+    <ul>
+        <li>In either case</li>
+        <li>We need a way of checking</li>
+        <li>If we are looking at an expression</li>
+        <li>Or just a literal</li>
+        <li>We can be pretty loose with this</li>
+        <li class="fragment">Check if it contains a '+'</li>
+        <li class="fragment">(but you would likely want something more complex)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Handle Literals</h2>
+    <ul>
+        <li>Right now, sees everything as str</li>
+        <li>Try an int conversions [int()]</li>
+        <li>Changes its *run-time* type</li>
+        <li>If that fails: Strip quote, store as str</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Handle Expressions</h2>
+    <ul>
+        <li>Before we tackle this</li>
+        <li>Let's make a dynamic add function</li>
+        <li>Should handle "regular" adds</li>
+        <li>Otherwise -> Concat to a string</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Handle Expressions</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Let's use it</li>
+            <li>Use spaces as a delimiter</li>
+            <li>(Ignore + for now)</li>
+            <li>Pass each to dynamic_add() </li>
+        </ul>
+        <div
+            style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div
+                style="width: 150px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;">
+            </div>
+            <div
+                style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="60"
+                        fill="white">+</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Done?</h2>
+    <ul>
+        <li>With that, it should just work</li>
+        <li>Do this for every line</li>
+        <li>Grunt work -> Python handles how + should work</li>
+        <li>Differs from a statically typed approach</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Multiply *</h2>
+    <ul>
+        <li>Time permitting, we can add *</li>
+        <li>That operation IS well defined</li>
+        <li>At least in python :)</li>
+        <li>"str" * 3 -> "strstrstr"</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Feel the compromises of dynamic typing</li>
+        <li>Hopefully you can envision:</li>
+        <li>How different this would be in a static language</li>
+        <li>More python practice</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions</h1>
+</section>

@@ -1,0 +1,353 @@
+
+<section>
+    <h1>Type System Nuances</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>So far</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Properties of type system</li>
+            <li>Strong and Weak</li>
+            <li>Static and Dynamic</li>
+            <li>"Two Axis" System</li>
+        </ul>
+        <img src="typing.png" width="500">
+    </div>
+</section>
+
+<section>
+    <h2>Nuances</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>These things exist on a spectrum</li>
+            <li>We should spend some time discussing what lies in between</li>
+            <li>Get a feel for a few different languages</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">↔️</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <h2>Move up the scale</h2>
+    <ul>
+        <li>The + operation is well defined for different types</li>
+        <li>Under the surface, this shouldn't really work</li>
+        <li>Most just let you concatenate or convert</li>
+        <li>But not all</li>
+        <li>Call a language's ability to prevent type errors: Type Safety</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Javascript</h2>
+    <ul>
+        <li>Weak, Dynamic typing</li>
+        <pre><code class="language-javascript" data-trim>var integerCount = 5;
+var decimalWeight = 2.5;
+
+// silently coercion the integer to  
+// float and adds them
+var total = integerCount + decimalWeight;
+
+console.log(total);
+        </code></pre>
+    </ul>
+    <ul>
+        <li>Not type-safe</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Java</h2>
+    <ul>
+        <li>Strong, static typing</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-java" data-trim>public class Main {
+    public static void main(String[] args) {
+        int integerCount = 5;
+        double decimalWeight = 2.5;
+
+        // implicit changes integerCount into 5.0 (at runtime)
+        double total = integerCount + decimalWeight;
+
+        System.out.println(total);
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Java</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Only allowed because no information is lost</li>
+            <li>Type has "widened"</li>
+            <li>Prevents type narrowing, without an explicit cast</li>
+            <li>Mostly type safe?</li>
+            <li>(bools are unique, ignore online charts)</li>
+        </ul>
+        <img src="java-types.png" width="400">
+    </div>
+</section>
+
+<section>
+    <h2>Rust</h2>
+    <ul>
+        <li>Strong, Static typing</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-rust">// warning: this code will not compile
+fn main() {
+    let integer_count: i32 = 5;
+    let decimal_weight: f64 = 2.5;
+
+    // type mismatch, Rust will refuse the implicit cast
+    // even though no "information" is lost
+    let total: f64 = integer_count + decimal_weight; 
+}
+    </code></pre>
+    <ul>
+        <li>We would need some explicit conversion here</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Spectrum</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>So even when languages fall in the same quadrant</li>
+            <li>Some are still more type-safe than others</li>
+            <li>Systems will scale better</li>
+            <li>With more type safe code</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🖥️</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- type inference -->
+<section>
+    <h2>Type Inference</h2>
+    <ul>
+        <li>Anatomy of a variable</li>
+        <li>Most variables, that is</li>
+        <li>(Without any sub-typing)</li>
+        <li>(In statically typed languages)</li>
+    </ul>
+    <pre><code class="language-python">
+[TYPE] [NAME] = [DATA]
+    </code></pre>
+    <pre><code class="language-java">
+int ten = 10;
+String s = "Hello World";
+    </code></pre>
+</section>
+
+<section>
+    <h2>Type Inference</h2>
+    <ul>
+        <li>If I ommitted these types</li>
+        <li>You could likely figure out what these are, right?</li>
+    </ul>
+    <pre><code class="language-java">
+[?] ten = 10;
+[?] s = "Hello World" 
+    </code></pre>
+</section>
+
+<section>
+    <h2>Type Inference</h2>
+    <ul>
+        <li>Often, the compiler is smart enough</li>
+        <li>To infer these types as well</li>
+        <li>Call this behavior "Type Inference"</li>
+        <li>Common in statically typed languages</li>
+        <li>Java -> <span class="fragment">var keyword</span></li>
+        <li>C++? -> <span class="fragment">auto keyword</span></li>
+        <li>Rust -> <span class="fragment">Omit the type</span></li>
+    </ul>
+    <pre class="move-up-1"><code class="language-java">var ten = 10;
+var s = "Hello World";</code></pre>
+</section>
+
+<section>
+    <h2>Type() Functions</h2>
+    <ul>
+        <li>Dynamically Typed Languages -> Types exist at run-time</li>
+        <li>Which means that types are usually some kind of value</li>
+        <li>Most languages in this boat provide a way of checking the type</li>
+        <li>For the developer to see</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Type() Functions</h2>
+    <pre><code class="language-python">
+print(type(42))
+print(type("Hello"))
+print(type([1, 2, 3]))
+    </code></pre>
+    <ul>
+        <li> class 'type'</li>
+        <li>Types are VALUES in these languages</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Type() Functions</h2>
+    <ul>
+        <li>This is often a problem if you want to enforce a type in your code</li>
+        <pre><code class="language-python">def square(value):
+    # introduce "not" and "in"
+    if type(value) not in (int, float):
+        return "Error: please give me a numeric type"
+    
+    return value ** 2
+        </code></pre>
+    </ul>
+    <ul>
+        <li>Notice: return types are different</li>
+        <li>Can affect the callers</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Codepoint</h2>
+    <ul>
+        <li>This is especially a problem for libraries</li>
+        <li>Code that is written once, under many different contexts</li>
+        <li>Library devs do *not* control who calls their code</li>
+        <li>Riddled with type checks everywhere</li>
+        <li>Let's take a peek at a library I maintain: github.com/oseda-dev/codepoint</li>
+    </ul>
+</section>
+
+<section>
+    <h2>People hate this</h2>
+    <ul>
+        <li>Dynamic types work for quick scripting</li>
+        <li>But industrial scale systems</li>
+        <li>Riddled with bugs if they are dynamically typed</li>
+        <li>What choices do developers have?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Only use type-safe languages</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Idyllic solution</li>
+            <li>Almost never possible</li>
+            <li>"Re-write it in Rust!"</li>
+        </ul>
+        <img src="ferris.png">
+    </div>
+</section>
+
+<section>
+    <h2>Type Hints</h2>
+    <ul>
+        <li>Python added a system to denote types in your code</li>
+        <li>*Added in 3.5*</li>
+        <li>Optional System</li>
+        <li>Uses : and -> </li>
+        <pre><code class="language-python">
+def greet(user: str) -> str:
+    return f"Hello, {user}!"
+        </code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Type Hints</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Not everybody will use them</li>
+            <li>Python *ignores* them</li>
+            <li>LSP might warn you? maybe?</li>
+        </ul>
+        <pre><code class="language-python">def greet(name: str) -> str:
+    # we can just lie
+    return 12345  
+
+# we can pass whatever we want actually
+result = greet(42)
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>TypeScript</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Javascript's solution to this is Typescript</li>
+            <li>Typescript = Javascript-like language, with *static* typing</li>
+            <li>`tsc` compiler </li>
+            <li>"Compiles" into <div class="fragment">Javascript?</div></li>
+        </ul>
+        <img src="ts.png" width="300">
+    </div>
+</section>
+
+<section>
+    <h2>TypeScript</h2>
+    <pre><code class="language-typescript">
+function greet(name: string) {
+    return "Hello, " + name;
+}
+// this will not compile
+greet(42); 
+    </code></pre>
+    <ul>
+        <li>Maybe a better option than type hints</li>
+        <li>But...</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Any Type!</h2>
+    <pre><code class="language-typescript" data-line-numbers="1|4|5|6">let dynamicValue: any = "Hello World"; 
+
+// re-assign this to whatever you want! yay!
+dynamicValue = 42; // number type
+dynamicValue = true; // boolean type
+dynamicValue = { id: 1 }; // object type (!!!)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Perils of JS</h2>
+    <ul>
+        <li>JS is one of the most dynamic weakly typed languages</li>
+        <li>That is used at such a grand scale</li>
+        <li>Comes with a lot of caveats</li>
+        <li>Let's have a look at them</li>
+        <li>https://jsisweird.com/</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
+
+<!--  Duck typing = push this off to OOP and dispatch-->
+
