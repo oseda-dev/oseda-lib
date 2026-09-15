@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-07-Evaluation-Optimization",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Education",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-15T14:16:35.364804128Z",
+  "color": "#000080",
+  "description": "A discussion of dynamic code execution with eval() and compiler optimizations.",
+  "license": "Apache-2.0"
+}

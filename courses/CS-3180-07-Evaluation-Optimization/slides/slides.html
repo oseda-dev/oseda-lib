@@ -1,0 +1,529 @@
+<section>
+    <h1>Evaluation + Optimization</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>So far</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Two big things we've talked about:</li>
+            <li>Execution methods (compilers/interpreters)</li>
+            <li>Type Systems</li>
+            <li>At least the deep dives</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">💻</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Core Difference</h2>
+    <ul>
+        <li>The "scope" of what executors see</li>
+        <li>Including how they see your types</li>
+        <li>Evaluate differently:</li>
+        <li>Different capabilities of evaluation</li>
+        <li>Specifically at different times</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Interpreters</h2>
+    <ul>
+        <li>Does EVERYTHING at runtime</li>
+        <li>This usually extends to executing new code</li>
+        <li>"At runtime, evaluate this new piece of code"</li>
+        <li>Most interpreted languages have a nice function for this</li>
+        <li>Python's is eval()</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Eval()</h2>
+    <ul>
+        <li>"Evaluate a piece of code"</li>
+        <li>Accepts an expression</li>
+        <li>Executes and evaluates that code</li>
+        <li>Returns its result</li>
+    </ul>
+
+    <pre><code class="language-python">
+result = eval("5 * 4 + 2")
+print(result)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Eval()</h2>
+    <ul>
+        <li>This is cool</li>
+        <li>Almost like a separate runtime</li>
+        <li>It can even access surrounding values</li>
+        <pre><code class="language-python">
+x = 10
+y = 20
+result = eval("x + y")
+print(result)
+        </code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Evil()</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>This is very scary</li>
+            <li>Huge security risk</li>
+            <li>Think about what we are doing</li>
+            <li>Execute *arbitrary code*?</li>
+            <li>Let's see that</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">😈</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <ul>
+        <li>We can call destructive functions</li>
+        <li>Rule: Don't use this on un-trusted input</li>
+    </ul>
+    <pre><code class="language-python">
+def evil_fn():
+    return "rm -rf /"
+
+def main():
+    to_eval = input("Give me something to evaluate: ")
+    result = eval(to_eval)
+    print(result)
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+</section>
+
+<section>
+    <h2>Eval + Interpreters</h2>
+    <ul>
+        <li>This is *mostly* unique to interpreted languages</li>
+        <li>Although not entirely</li>
+        <li>How would a compiled language even handle this?</li>
+        <li>Compiled languages often produce binaries</li>
+        <li>Those binaries are fixed, as is</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Eval()</h2>
+    <pre class="move-up-2"><code class="language-c">
+int main() {
+
+    system("gcc -o exec_me file.c");
+
+    system("./exec_me");
+    
+    return 0;
+}
+    </code></pre>
+
+    <ul>
+        <li>Fake C Eval attempt</li>
+        <li>This doesn't address access to existing values</li>
+        <li>Point being: Fundamentally different</li>
+    </ul>
+
+</section>
+
+
+<section>
+    <h2>Compilers</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>If compilers can't easily do dynamic evaluation</li>
+            <li>What other advantages do they have?</li>
+            <li>Since they can "see" more of your code</li>
+            <li>They can do additional optimizations</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🔄</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Compiler Optimizations</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Compilier's will change you code</li>
+            <li>Often much much more than you think</li>
+            <li>"As-If rule"</li>
+            <li>Your code should execute as-if it was not changed</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">💻</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Compiler Optimizations</h2>
+    <ul>
+        <li>Every single line of high-level code</li>
+        <li>Produces several lines of low-level code</li>
+        <li>Different intruction take different time</li>
+        <li>Most of the time</li>
+        <li>However, more instructions = more time</li>
+    </ul>
+</section>
+
+<section>
+    <h2>C to ASM</h2>
+    <div class="horizontal-container">
+        <pre><code>
+int i;
+for (i = 0; i < 10; i++) {    
+    // some code here
+}
+        </code></pre>
+
+        <pre><code>mov ecx, 0        ; initialize loop
+.loop_start:      ; label   
+cmp ecx, 10       ; conditional
+jge .loop_end     ; exit loop
+; some code here
+inc ecx           ; increment var    
+jmp .loop_start   ; jump back
+.loop_end:        ; label
+        </code></pre>
+    </div>
+
+</section>
+
+<section>
+    <h2>Assembly</h2>
+    <ul>
+        <li>Every new assembly instruction takes time</li>
+        <li>Would like to operate on this representation</li>
+        <li>(More commonly, an AST)</li>
+        <li>To minimize these instructions</li>
+        <li>Assembly is *inherently* imperative</li>
+        <li>Let's look at some different optimizations</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Dead Code Elimination</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Let's start small</li>
+            <li>If code can not run</li>
+            <li>Don't load the assembly</li>
+            <li>Compiler must *PROVE* it can't run</li>
+            <li>Java won't even compile</li>
+        </ul>
+        <pre><code class="language-c">int foo() {
+    int a = 5;
+    int b = 5;
+
+    return a + b; 
+
+    if (a == 5) {
+        return 0;
+    }
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Conditional Dead Code</h2>
+    <ul>
+        <li>Can do the same with conditional</li>
+    </ul>
+    
+        <pre class="move-up-1"><code class="language-java" data-line-numbers="-1|10-12|-1">class Optimize {
+    public static void main(String[] args) {
+        System.out.println(foo());
+    }
+
+    public static int foo(){
+        int a = 5;
+        int b = 5;
+
+        if(false){
+            return 0;
+        }
+
+        return a + b;
+    }
+}
+        </code></pre>
+</section>
+
+<section>
+    <h2>Conditional Dead Code</h2>
+    <ul>
+        <li>Delete that portion of code</li>
+    </ul>
+
+<pre><code class="language-java">class Optimize {
+    public static void main(String[] args) {
+        System.out.println(foo());
+    }
+
+    public static int foo(){
+        int a = 5;
+        int b = 5;
+
+        return a + b;
+    }
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Conditional Optimization</h2>
+    <ul>
+        <li>Can optimize conditionals</li>
+        <li>If compiler can prove a case</li>
+    </ul>
+
+    <div class="horizontal-container">
+        <pre><code class="language-c">if(false && conditional){
+    // will never run
+    // Drop entire conditional
+}
+        </code></pre>
+
+        <pre><code class="language-c">if(true || conditional){
+    // code will ALWAYS run
+    // take code out of a condition
+    // less ASM to load
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Short Circuit Evaluation</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>If only one conditional is required</li>
+            <li>To determine whether a block runs</li>
+            <li>Only that call gets executed</li>
+        </ul>
+        <pre><code class="language-c">if (foo() || bar()){
+    // some code
+    // if foo() return true
+    // bar never runs
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Const Folding</h2>
+    <ul>
+        <li>Unchanging values (final) only need computed one time</li>
+        <li>Evaluate it at COMPILE time</li>
+        <li>Instead of loading those into assembly</li>
+    </ul>
+    <div class="horizontal-container">
+
+        <pre><code class="language-java">int seconds = 60 * 60 * 24;
+wait_for(seconds)
+        </code></pre>
+        <pre><code class="language-java">int seconds = 86400;
+wait_for(seconds)
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Const Propagation</h2>
+    <ul>
+        <li>Variable access costs instructions</li>
+        <li>Substitute a variable for a value</li>
+        <li>If it is known</li>
+        <li>Chain with constant folding</li>
+    </ul>
+    <div class="horizontal-container">
+        <pre><code class="language-c" data-line-numbers="-1|1|2|3|-1">int x = 14;
+int y = 7 - (x / 2);
+return y * 3;
+        </code></pre>
+
+        <pre><code class="language-c">// replace every instance of x with 14
+// fold, then replace every instance of y with 7
+return 7 * 3 
+// would optimize this to:
+return 21 
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Side Effects</h2>
+    <ul>
+        <li>Many of these optimizations rely on the simple usage</li>
+        <li>Functions don't do anything weird</li>
+        <li>This is worth spending some time on</li>
+        <li>It will become relevant later</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Side Effects</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Call a side-effect:</li>
+            <li>A state modification outside of the functions scope</li>
+        </ul>
+
+        <pre><code class="language-python">
+balance = 100
+
+def withdraw_impure(amount):
+    global balance
+    balance -= amount # mutate global state
+    return balance
+
+print(withdraw_impure(30)) # 70
+print(withdraw_impure(30)) # 40
+print(withdraw_impure(30)) # 10
+
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Pure Functions</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Call a Pure Function:</li>
+            <li>A function that does NOT mutate external state</li>
+            <li>Necessary for many optimizations</li>
+        </ul>
+        <pre class="move-up-1"><code class="language-python">def withdraw_pure(current_balance, amount):
+    # no state mutation
+    return current_balance - amount
+
+balance = 100
+
+balance = withdraw_pure(balance, 30)
+print(balance) # 70
+
+balance = withdraw_pure(balance, 30)
+print(balance) # 40
+
+balance = withdraw_pure(balance, 30)
+print(balance) # 10
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>In-lining</h2>
+    <ul>
+        <li>Replace pure functions calls with the code itself</li>
+        <li>Literally copy+pasted</li>
+        <li>Prevent loading a new function call</li>
+        <li>C++ has the `constexpr` for evaluating entire functions at compile time </li>
+        <li>AND in-lining them </li>
+    </ul>
+
+</section>
+
+<section>
+    <h2>Constexpr</h2>
+    <pre class="move-up-2"><code class="language-cpp">
+constexpr int square(int x) {
+    return x * x;
+}
+
+int main() {
+    // square(5) is determined entirely at COMPILE TIME
+    constexpr int static_val = square(5); 
+}
+    </code></pre>
+    <ul>
+        <li>My favorite C++ feature</li>
+        <li>Rust has something similar</li>
+        <li>Zig can do WAY more</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Caching</h2>
+    <ul>
+        <li>Lookup of variables is expensive</li>
+        <li>"Common" values show up enough</li>
+        <li>For certain languages to "cache" them</li>
+        <li>At least, references to them</li>
+        <li>To prevent unnecessary lookup</li>
+    </ul>
+</section>
+
+<section>
+    <pre><code class="language-java">class Cache {
+    public static void main(String[] args){
+        // System.out.println(100 == 100);
+        // System.out.println(200 == 200);
+        Integer a = 100;
+        Integer b = 100;
+
+        System.out.println(a == b); // true
+
+
+        Integer x = 200;
+        Integer y = 200;
+        System.out.println(x == y); // false
+    }
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Interpreters can evaluate code dynamically</li>
+        <li>Easier than compilers can at least</li>
+        <li>Compilers can do many more optimizations</li>
+        <li>They can "see" more of your code</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
