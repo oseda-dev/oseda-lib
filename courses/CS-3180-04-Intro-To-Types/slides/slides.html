@@ -1,0 +1,365 @@
+<section>
+    <h1>Type Systems</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Language Design</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Syntax</li>
+            <li>Paradigm</li>
+            <li>Level</li>
+            <li>One of the most important:</li>
+            <li class="fragment">Type System</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">💻</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <h2>Type System</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Often discuss data types</li>
+            <li>Let's get definitions</li>
+            <li>Match our intuition</li>
+            <li>"Primitive" and "Complex" types</li>
+        </ul>
+        <div class="move-up-3 fragment">
+            An attribute or classification <br> that tells the executor how <br> the programmer intends to use a specific piece of data
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Data Types</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Definition hints at some arbitrariness here</li>
+            <li>How we "intend to use" data</li>
+            <li>We are giving meaning to 1's and 0's</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">10101</text>
+                </svg>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section>
+    <h2>Data Types</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>The lower level you are</li>
+            <li>The less meaning a type has</li>
+            <li>CPU instructions don't know what an `Animal` is</li>
+            <li>ASM + C usually just use integers</li>
+            <li>An abstraction on 1's and 0's</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Data Types</h2>
+    <div class="horizontal-container move-up-2">
+        <ul>
+            <li>Encourage thinking about types from:</li>
+            <li>Bottom up -> Abstractions on binary</li>
+            <li>Over top down -> Compile into binary</li>
+        </ul>
+        <img src="type-abstractions.png"> 
+    </div>
+</section>
+
+<section>
+    <h2>Type System</h2>
+    <ul>
+        <li>How a language handles types is one of the primary ways to differentiate them</li>
+        <li>Aside from syntax of course</li>
+        <li>How did we get to all the languages doing this differently?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>C's Types</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>C has a few useful types:</li>
+            <li>`int`: Integer</li>
+            <li>`char`: Character</li>
+            <li>`floats`: Floating point numbers</li>
+            <li>`true/false`: Booleans via stdbool.h </li>
+        </ul>
+        <div>
+            Let's use them in code
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>C's Types</h2>
+    <ul>
+        <li>But does it really?:</li>
+        <li class="fragment">`int`: => Integers</li>
+        <li class="fragment">`char`: => Integers in a trenchcoat</li>
+        <li class="fragment">`floats`: => Stored as 32-bit ints</li>
+        <li class="fragment">`true/false`: => 1/0 </li>
+        <li class="fragment">Pointers* => Address = Integer</li>
+        <li class="fragment">Arrays => Pointers => Integer</li>
+    </ul>
+</section>
+
+<section>
+    <h2>C is lying</h2>
+    <ul>
+        <li>C treats basically every type as int under the hood</li>
+        <li>Abstraction on binary again</li>
+        <li>You still need to EXPLICITLY label types</li>
+        <li>FORTRAN was one of the first to do this*</li>
+    </ul>
+    <img src="fortran.png" width="200">
+</section>
+
+<section>
+    <h2>Type Coercion</h2>
+    <ul>
+        <li>Because everything is an int</li>
+        <li>C will seamlessly convert between types</li>
+        <li>Implicitly convert between your types</li>
+        <li>We'll call this behavior "Type Coercion"</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Type Coercion</h2>
+    <pre class="move-up-1"><code class="language-c">
+#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10;
+    // ascii 65
+    char b = 'A'; 
+    float c = 5.5;
+
+    float result = a + b + c; 
+    
+    printf("%f", result);
+    return 0;
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Better Example</h2>
+    <pre class="move-up-2"><code class="language-c data-trim">#include &lt;stdio.h&gt;
+
+// expect int
+void printNumber(int num) {
+    printf("number was: %d\n", num);
+}
+
+int main() {
+    double myPi = 3.14159;
+    
+    // c converts double to int
+    printNumber(myPi); 
+    
+    return 0;
+}
+    </code></pre>
+    <ul>
+        <li>Let's try this in Java</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Weak Typing</h2>
+    <ul>
+        <li>This property of converting between types</li>
+        <li>A weakly-typed system</li>
+        <li>Note: The first example actually works in Java </li>
+        <li>Strings are usually an edge case </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Strong Typing</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>If instead, a language REQUIRES that your types match</li>
+            <li>We will call that a strongly typed language</li>
+            <li>Java is an example of a strongly typed language</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🦾</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Typing Strength</h2>
+    <ul>
+        <li>Type strength is always a spectrum</li>
+        <li>A strong type system usually:</li>
+        <li>EXPLICITLY cast between types</li>
+        <li>Prevent operations on invalid types</li>
+        <li>Minimize silent conversions</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Examples of both:</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Weakly Typed:</li>
+            <li>C</li>
+            <li>Perl</li>
+            <li>Javascript</li>
+            <li>Bash</li>
+        </ul>
+
+        <ul>
+            <li>Strongly Typed:</li>
+            <li>Java</li>
+            <li>Rust</li>
+            <li>Go</li>
+            <li class="fragment">Python?</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2>Python?</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>How is python a *strongly* typed language?</li>
+            <li>We saw before how fast-and-loose it plays</li>
+            <li>Let's look at a non-string example</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🐍</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <pre><code class="language-python">
+def calculate_total(price, quantity):
+    return price * quantity
+
+print(calculate_total(4.99, 3))  
+
+print(calculate_total(4.99, "three"))
+
+# you can actually catch these errors
+# introduce try/except
+try:
+    print(calculate_total(4.99, "three"))
+except TypeError as e:
+    print(f"Oopsies: {e}")
+
+    </code></pre>
+</section>
+
+<section>
+    <h2>What's different?</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Well, let's do it in Java and see</li>
+            <li>Type checking still occurs in both</li>
+            <li>Difference: WHEN the type check occurs</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 250px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">⏱️</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Dynamic Typing</h2>
+    <ul>
+        <li>We will call this property of waiting until RUN-TIME to check your types</li>
+        <li>Dynamic typing</li>
+        <li>Types are associated with the data, not the variable</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Static Typing</h2>
+    <ul>
+        <li>Opposite of this: static typing</li>
+        <li>Variable types are checked prior to RUN-TIME</li>
+        <li>Usually, this means they are checked at COMPILE-TIME</li>
+        <li>Types are bound to the variable itself</li>
+        <li>Also a spectrum</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Typing</h2>
+    <ul>
+        <li>Strong/Weak + Static/Dynamic types</li>
+        <li>Are compatible with one another</li>
+        <li>Often these are organized along a two-axis plot</li>
+        <li>Let's look at one</li>
+    </ul>
+</section>
+
+<section>
+    <div class="center-slide">
+        <img class="move-up-1" src="typing.png" width="800">
+    </div>
+</section>
+
+<section>
+    <h2>Wrap Up</h2>
+    <ul>
+        <li>Two ways of categorizing type systems</li>
+        <li>Explicitness of Coercion (strong/weak) </li>
+        <li>Time when types are checked (static/dynamic) </li>
+        <li>Most languages fall somewhere in between</li>
+        <li>Next time: Nuances</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
+
+<!-- type system nuances: -->
+<!--  Duck typing -->
+<!--  Perils of JS -->
+<!-- Type safety -->
+<!-- type inference -->
+<!-- Type Composition -->
+<!-- Python type hints -->
