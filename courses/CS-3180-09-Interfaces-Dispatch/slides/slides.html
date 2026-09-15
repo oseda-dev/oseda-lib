@@ -1,0 +1,374 @@
+
+<section>
+    <h1>Interfaces + Dispatch</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Style</h2>
+    <ul>
+        <li>Today will be more focused on running code</li>
+        <li>Do more code than slides</li>
+        <li>Check the course GitHub for the code</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Access</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>In most OOP contexts</li>
+            <li>Use the dot (.) operator</li>
+            <li>Used in a few scenarios:</li>
+            <li class="fragment">Field Access</li>
+            <li class="fragment">Method Access Access</li>
+        </ul>
+        <pre class="move-up-1"><code class="language-python">Student s1 = Student();
+// access GPA field
+s1.gpa;
+
+// call goToClass() method
+s1.goToClass()
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Dot</h2>
+    <ul>
+        <li>Python stores all its object data using __dict__</li>
+        <li>Python dictionary containing all class information</li>
+        <li>One for the instance: p.__dict__</li>
+        <li>One for the Class: Person.__dict__</li>
+    </ul>
+</section>
+
+<section>
+    <h2>__dict__</h2>
+    <ul>
+        <li>When you access something with dot</li>
+        <li>You are actually indexing into this dictionary</li>
+        <li>One of them at least</li>
+        <li>Python looks up this value at runtime when you access them</li>
+    </ul>
+    <pre><code class="language-python">
+    instance.method() == instance.__dict__["method"]
+    </code></pre>
+</section>
+
+<section>
+    <pre><code>class Person:
+    def __init__(self, name, gpa):
+        self.name = name
+        self.gpa = gpa
+
+    def go_to_class(self):
+        print(self.name, " goes to class")
+
+p = Person("Bob", 4.0)
+p.go_to_class()
+p.name
+    </code></pre>
+    <ul>
+        <li>This is how Python implements Dynamic Typing</li>
+        <li>Under the hood at least</li>
+    </ul>
+</section>
+
+<section>
+    <h2>__dict__</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>There is a lot of stuff in here</li>
+            <li>Class.__dict__ contains a lot of function pointers</li>
+            <li>instance.__dict__ contains just the data</li>
+            <li>This is what self actually refers to</li>
+        </ul>
+        
+    </div>
+</section>
+
+<section>
+    <h2>Using __dict__</h2>
+
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Since python uses this when we used dot</li>
+            <li>We could be tricky and use it ourself</li>
+            <li>For access</li>
+            <li class="fragment">Or for modification</li>
+        </ul>
+        <pre><code class="language-python">p: Person = Person("Bob", 3.9)
+p.__dict__['new_value'] = "Hello"
+
+print(p.__dict__)
+
+print(f"New value was: {p.new_value}")
+        </code></pre>
+    </div>
+</section>
+
+
+<section>
+    <h2>Static Dispatch</h2>
+    <ul>
+        <li>If we were to translate this code over to Java</li>
+        <li>It functions the same</li>
+        <li>This is simple for data</li>
+        <li>And for functions there is a *one-to-one* matching from:</li>
+        <li>Function name -> Implementation</li>
+        <li>Static Dispatch: Address of callee can be resolved prior to execution</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Java Complications</h2>
+    <ul>
+        <li>Let's write some Java to see how this assumption breaks down</li>
+        <li>Class Person</li>
+        <li>Name, GPA, etc</li>
+        <li>Let's override toString()</li>
+        <li>See what happens when we don't</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Inheritance</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Fundamental OOP concept</li>
+            <li>A class can steal all of its behavior</li>
+            <li>Java uses the "extends" keyword</li>
+            <li>All objects implicitely extend from Object</li>
+        </ul>
+
+        <img src="Inheritance.png" width="300">
+    </div>
+</section>
+
+<section>
+    <h2>What to call?</h2>
+    <ul>
+        <li>Every Person IS AN Object</li>
+        <li>If we had a method that accepted an object:</li>
+        <li>Called toString()</li>
+        <li>Which implementation gets called?</li>
+        <li class="fragment">Person!</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Typing</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Java separates data into its:</li>
+            <li>Declared Type + Actual Type</li>
+            <li>Static typing -> Each object know's what its actual type is</li>
+            <li>Compiler only sees its declared type</li>
+        </ul>
+        <pre><code class="language-java">// [DECLARED] [NAME] = [ACTUAL]
+Object o = new Person();
+o.[ONLY OBJECT ATTRIBUTES]
+
+Person p = new Person()
+p.[OBJECT + PERSON ATTRIBUTES]
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Python Inheritance</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li><code class="language-python">class Derived(Base)</code> syntax</li>
+            <li>Actually gives a much simpler solution</li>
+            <li>Just change what the implementation is pointed to in __dict__</li>
+            <li>Duck Typing will handle all of the edge cases*</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🦆</text>
+                </svg>
+            </div>
+        </div>    
+    </div>
+</section>
+
+<section>
+    <h2>Diamond Problem</h2>
+    <ul>
+        <li>Static Dispatch can still be achieved with Inheritance (at least in Java) </li>
+        <li>Python and Java both prioritize execution of child-most methods</li>
+        <li>This isn't always this so simple</li>
+        <li>Let's present a specific scenario:</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Multi-Inheritance</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Left and Right both override behavior</li>
+            <li>Your code can figure out what the child-most implementation of foo() is</li>
+        </ul>
+        <img src="DiamondProblemA.png" width="400">
+    </div>
+</section>
+
+<section>
+    <h2>Multi-Inheritance</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>If we added a class that derived behavior</li>
+            <li>From both Left and Right (without override it)</li>
+            <li>Which method should be called?</li>
+        </ul>
+        <img src="DiamondProblemB.png" width="400">
+    </div>
+</section>
+
+<section>
+    <h2>Diamond Problem</h2>
+    <ul>
+        <li>Many solutions to this</li>
+        <li>Java just prohibits multi-inheritance</li>
+        <li>C++ looks this up based on class name?</li>
+        <li>Python.... "Method Resolution Order" (MRO)</li>
+    </ul>
+</section>
+
+<section>
+    <h2 class="move-up-1">Method Resolution Order</h2>
+    <div class="horizontal-container move-up-1">
+        <img src="MRO1.png" width="350">
+        <img src="MRO2.png" width="350">
+    </div>
+</section>
+
+<section>
+    <h2 class="move-up-1">Method Resolution Order</h2>
+    <div class="horizontal-container move-up-1">
+        <img src="MRO3.png" width="350">
+        <img src="MRO4.png" width="350">
+    </div>
+</section>
+
+<section>
+    <h2 class="move-up-1">Method Resolution Order</h2>
+    <div class="horizontal-container move-up-1">
+        <img src="MRO5.png" width="350">
+        <img src="MRO6.png" width="350">
+    </div>
+</section>
+
+<section>
+    <h2>Solutions</h2>
+    <div class="horizontal-container">
+        
+        <ul>
+            <li>(Please don't memorize that)</li>
+            <li>Java brings in a new idea</li>
+            <li>Interfaces</li>
+            <li>Set of method declarations</li>
+            <li>Without any implementations</li>
+        </ul>
+
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">📃</text>
+                </svg>
+            </div>
+        </div> 
+    </div>
+</section>
+
+<section>
+    <h2>Contract</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Validity of Interfaces are resolved at compile time</li>
+            <li>If a class implements an interfaces</li>
+            <li>Must implement its methods</li>
+            <li>Compile-time contract</li>
+        </ul>
+        <pre class="move-up-2"><code class="language-java">interface Drivable {
+    public void driveToWork();
+    public void driveToSchool();
+}
+        </code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>Declared Types</h2>
+    <ul>
+        <li>Interfaces are only useful</li>
+        <li>Because they can function as declared types</li>
+        <li>Can pass them into methods</li>
+    </ul>
+    <pre><code class="language-java">
+public static void commute(Drivable d){
+    d.driveToWork();
+    d.driveToSchool();
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Dynamic Dispatch</h2>
+    <ul>
+        <li>Java's static typing will ensure this is a valid vall</li>
+        <li>At compile time</li>
+        <li>But dynamically look up the correct implementation at runtime</li>
+        <li>Just looking at this snippet -> No clue what implementation is called</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-java">public static void commute(Drivable d){
+    d.driveToWork();
+    d.driveToSchool();
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dynamic Dispatch</h2>
+    <ul>
+        <li>No longer a one-to-one mapping of declaration to implementation</li>
+        <li>Dynamic Lookup of a method implementation</li>
+        <li>Call this behavior dynamic dispatch</li>
+        <li>Harder for a compiler to optimize</li>
+        <li>Allows for SIGNIFICANT abstraction</li>
+        <li>Basis for all OOP code at scale</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Dispatch Implementations</h2>
+    <ul>
+        <li>C++ uses the <code>virtual</code> keyword</li>
+        <li>Look's up values in a VTABLE</li>
+        <li>Python doesn't have interfaces</li>
+        <li>Duck Typing = Implicit Interfaces?</li>
+        <li>singledispatch + multipledispatch decorators?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Inheritance makes function lookup complicated</li>
+        <li>Static Dispatch: Resolve the callee prior to execution</li>
+        <li>Dynamic Dispatch: Resolve the callee at runtime</li>
+        <li>Some languages use a separate type for implementation contracts</li>
+        <li>Key to resolving dynamic dispatch</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
