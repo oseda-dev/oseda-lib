@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-02-Methods-of-Execution",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-15T14:15:31.055604552Z",
+  "color": "#000080",
+  "description": "A discussion of methods of how different programming langauges execute through compilers and interpreters.",
+  "license": "Apache-2.0"
+}

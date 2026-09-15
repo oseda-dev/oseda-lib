@@ -1,0 +1,502 @@
+<section>
+    <h1>OOP Introduction</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Procedural</h2>
+    <ul>
+        <li>Most of the code we've seen so far</li>
+        <li>Mostly 'Procedural'</li>
+        <li>Lays out step-by-step instructions</li>
+        <li>Functions often simple lay out steps</li>
+        <li>This *can* scale, with best practices*</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Paradigms</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Paradigms dictate the way we conceptual data</li>
+            <li>Specifically, how it flows through your code</li>
+            <li>As always, this is just an abstraction</li>
+            <li>Over binary, over assembly, over bytecode</li>
+        </ul>
+        <img src="paradigms.png" width="250">
+    </div>
+</section>
+
+<section>
+    <h2>OOP</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Object-Oriented Programming</li>
+            <li>You are likely somewhat familiar</li>
+            <li>UML -> Abstraction on top of OOP</li>
+            <li>Rebuild this paradigm through natural abstraction</li>
+        </ul>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/Oop-uml-class-example.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original">
+    </div>
+</section>
+
+<section>
+    <h2>Interaction</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Think about what we can 'use' in our code</li>
+            <li>Boils down to two things:</li>
+            <li class="fragment">Variables: Data (including globals)</li>
+            <li class="fragment">Functions: Transform Data</li>
+        </ul>
+        <img src="f(x).png" width="350"> 
+    </div>
+
+</section>
+
+<section>
+    <h2>Objects</h2>
+    <ul>
+        <li>If we are going to abstract beyond this</li>
+        <li>It needs to 'black-box' these ideas</li>
+        <li>This is naturally what a class does</li>
+        <li>Contains data and methods to transform that data</li>
+        <li>Let's see why this is useful</li>
+    </ul>
+</section>
+
+<style>
+  .full-width pre {
+    width: 100% !important;
+    max-width: none !important;
+  }
+  .full-width pre code {
+    max-height: none !important;
+  }
+</style>
+
+
+<section class="full-width">
+    <pre class="move-up-3"><code class="language-java" data-line-numbers="-1|4-14|20-26|16-17|-1">public class Oop {
+    public static void main(String[] args){
+
+        String student1Name = "Alice";
+        String[] student1Classes = {
+            "CS-1181", 
+            "CS-3180"
+        };
+
+        String student2Name = "Bob";
+        String[] student2Classes = {
+            "CEG-2350",
+            "CEG-3320"
+        };
+
+        goToClass(student1Name, student1Classes);
+        goToClass(student2Name, student2Classes);
+    }
+
+    public static void goToClass(String name, String[] classes){
+        System.out.print(name + " goes to: ");
+        for(int i = 0; i < classes.length; i++){
+            System.out.print(classes[i] + " ");
+        }
+        System.out.println();
+    }
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Issues</h2>
+    <ul>
+        <li>We are just passing data into these functions</li>
+        <li>Hope that the caller uses this appropriately</li>
+        <li>No way to strictly enforce this</li>
+        <pre><code class="language-java" data-line-numbers="-1|1-2|4-5|-1">goToClass(student1Name, student1Classes);
+goToClass(student2Name, student2Classes);
+// could also do:
+goToClass(student2Name, student1Classes);
+goToClass(student2Name, student1Classes);
+        </code></pre>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Coupling</h2>
+    <ul>
+        <li>We would like a way to tightly couple data</li>
+        <li>Student is composed of:</li>
+        <li>Their Name</li>
+        <li>Their Classes</li>
+        <li>We don't want to mismatch these</li>
+        <li>Let's re-write this with a class</li>
+    </ul>
+</section>
+
+<section>
+    <h2>OOP Vocab</h2>
+    <ul>
+        <li>Classes: Blueprints for data</li>
+        <li>Objects: Instance of that coupled data</li>
+        <li>Fields: Data specific to the instance</li>
+        <li>Methods: Functions that accept object data</li>
+        <li>Constructor: Special method to initialize an object</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Refactor with Classes</h2>
+    <pre class="move-up-1"><code class="language-java" data-line-numbers="-1|1|2-4|5-9|10-17|22-29|31-32|-1">class Student {
+    // fields
+    String name;
+    String[] classes;
+    // constructor
+    public Student(String name, String[] classes) {
+        this.name = name;
+        this.classes = classes;
+    }
+    // method
+    public void goToClass(){
+        System.out.print(name + " goes to: ");
+        for(int i = 0; i < classes.length; i++){
+            System.out.print(classes[i] + " ");
+        }
+        System.out.println();
+    }
+}
+
+class Oop {
+    public static void main(String[] args) {
+        Student s1 = new Student("Alice", new String[]{
+            "CS-3180", "CS-1181"
+        });
+
+        Student s2 = new Student("Bob", new String[]{
+            "CEG-2350",
+            "CEG-3320"
+        });
+
+        s1.goToClass();
+        s2.goToClass();
+    }
+}    </code></pre>
+</section>
+
+<section>
+    <h2>Dead Horse</h2>
+    <ul>
+        <li>You likely already know most of this</li>
+        <li>Set up: A contrast of OOP implementations</li>
+        <li>Java specificities:</li>
+        <li class="fragment">'this' keyword: implicit parameter of the particular instance</li>
+        <li class="fragment">Everything is in a class: Even non-OOP code </li>
+        <li class="fragment">Constructor: Special method with it's own name </li>
+        <li class="fragment">Fields: Explicitly named</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Python OOP</h2>
+    <ul>
+        <li>Let's take look at how python handles this same situation</li>
+        <li>Java has basically defined OOP</li>
+        <li>Many decisions are arbitrary</li>
+        <li>With respect to those nuances</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Python Classes</h2>
+    <pre class="move-up-1"><code class="language-python" data-line-numbers="-1|1|2-4|6-10|12-20|22-23|-1">class Student:
+    def __init__(self, name, classes):
+        self.name = name
+        self.classes = classes
+
+    def go_to_class(self):
+        # class keyword reserved
+        print(self.name + " goes to: ")
+        for course in self.classes:
+            print(course)
+
+s1= Student("Alice", [
+    "CS-1181", 
+    "CS-3180"
+])
+
+s2= Student("Bob", [
+    "CEG-2350", 
+    "CEG-3320"
+])
+
+s1.go_to_class()
+s2.go_to_class()
+    </code></pre>
+</section>
+
+<section>
+    <h2>Python Trickiness</h2>
+    <ul class="move-up-1">
+        <li>Classes are optional</li>
+        <li>__init__ used for a constructor</li>
+        <li>Dynamically add fields, without explicit declaration</li>
+        <li>'self' replaces 'this'</li>
+        <li>Explicitely stated in declaration</li>
+        <li>Implicitely passed</li>
+    </ul>
+    <pre><code class="language-python"># s1 IS the self parameter
+s1.go_to_class()
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>'Dunder' Methods</h2>
+    <ul>
+        <li>Double Underscore = 'Dunder'</li>
+        <li>Python treats these as special methods</li>
+        <li>Usually called implicitly</li>
+        <li>There is a lot of these you can override</li>
+        <li>E.g. __add__ gets called when you use + on two classes</li>
+    </ul>
+</section>
+
+<section>
+    <h2>__examples__</h2>
+    <pre class="move-up-1"><code class="language-python" data-line-numbers="-1|2-4|6-8|10-12|15-19|-1">class Number:
+    # gets called when instantiated
+    def __init__(self, value):
+        self.value = value
+
+    # gets called when + is used
+    def __add__(self, o):
+        return Number(self.value + o.value)
+
+    # string representation
+    def __repr__(self):
+        return str(self.value)
+
+
+n1 = Number(2)
+n2 = Number(3)
+
+result = n1 + n2
+print(result)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dynamic Typing Classes</h2>
+    <ul>
+        <li>Java gets to check that a variable is a specific type</li>
+        <li>Enforce this at compile time</li>
+        <li>Python can't really do the same</li>
+        <li>With 'primitives': checks your usage (+, *, etc) is valid at runtime*</li>
+        <li>With classes, this is done at method-access time</li>
+        <li>(Secretly, primitives are really classes)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Duck Typing</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>"If it looks like a duck and quacks likes a duck"</li>
+            <li>It's probably a duck</li>
+            <li>Call the method</li>
+            <li>Object type is irrelevant</li>
+            <li>Just needs the appropriate method</li>
+            <li>Let's see what this means in practice</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">🦆</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section>
+    <h2>Canonical Example</h2>
+    <ul>
+        <li>Python gives a free no-arg constructor</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-python" data-line-numbers="-1|1-3|5-7|9-11|14-17|18-27">class Duck:
+    def quack(self):
+        print("Duck Quack!")
+
+class Person:
+    def quack(self):
+        print("*Human like imitation of a quack*")
+
+class Dog:
+    def bark(self):
+        print("Woof!")
+
+
+# will check if this method exists at runtime, then call it
+# since the animal parameter doesn't have a type
+def make_it_quack(animal):
+    animal.quack()
+
+# directly instantiate each type
+make_it_quack(Duck())
+# person has a duck method, so this works
+make_it_quack(Person())
+
+# AttributeError is raised
+# attempting to access an attribute that doesn't exist
+make_it_quack(Dog())
+
+    </code></pre>
+</section>
+
+<section>
+    <h2>Duck Typing</h2>
+    <ul>
+        <li>This is *mostly* unique to dynamic, interpreted languages</li>
+        <li>Javascript, Ruby, PHP have similar systems</li>
+        <li>Was clearly not created with OOP in mind</li>
+        <li>Just supports OOP features</li>
+        <li class="fragment">Would you call python an object-oriented language?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Encapsulation</h2>
+    <ul>
+        <li>Abstraction is about hiding data</li>
+        <li>Only expose the necessary parts of system</li>
+        <li>We don't want the users to have unfettered access to our data</li>
+        <li>That's part of why we made a class to begin with</li>
+        <li>Control the state</li>
+        <li>Encode rules into your type system</li>
+    </ul>
+</section>
+
+<section>
+    <ul>
+        <li>Java: private/public/protected keywords</li>
+    </ul>
+<pre><code class="language-java" data-line-numbers="-1|3-4|7-10|12-16|18-26|30-33|-1">public class Account {
+
+    // prevent people from accessing via account.balance
+    private int balance = 1000;
+
+
+    // allow anyone to create an account
+    public Account(int startingBalance){
+        this.balance = startingBalance;
+    }
+
+    // public access function
+    // allow the world to see
+    public int getBalance(){
+        return this.balance;
+    }
+
+    // private mutator function
+    // prevent world from editing
+    private void setBalance(int newBalance) {
+        if(this.balance - newBalance < 0){
+            throw new RuntimeException();
+        }
+
+        this.balance = newBalance;
+    }
+
+    // enforce the caller to use a method with 
+    // other parameters/guards on it
+    public void processTransaction(Transaction t) {
+        System.out.println("Processing transaction...");
+        setBalance(t.amount);
+    }
+    
+}
+</code></pre>
+</section>
+
+<section>
+    <ul>
+        <li>Keywords allow us to restrict the access</li>
+        <li>Accessing a private member: Code does not compile</li>
+    </ul>
+    <pre><code class="language-java">class Main {
+    public static void main(String[] args) {
+
+        Account a = new Account(500);
+        // allowed to access public methods
+        a.processTransaction(new Transaction(100));
+
+
+        // does not compile
+        a.balance = 400;
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Python Encapsulation</h2>
+    <ul>
+        <li>Python does NOT have any similar protection</li>
+        <li>Enforced via convention:</li>
+        <li>Use an underscore for private members</li>
+        <li>You can still change them</li>
+    </ul>
+</section>
+
+<section>
+    <h2>No Safe Guards</h2>
+    <pre class="move-up-2"><code class="language-python" data-line-numbers="-1|3-5|10-14|21-22|24-25|-1">class Account:
+
+    def __init__(self, startingBalance):
+        # single underscore for fields
+        self._balance = startingBalance
+
+    def get_balance(self):
+        return self._balance
+
+    # two underscores for method
+    def __set_balance(self, newBalance):
+        if self._balance - newBalance < 0:
+            raise RuntimeError()
+        self._balance = newBalance
+
+    def process_transaction(self, amount):
+        print("Processing transaction...")
+        self.__set_balance(amount)
+
+
+a = Account(500)
+a.process_transaction(100)
+
+a._balance = -200
+print(a._balance)
+
+    </code></pre>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Object-Oriented Programming</li>
+        <li>Natural abstraction upon variables + functions</li>
+        <li>Different Languages approaches</li>
+        <li>Encapsulation of data</li>
+        <li>Desired for scalable system</li>
+        <li>OOP implementations differ</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>

@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-09-Interfaces-Dispatch",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-15T14:17:05.265853252Z",
+  "color": "#0000FF",
+  "description": "A discussion of how different programming languages handle both static and dynamic dispatch",
+  "license": "Apache-2.0"
+}
