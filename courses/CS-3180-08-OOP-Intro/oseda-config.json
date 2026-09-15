@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-08-OOP-Intro",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-15T14:16:47.140476283Z",
+  "color": "#0000FF",
+  "description": "An introduction to how different programming languages handle object-oriented programming and encapsulation",
+  "license": "Apache-2.0"
+}
