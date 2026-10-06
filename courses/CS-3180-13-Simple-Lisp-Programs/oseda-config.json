@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-13-Simple-Lisp-Programs",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-26T19:48:19.563191489Z",
+  "color": "#0000FF",
+  "description": "A discussions of how simple functions in Common Lisp work and how they can be used to write basic Lisp programs",
+  "license": "Apache-2.0"
+}

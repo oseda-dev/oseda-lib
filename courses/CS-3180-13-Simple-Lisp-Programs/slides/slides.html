@@ -1,0 +1,205 @@
+
+
+<section>
+    <h1>Simple Lisp Programs</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Lists</h2>
+    <ul>
+        <li>We know how to manipulate lists</li>
+        <li>Same rules apply to expressions</li>
+        <li>Let's expand our knowledge </li>
+        <li>To hopefully make more useful programs</li>
+        <li>Less slides = more code</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Variables?</h2>
+    <ul>
+        <li>Simple != Pragmatic</li>
+        <li>Few ways variables can be done</li>
+        <li>We'll take some shortcuts for now</li>
+        <li>Use the <code>defparameter</code> function</li>
+        <li>For now, let's see how it is used</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Defparameter</h2>
+    <ul>
+        <li>Defines a global variables</li>
+        <li>"Earmuff" notation?</li>
+        <li>Can fill this with Symbolic Expressions</li>
+        <li>Only use this with globals</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="">(defparameter *variable-name* value)
+
+(defparameter *age* 30)
+
+(defparameter *months* (+ 3 5))
+
+(format t "I am ~S years and ~S months old~%" *age* *months*)
+    </code></pre>
+
+</section>
+
+<section>
+    <h2>Word of Caution</h2>
+    <ul>
+        <li>Haven't we just written procedural code?</li>
+        <li>Antithetical to Lisp</li>
+        <li>Named intentionally -> "Define Parameter"</li>
+        <li>Think of it as a parameter instead of a side-effect</li>
+        <li>"Pollutes the global namespace"</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defparameter *age* 30)
+(format t "I age ~S years old~%" *age*)
+    
+(setf *age* (* 5 7))
+(format t "I am now ~S years old~%" *age*)
+</code></pre>
+</section>
+
+
+<section>
+    <h2>Updating "Variables"</h2>
+    <ul>
+        <li>Setf to update a variable</li>
+        <li>Hesitate to use this on labs</li>
+        <li>Mutating global state</li>
+        <li>Necessary evil for "bootstrapping" your Lisp knowledge</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defparameter *age* 30)
+(format t "I age ~S years old~%" *age*)
+
+(setf *age* (* 5 6))
+(format t "I am now ~S years old~%")
+</code></pre>
+</section>
+
+<section>
+    <h2>User Input</h2>
+    <ul>
+        <li>Lisp gives you a "simple" function</li>
+        <li>read-line to read input as a string</li>
+        <li>Code like this often leads to race conditions</li>
+        <li>Symptomatic of a bad paradigm</li>
+        <li>finish-output to block until all buffers are flushed</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="">(format t "What is your name?~%")
+(finish-output)
+(defparameter *name* (read-line))
+</code></pre>
+</section>
+
+<section>
+    <h2>Input as Data</h2>
+    <ul>
+        <li>You can also <code>read</code></code> input as data</li>
+        <li>Executor assumes its just Lisp code</li>
+        <li>Similar a <code>quote</code> in some ways</li>
+        <li>Will also coerce types for you</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers=""="">(format t "Enter something Lisp-like: ")
+(finish-output)
+(defparameter *code* (read))
+
+(format t "You entered: ~S~%" *code*)
+(format t "The type was: ~S~%" (type-of *code*))
+    </code></pre>
+</section>
+
+<section>
+    <h2>If "Statements"</h2>
+    <ul>
+        <li><code>if</code> are really just functions</li>
+        <li>"If construct actually" - 🤓</li>
+        <li>More complex forms later</li>
+        <li>Lazily evaluated</li>
+        <li>Let's see this</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp">
+        (if test-form then-form [optional-else])
+    </code></pre>
+</section>
+
+<section>
+    <h2>If Construct</h2>
+    <ul>
+        <li>Selective Indentation</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(format t "How old are you?~%")
+(finish-output)
+(defparameter *age* (read))
+
+(if (>= *age* 35) 
+    (format t "You are old enough to be president"))
+    </code></pre>
+
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(format t "How old are you?~%")
+(finish-output)
+(defparameter *age* (read))
+
+(if (>= *age* 35) 
+    (format t "You ARE old enough to be president")
+    (format t "You are NOT old enough to be president"))
+
+    </code></pre>
+    
+</section>
+
+<section>
+    <h2>Functions</h2>
+    <ul>
+        <li>Define function via <code>defun</code></li>
+        <li>Parameters are just a list</li>
+        <li>Scoped to the body -> Important</li>
+        <li>Evaluate to their LAST expression evaluated</li>
+        <li>Let's see how this works</li>
+    </ul>
+    <pre><code class="language-lisp">(defun function-name (parameter-list)
+    body-expression)</code></pre>
+</section>
+
+<section>
+    <h2>Functions</h2>
+    <ul>
+        <li>Doc String as a parameter</li>
+    </ul>
+<pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defun square (x)
+  (* x x))
+
+(format t "~S~%" (square 5))
+
+; / will just return a "ratio" if both values are ints
+(defun do-some-math (value divisor)
+    (/ (square value) (float divisor)))
+
+(format t "~S~%" (do-some-math 5 2))
+
+(defun cube (value)
+    "Returns the cube of the number"
+    (* value value value))
+
+</code></pre>
+</section>
+
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li><code>defparameter</code> and <code>setf</code> for globals</li>
+        <li>Pollute the namespace</li>
+        <li><code>if</code> function for simple conditionals</li>
+        <li><code>defun</code> for functions</li>
+    </ul>
+</section>
+
+
+<!-- progn -->
+<!-- let -->
+<!-- when -->
+<!-- cond -->
