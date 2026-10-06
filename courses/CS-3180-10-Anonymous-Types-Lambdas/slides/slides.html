@@ -1,0 +1,354 @@
+<section>
+    <h1>Anonymous Types Lambdas</h1>
+    <h2 class="move-up-1">CS-3180</h2>
+</section>
+
+<section>
+    <h2>Classes</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Java convention is one class-per file</li>
+            <li>+ a package system</li>
+            <li>Python has similar organization rules</li>
+            <li>"Group things logically"</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="80" fill="white">📁</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Interfaces Parameters</h2>
+        <ul>
+            <li>OOP is often rigid</li>
+            <li>Adding a class between a parent and child</li>
+            <li>Painful to refactor</li>
+            <li>Interfaces are often a better choice for libraries</li>
+        </ul>
+        <pre class="move-up-1"><code class="language-java">public static void libraryFunc(Interface a){
+    a.method()
+}
+        </code></pre>
+</section>
+
+<section>
+    <h2>Rigidity</h2>
+    <ul>
+        <li>Interfaces are not "concrete"</li>
+        <li>At least not in the way classes are</li>
+        <li>Contain declarations, but no definitions</li>
+        <li>Useful as types, posses some other problems</li>
+    </ul>
+    <pre><code class="language-java">interface Runnable {
+    public void run();
+}
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Boilerplate</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>"Lots of code, little logic"</li>
+            <li>Consider the <code class="language-java">Thread</code> class</li>
+            <li>Accepts a <code class="language-java">Runnable</code> as a parameter</li>
+        </ul>
+        <pre class="move-up-3"><code class="language-java" data-line-numbers="">// standard library definition
+interface Runnable {
+    public void run();
+}
+
+Thread t1 = new Thread(
+    [RUNNABLE INSTANCE]
+)
+
+t1.start()
+
+        </code></pre>
+    </div>
+    <ul>
+        <li><code class="language-java">.start()</code> executes the <code class="language-java">run()</code> in the background</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Interface Instances</h2>
+    <ul>
+        <li>[RUNNABLE INSTANCE]</li>
+        <li>Really means:</li>
+        <li>A class that implements <code class="language-java">Runnable</code></li>
+        <li>Well lets do that then:</li>
+        <li>Have it sleep for <code>N</code> seconds</li>
+        <li>See the consequence</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Interface instances</h2>
+    <ul class="move-up-1">
+        <li>Can't alter contract, need N as constructor param</li>
+    </ul>
+        <pre class="move-up-2"><code class="language-java" data-line-numbers="-1|1|2|4-6|8-9|8-16|19-28|">class Task implements Runnable {
+    private int sleepForSeconds;
+    
+    public Task(int sleepForSeconds){
+        this.sleepForSeconds = sleepForSeconds;
+    }
+
+    @Override
+    public void run(){
+        try {
+            Thread.sleep(sleepForSeconds * 1000);
+        } catch (InterruptedException e) {
+            System.out.println("Something went wrong");
+        }
+        System.out.println("Done sleeping!");
+    } 
+}
+
+public class AnonTypes1 {
+    public static void main(String[] args) {
+        Runnable task = new Task(5);
+        
+        Thread t = new Thread(task);
+
+        t.start();
+    }
+}
+        </code></pre>
+</section>
+
+<section>
+    <h2>Carpal Tunnel</h2>
+    <ul>
+        <li>My hands already hurt</li>
+        <li>There basically 1? 2? lines of logic</li>
+        <li>30 SLOC</li>
+        <li>Kind of ridiculous</li>
+        <li>There is some better options</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Anonymous Interfaces</h2>
+    <ul>
+        <li>Java (+ others) will let you create interface implementation</li>
+        <li>Without a separate class</li>
+        <li>No class = No name</li>
+        <li>It can't easily be re-instantiated</li>
+        <li>Let's see that</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Anon. Inner Classes</h2>
+    <ul>
+        <li>Use { } after instantiation (of interface, directly)</li>
+        <li>Dropping some try/catch boilerplate</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-java" data-line-numbers="-1|4-15|16-17|-1">public class AnonTypes2 {
+    public static void main(String[] args) {
+
+        Runnable task = new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (Exception e) {}
+
+                System.out.println("Done sleeping!");
+            }
+        };
+
+        Thread t = new Thread(task);
+        t.start();
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Anon. Inner Classes</h2>
+    <ul>
+        <li>Can implement multiple methods within { }</li>
+        <li>Best when only *used* once</li>
+        <li>Implementation is all we care about</li>
+        <li>Execute implementation later</li>
+        <li>Still a lot of boilerplate</li>
+        <li>Can we do better?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lambda Expressions</h2>
+    <ul>
+        <li><code class="language-java">( params ) -> { implementation }</code></li>
+        <li>Run has no parameters</li>
+        <li>As well as no return</li>
+        <li>Could call <code class="language-java">.run()</code>, but Java calls that under the hood</li>
+    </ul>
+
+    <pre class="move-up-2"><code class="language-java" data-line-numbers="">Runnable task = () -> {
+    try {
+        Thread.sleep(5 * 1000);
+    } catch (Exception e){}
+};
+
+Thread t = new Thread(task);
+t.start();
+
+    </code></pre>
+</section>
+
+<section class="move-up-2">
+    <h2>Lambda Expressions</h2>
+        <ul>
+            <li>Parameters do not need a type</li>
+            <li>Static Typing -> Java will infer the types</li>
+            <li>Only works for single-method interfaces</li>
+            <li>Call those "Functional Interfaces"</li>
+        </ul>
+        <pre class="move-up-1"><code class="language-java" data-line-numbers="-1|1-4|8-14|-1">interface Drivable {
+    public void drive(int distance);
+}
+
+public class Lambdas {
+    public static void main(String[] args) {
+        
+        Drivable d = (distance) -> {
+            System.out.println("Drives " 
+                + distance 
+                + " miles");
+        };
+        
+        d.drive(5);
+    }
+    
+
+
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Behavior</h2>
+    <ul>
+        <li>We can assign variables to lambdas</li>
+        <li>Behavior, as a variable</li>
+        <li>Pass these around throughout our program</li>
+        <li>Execute on demand</li>
+        <li>Abuse of OOP</li>
+        <li>Behavior as data is inherently an idea from the Functional Paradigm</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Non-First Class Citizens</h2>
+    <ul>
+        <li>We have created an object to sit in place of a function</li>
+        <li>Java has to jump through a lot of hoops for this</li>
+        <li>There is no type for a Function</li>
+        <li>Wrap as an object instead</li>
+        <li>In Java, functions are not "First-Class"</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Python Function Types</h2>
+    <ul>
+        <li>Python has a type for functions</li>
+        <li><code class="language-python">add</code> is just a variable</li>
+        <li>That you *can* call</li>
+        <li>You don't strictly have to</li>
+        <!-- <li>We can assign them</li>
+        <li>Pass them around like data</li>
+        <li>Without all those hoops</li> -->
+    </ul>
+     
+       <pre class="move-up-1"><code class="language-python" data-line-numbers="">def add(a, b):
+    return a + b
+
+# add is reference to its implementation
+# we dont actually have to call it with (...)
+print(add)
+
+print(add(1, 1))
+
+        </code></pre>
+</section>
+
+<section>
+    <h2 class="move-up-1">First-Class Citizens</h2>
+    <ul>
+        <li>We can pass these function types around</li>
+        <li>(Type hinting becomes tricky)</li>
+        <li>Work just like data, that we can ()</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-python" data-line-numbers="-1|1-5|7-8|10-11|13-14|-1">def add(a, b):
+    return a + b
+
+def mult(a, b):
+    return a * b
+
+def perform_operation(fn, a, b):
+    return fn(a, b)
+
+result = perform_operation(add, 3, 4)
+print(result)
+
+result = perform_operation(mult, 3, 4)
+print(result)
+</code></pre>
+</section>
+
+<section>
+    <h2>First-Class Citizen</h2>
+    <ul>
+        <li>This property of being able to pass functions as arguments:</li>
+        <li>Call them First-Class functions</li>
+        <li>One of the fundamental ideas of functional programming</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Python Lambda Expression</h2>
+    <ul>
+        <li>Lambda Expressions are not unique to OOP hacks</li>
+        <li>Universally applicable</li>
+        <li>Python: <code class="language-python">lambda params: expression</code></li>
+    </ul>
+    <pre class="move-up-1"><code class="language-python" data-line-numbers="-1|1-2|4-7|5|-1">def perform_operation(fn, a, b):
+    return fn(a, b)
+
+result = perform_operation(
+    lambda a, b: a - b,
+    5, 3
+)
+
+print(result)
+
+    </code></pre>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Anonymous Types are commonly used to store behavior</li>
+        <li>Different languages need to jump through different hoops to do this</li>
+        <li>Functions as types = First Class Functions</li>
+        <li>Not all languages support this</li>
+        <li>Lambda Expression: Quick, anonymous functions</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
