@@ -1,0 +1,403 @@
+<section>
+    <h1>Higher Order Functions</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Functional Programming</h2>
+    <ul>
+        <li>Functional Paradigm is all about functions</li>
+        <li>EVERYTHING is a function (as we've seen)</li>
+        <li>First-class functions are pivotal to this</li>
+        <li>We'll look at the limits of these implications</li>
+    </ul>
+</section>
+
+<section>
+    <h2>FP in non-functional languages</h2>
+    <ul>
+        <li>Many languages support first-class functions</li>
+        <li>Javascript supports many paradigm</li>
+        <li>You don't need to know JS</li>
+        <li>It will be helpful today in introducing some concepts</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>First Class Fns</h2>
+    <ul>
+        <li>Functions are a type</li>
+        <li>They can saved as variables (without being called)</li>
+        <li>Passed into functions (often called a "callback")</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-javascript" data-line-numbers="-1|1-3|5-9|11-12|-1">function greet() {
+    console.log("Hello world!");
+}
+
+// callbackFn is an argument (first class function)
+function repeatFn(callbackFn) {
+    callbackFn();
+    callbackFn();
+}
+
+const fn = greet;
+repeatFn(fn);
+</code></pre>
+</section>
+
+<section>
+    <h2>"Lambda" Expressions</h2>
+    <ul>
+        <li>Often, callbacks are implemented as lambdas</li>
+        <li>(Javascript calls theses "arrow functions")</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-javascript" data-line-numbers="-1|9|-1">// callbackFn is an argument (first class function)
+function repeatFn(callbackFn) {
+    callbackFn();
+    callbackFn();
+}
+
+
+// in-line lambda of function greet(){...} 
+const fn = () => console.log("Hello world!");
+
+repeatFn(fn);
+</code></pre>
+</section>
+
+<section>
+    <h2>Inlining</h2>
+    <ul>
+        <li>Equivalently, something like this</li>
+        <li>Adding full {}s and indentation</li>
+        <li>Consumer doesn't care (or even see) when parameter fn is called</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-javascript" data-line-numbers="">// callbackFn is an argument (first class function)
+function repeatFn(callbackFn) {
+    callbackFn();
+    callbackFn();
+}
+
+repeatFn(() => {
+    console.log("Hello world!")
+});
+</code></pre>
+</section>
+
+<section>
+    <h2>Returning Functions</h2>
+    <ul>
+        <li>Beyond accepting functions</li>
+        <li>We can also <code>return</code> functions</li>
+        <li>"Function Factories"*</li>
+        <li>Useful in some circumstances</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Returning Functions</h2>
+    <ul>
+        <li>Returns a fn we can call later</li>
+        <li>Pay attention to knowns vs. unknowns</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-javascript" data-line-numbers="-1|1-8|3-5|10-11|13-14|-1">function createMultiplier(factor) {
+    // number is a parameter, not a value    
+    return function(number) {
+        return number * factor;
+    };
+    // arrow fn equivalent
+    // return (number) => number * factor
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5));
+console.log(triple(5));
+</code></pre>
+</section>
+
+<section>
+    <h2>Higher-Order Functions</h2>
+    <ul>
+        <li>Call a Higher-Order Function (HOF), a function that either:</li>
+        <li>Accepts function as a parameter (callback)</li>
+        <li>Returns a function</li>
+        <li class="fragment">Or both!</li>
+        <li class="fragment">This concept is how FP can scale for large programs</li>
+    </ul>
+</section>
+
+<section>
+    <h2>List Processing</h2>
+    <ul>
+        <li><i>Very</i> commonly used for processing lists</li>
+        <li>Hence why these ideas mostly come from Lisp</li>
+        <li>Let's start re-build the most common version of this (in JS)</li>
+        <li>Work backwards into Lisp</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Map Function</h2>
+    <ul>
+        <li>Let's write a HOF that applies a function to every value in a list</li>
+        <li>Traditional called "map"</li>
+        <li>Have our function accept:</li>
+        <li>The list to process</li>
+        <li>Callback function to transform</li>
+        <li>(We'll assume this function always "looks" like how we want)</li>
+    </ul>
+
+</section>
+
+<section>
+    <h2>Map Function</h2>
+    <ul>
+        <li>Usually instead implemented as a method for List</li>
+    </ul>    
+    <pre class="move-up-1"><code class="language-javascript" data-line-numbers="-1|1-8|10-15|-1">function map(list, fn){
+    for (let i = 0; i < list.length; i++) {
+        // transform the ith elem
+        const newValue = fn(list[i])
+        list[i] = newValue
+    }
+    return list;
+}
+
+const list = [1, 2, 3, 4, 5]
+const updatedList = map(list, (i) => {
+    return i + 1;
+});
+
+console.log(updatedList)
+</code></pre>
+
+</section>
+
+<section>
+    <h2>Common HOFs</h2>
+    <ul>
+        <li>Most languages have equivalents to these</li>
+        <li>Common HOFs include:</li>
+        <br>
+        <ul>    
+            <li><code>map(...)</code></li>
+            <li><code>filter(...)</code></li>
+            <li><code>reduce(...)</code></li>
+            <li><code>forEach(...)</code></li>
+            <li><code>every(...)</code></li>
+            <li><code>some(...)</code></li>
+        </ul>
+</section>
+
+
+<section>
+    <h2>HOFs in Lisp</h2>
+    <ul>
+        <li>HOFs come from Lisp</li>
+        <li>Especially useful when recursively lists</li>
+        <li>Let's see how this looks</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lisp HOFs</h2>
+    <ul>
+        <li>Analyze this code</li>
+        <li>You might <i>expect</i> this to work</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun my-map (list fn)
+    (labels ((my-map-inner (remaining)
+            ; when lets us handle nil recursive case easier
+            (when remaining
+                 (let ((new-value (fn (car remaining))))
+                    (cons 
+                        new-value 
+                        (my-map-inner (cdr remaining)))))))
+        (my-map-inner list)))
+
+(defun add-one (value)
+    (+ value 1))
+
+(format t "New List: ~S~%" (my-map '(1 2 3) add-one))</code></pre>
+</section>
+
+<section>
+    <h2>Lisp Namespacing</h2>
+    <ul>
+        <li>The "Global Namespace" is really two namespaces</li>
+        <li>One for functions, one for variables</li>
+        <li><code>(fn ...)</code> will lookup <code>fn</code> in function namespace</li>
+        <li><code>(funcall fn ...)</code> to fix this</li>
+        <li>Also, we'll use <code>#'</code> when we pass <code>add-one</code> to get the function itself</li>
+        <li>(Some dialects fix this behavior)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>HOFs in Lisp</h2>
+    <ul>
+        <li>Fixing that, you arrive at:</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun my-map (list fn)
+    (labels ((my-map-inner (remaining)
+            ; when lets us handle nil recursive case easier
+            (when remaining
+                ; funcall -> look up in variable namespace
+                (let ((new-value (funcall fn (car remaining))))
+                    (cons 
+                        new-value 
+                        (my-map-inner (cdr remaining)))))))
+        (my-map-inner list)))
+
+(defun add-one (value)
+    (+ value 1))
+
+; #' look up as function type
+(format t "New List: ~S~%" (my-map '(1 2 3) #'add-one))
+</code></pre>
+</section>
+
+<section>
+    <h2>Standard Library HOF</h2>
+    <ul>
+        <li>What we are really doing:</li>
+        <li>Mapping the <code>car</code> of the list</li>
+        <li>Through our function</li>
+        <li>Common usecase, standard library has a function for this</li>
+        <li><code>mapcar</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Map Car</h2>
+    <ul>
+        <li>Looks something like this:</li>
+        <li><code>mapcar</code> can also accept multiple lists</li>
+        <li>Parallelizes the application</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">
+(defun add-one (value)
+    (+ value 1))
+
+(defparameter *original-list* '(1 2 3))
+
+(let ((new-list (mapcar #'add-one *original-list*)))
+    (format t "New list was: ~S~%" new-list))
+
+</code></pre>
+</section>
+
+<section>
+    <h2>Map Car</h2>
+    <ul>
+        <li>We can use the <code>lambda</code> function if we don't want to <code>defun</code> globally</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">
+(defparameter *original-list* '(1 2 3))
+
+(let 
+    ((new-list 
+    (mapcar #'(lambda (value) (+ 1 value)) *original-list*)))
+        (format t "New list was: ~S~%" new-list))
+</code></pre>
+</section>
+
+<section>
+    <h2>Other HOFs in Lisp</h2>
+    <ul>
+        <li><code>mapcar</code> will get 90% there in most cases</li>
+        <li>A few others include:</li>
+        <li><code>maplist</code>: Like mapcar, but pass CDR each time</li>
+        <li><code>funcall</code>: Calls a function (which we already used</li>
+        <li><code>apply</code>: Like funcall, but unpack arguments</li>
+        <li><code>reduce</code>: Fold elements into a value</li>
+    </ul>
+</section>
+
+<section>
+    <h2>OOP HOF implementations</h2>
+    <ul>
+        <li>Such a useful construct, most OOP languages</li>
+        <li>Attempt to implement something like this</li>
+        <li>Take a brief look at how you might do something like this with objects</li>
+    </ul>
+</section>
+
+<section>
+    <h2>HOF OOP</h2>
+    <ul>
+        <li>Standard Library Provides "Functional Interfaces"</li>
+        <li>Just need to turn every HOF type into an interface</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-java" data-line-numbers="">interface Mappable {
+    public int apply(int i);
+}
+// use generics instead of ints
+public static List&lt;Integer&gt; map(List&lt;Integer&gt; list, Mappable m){
+    for(int i = 0; i &lt; list.size(); i ++){
+        int newValue = m.apply(
+            list.get(i)
+        );
+        list.set(newValue, i);
+    }
+    return list;
+}</code></pre>
+</section>
+
+
+<section>
+    <h2>Streams</h2>
+    <ul>
+        <li>In Java, you must convert Collection type into a "stream"</li>
+        <li>Apply HOFs (interfaces impls.) to that stream </li>
+        <li>Convert the stream back into a Collection</li>
+        <li>(This is secretly a FP function called a Monad)</li>
+        <li>Let's see it</li>
+    </ul>
+</section>
+
+<section>
+<pre class="move-up-2"><code class="language-java" data-line-numbers="">List&lt;String&gt; names = Arrays.asList(
+    "John", "Sarah", "Jack", "Emily"
+);
+List&lt;String&gt; result = new ArrayList&lt;&gt;();
+
+for (String name : names) {
+    if (name.startsWith("J")) {
+        result.add(name.toUpperCase());
+    }
+}
+System.out.println(result);
+</code></pre>
+<pre class="move-up-1"><code class="language-java" data-line-numbers=""> // transforms into this declarative version
+List&lt;String&gt; names = Arrays.asList(
+    "John", "Sarah", "Jack", "Emily"
+);
+
+List&lt;String&gt; result = names.stream()
+    .filter(name -&gt; name.startsWith("J"))
+    .map(String::toUpperCase) //wrap this method call in a lambda
+    .collect(Collectors.toList());
+
+System.out.println(result);</code></pre>
+
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>A function is higher-order if it:</li>
+        <li>Accepts a function as a parameter</li>
+        <li>Or returns a function (or both)</li>
+        <li>Native to languages with first-class functions</li>
+        <li><code>mapcar</code> is the most common one in Lisp</li>
+        <li>Not an idea exclusive to FP languages</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
