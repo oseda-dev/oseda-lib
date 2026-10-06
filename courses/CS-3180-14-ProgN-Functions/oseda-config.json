@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-14-ProgN-Functions",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-29T13:25:18.160302018Z",
+  "color": "#0000FF",
+  "description": "A discussion of CommonLisp functions that implicitly use the progn function ",
+  "license": "Apache-2.0"
+}

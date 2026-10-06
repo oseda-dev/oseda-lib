@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-16-Higher-Order-Functions",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-10-04T18:11:29.933157625Z",
+  "color": "#0000FF",
+  "description": "A discussion of higher order functions in Lisp and some OOP implementations",
+  "license": "Apache-2.0"
+}

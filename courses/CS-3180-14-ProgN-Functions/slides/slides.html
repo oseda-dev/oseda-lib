@@ -1,0 +1,297 @@
+<section>
+    <h1>ProgN + More Functions</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Global Namespace</h2>
+    <ul>
+        <li>Everything we have done so far</li>
+        <li>Existed in the global namespace</li>
+        <li>Access data/functions globally</li>
+        <li><code>defparamter, defun</code> etc</li>
+        <li>Let's build a program with better scoping</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Paradigms</h2>
+    <ul>
+        <li>Even in functional languages</li>
+        <li>A degree of imperativeness is sometimes necessary</li>
+        <li>We saw this before</li>
+        <li>If we just execute a Lisp file, it evaluates things sequentially</li>
+    </ul>
+</section>
+
+<section>
+    <h2>ProgN</h2>
+    <ul>
+        <li>If you've learned one thing, its that everything is a function</li>
+        <li>Sequential evaluation has also been functionalized</li>
+        <li><code>progn</code> function</li>
+        <li>Sequentially evaluates all of its arguments</li>
+        <li>Returns the last evaluation</li>
+    </ul>
+</section>
+
+<section>
+    <h2>ProgN</h2>
+    <ul>
+        <li><code>(read-line)</code> get's returned</li>
+        <li>Let's play around with that</li>
+    </ul>
+    <pre><code class="language-lisp">(progn 
+    (format t "Hello world~%")
+    (format t "My name is Bob~%")
+    (format t "What is your name?~%")
+    (finish-output)
+    (read-line))
+</code></pre>
+</section>
+
+<section>
+    <h2>Side Effects</h2>
+    <ul>
+        <li>ProgN is almost exclusively used for side effects</li>
+        <li>MUST opt-in if we want that behavior</li>
+        <li>Throw away any intermediate returns</li>
+        <li>Hopefully, they shouldn't have any, like a print</li>
+        <li>Pure Functions with no side-effects are the default</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Scoping</h2>
+    <ul>
+        <li>Your entire program is basically wrapped in <code>progn</code></li>
+        <li>Note that <code>defparameter</code> will still define globals</li>
+        <li>Haven't really "scoped" our values</li>
+        <li>Fix this later, but it's a start</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="">(progn 
+    (format t "What is your name?~%")
+    (finish-output)
+    (defparameter *name* (read-line)))
+
+(format t "Name: ~S~%" *name*)</code></pre>
+</section>
+
+<section>
+    <h2>Implicit ProgN</h2>
+    <ul>
+        <li>Many functions in Lisp give you an IMPLICIT <code>progn</code></li>
+        <li><code>defun</code> is one of these functions</li>
+        <li><code>if</code> is NOT</li>
+        <li>Let's see both of those</li>
+        <li><code>main</code> is generally impure, let's write one</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Main</h2>
+    <ul>
+        <li><code>defun</code> will still create global function</li>
+        <li>We'll just call main</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="">(defun square (value)
+    (format t "squaring value...~%")
+    (* value value))
+
+(defun main () 
+    (format t "Hello world~%")
+    (format t "4 squared is ~S~%" (square 4)))
+
+
+(main)
+
+    </code></pre>
+</section>
+
+<section>
+    <h2>When</h2>
+
+    <ul>
+        <li>Kind of like an if, but re-framed</li>
+        <li>When 1st argument is <code>non-nil</code>, evaluate the 2nd</li>
+        <li>Evaluate to <code>nil</code> otherwise</li>
+        <li>Implicit ProgN</li>
+    </ul>
+
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defun foo (x)
+    (when (> x 0)
+        (print "Positive")
+        (* x 2)))
+
+(format t "Value was: ~S~%" (foo 5))
+(format t "Value was: ~S~%" (foo -5))
+</code></pre>
+</section>
+
+<section>
+    <h2>Unless</h2>
+    
+    <ul>
+        <li>When 1st argument IS <code>nil</code>, evaluate the 2nd</li>
+        <li>Opposite of when</li>
+        <li>Implicit ProgN</li>
+        <li>Equivalent to <code>(when (not test) body)</code></li>
+    </ul>
+
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defun my-sqrt (value)
+    (unless (< value 0)
+        (print "square rooting number...~%")
+        (sqrt value)))
+
+(format t "Value was: ~S~%" (my-sqrt 5))
+(format t "Value was: ~S~%" (my-sqrt -5))</code></pre>
+</section>
+
+<section>
+    <h2>Cond</h2>
+    <ul>
+        <li>If-else-if-else block</li>
+        <li>This will always work</li>
+        <li>May not always want the jackhammer for the nail</li>
+        <li>Lazily evaluates all of its <code>test</code> forms</li>
+        <li>Each FULL FORM is one argument to <code>cond</code>, with a <code>progn</code></li>
+        <li>Let's see this</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Cond</h2>
+    <ul>
+        <li>Catch-all becomes <code>t</code></li>
+        <li>Each arg is of the form <code>(test body)</code></li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun get-letter-grade (score)
+    (cond 
+        ((>= score 90) "A")
+        ((>= score 80) "B")
+        ((>= score 70) "C")
+        (t "F")))
+
+(defun main ()
+    (format t "Your letter grade was ~S~%" 
+        (get-letter-grade 94))
+    (format t "Your letter grade was ~S~%" 
+        (get-letter-grade 35)))
+
+(main)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cond ProgN</h2>
+    <ul>
+        <li>ProgN here can complicate things</li>
+        <li>Formatting gets difficult</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">
+(defun get-letter-grade (score)
+    (cond 
+        ((>= score 90) (format t "Excellent~%")   "A")
+        ((>= score 80) (format t "Good Job~%")    "B")
+        ((>= score 70) (format t "...~%")         "C")
+        (t             (format t ":(~%")          "F")))
+
+(defun main ()
+    (format t "Your letter grade was ~S~%" 
+        (get-letter-grade 94))
+    (format t "Your letter grade was ~S~%" 
+        (get-letter-grade 35)))
+
+(main)</code></pre>
+</section>
+
+<section>
+    <h2>Let</h2>
+    <ul>
+        <li>Scoped Variables*, finally</li>
+        <li>Constant Name Bindings</li>
+        <li>Body of the let function -> becomes the scope of the variable</li>
+        <li>Implicit <code>progn</code></li>
+        <li>Returns the last value as a result</li>
+        <li>Start with some small examples</li>
+    </ul>    
+</section>
+
+<section>
+    <h2>Let</h2>
+    <ul>
+        <li>Pay close attention to the ()s</li>
+        <li>One of these ()s feels redundant</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">
+(defun get-letter-grade (score)
+    (cond 
+        ((>= score 90) (format t "Excellent~%")   "A")
+        ((>= score 80) (format t "Good Job~%")    "B")
+        ((>= score 70) (format t "...~%")         "C")
+        (t             (format t ":(~%")          "F")))
+
+(defun main ()
+    (let ((grade (get-letter-grade 97)))
+        (format t "Hi Bob~%")
+        (format t "You got the following grade: ~S~%" grade)))
+
+(main)
+    </code></pre>
+</section>
+
+<section>
+    <ul>
+        <li>You can actually define multiple variables</li>
+        <li>Parallel Binding -> The coolest feature of Lisp</li>
+        <li>Data must be mutually exclusive</li>
+        <li><code>name</code> doesn't rely on <code>grade</code></li>
+        <li>Use <code>let*</code> if you need that behavior</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun get-letter-grade (score)
+    (cond 
+        ((>= score 90) (format t "Excellent~%")   "A")
+        ((>= score 80) (format t "Good Job~%")    "B")
+        ((>= score 70) (format t "...~%")         "C")
+        (t             (format t ":(~%")          "F")))
+
+(defun main ()
+    (let ((grade (get-letter-grade 97))
+          (name "Bob"))
+        (format t "Hi ~S~%" name)
+        (format t "You got the following grade: ~S~%" grade)))
+
+(main)</code></pre>
+</section>
+
+<section>
+    <h2>SetQ</h2>
+    <ul>
+        <li>Evil imperative keyword</li>
+        <li>Update a local binding</li>
+        <li>Combine with <code>when</code> for a gaurd clause</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defun abs-square (value)
+    (when (< value 0)
+        (setq value (abs value)))
+    (* value value))
+
+(format t "Value was: ~S~%" (abs-square -5))
+(format t "Value was: ~S~%" (abs-square -3))
+(format t "Value was: ~S~%" (abs-square 2</code></pre>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Lisp is starting to get difficult</li>
+        <li>Need to practice this, it get's easier</li>
+        <li>Be mindful when you use an implicit <code>progn</code></li>
+        <li>All the functions we've discussed use it in some way</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
+

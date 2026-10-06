@@ -1,0 +1,317 @@
+<section>
+    <h1>Intro to Lisp</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Paradigms</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>We have discussed a few languages now:</li>
+            <li>Python, Java</li>
+            <li>JS, Rust, etc</li>
+            <li>Most are imperative</li>
+            <li>True for most languages you will use</li>
+        </ul>
+        <img src="paradigms.png" width="400">
+    </div>
+</section>
+
+<section>
+    <h2>Lisp!</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Functional Programming Language</li>
+            <li>Primary paradigm*</li>
+            <li>Much harder to learn</li>
+            <li>Fundamentally different mental model</li>
+            <li>Slow build up</li>
+        </ul>
+        <img src="lispIcon.png" width="300">
+    </div>
+</section>
+
+<section>
+    <h2>New Language</h2>
+    <ul>
+        <li>How to learn a new language?</li>
+        <li>Python doesn't count</li>
+        <li>Let's determine what we are working with</li>
+        <li>Before we start programming in it</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Complications</h2>
+    <ul>
+        <li>Lisp is really a family of languages</li>
+        <li>There are many flavors of Lisp</li>
+        <li>Created in 1958</li>
+        <li>Gone through many modernizations</li>
+        <li>How is this even defined?</li>
+        <li>How are languages defined in general</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Language Specifications</h2>
+    <ul>
+        <li>Most languages are actually not the executor</li>
+        <li>A language is just its specification</li>
+        <li>Usually a 100 pg. PDF file</li>
+        <li>Maintained by ISOs</li>
+        <li>Some have a "reference implementation"</li>
+        <li>"This impl. works as it should, build to that spec"</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Language Specifications</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Specifications are often made after the initial implementation</li>
+            <li>Many implementations of that standard</li>
+            <li>Each with their own quirks</li>
+        </ul>
+        <img src="JavaImplementations.png" width="500">
+    </div>
+</section>
+
+<section>
+    <h2>"Development Kit"</h2>
+    <ul>
+        <li>Overly complicated for Java</li>
+        <li>JDK: series of binaries</li>
+        <li>Some implement just pieces</li>
+        <li>Most languages: implementation of the executor</li>
+        <li>When implementations build off each other, we call that a "dialect" of the other language</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lisp Languages</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>Lisp Family</li>
+            <li>Not Implementations</li>
+            <li>Racket is a dialect of Scheme, etc</li>
+            <li>We will be using CommonLisp</li>
+        </ul>
+        <img src="LispSpecs.png">
+    </div>
+</section>
+
+<section>
+    <h2>Steel Bank CL</h2>
+    <ul>
+        <li>We will be using Steel Bank Common Lisp</li>
+        <li>Install from package managers (Windows users: check SBCL download)</li>
+        <li>FOSS CL implementation</li>
+        <li>The CL specification does not state how CL should be executed</li>
+        <li>Can either be compiled or interpreted</li>
+        <li>SBCL supports both*</li>
+    </ul>
+</section>
+
+<section>
+    <h2>SBCL</h2>
+    <ul>
+        <li><code>sbcl</code> will give us a REPL</li>
+        <li>REPL driven development</li>
+        <li>Most projects are not actually REPL based</li>
+        <li>Take a look at <code>lisp.sh</code> from your next lab</li>
+    </ul>
+</section>
+
+<section>
+    <h2><code>lisp.sh</code></h2>
+    <pre class="move-up-1"><code class="language-bash" data-line-numbers="-1|12-18|21-24|26-29|34-44|-1">#!/bin/bash
+
+# LISP execution script based on AUR package:
+# https://github.com/xyproto/lisp
+
+
+# Goal with this is to sort of eliminate the REPL feel for students
+# irl lisp programs are almost never ran as a REPL
+
+clear
+
+LISP_INTERPRETER=sbcl
+
+if ! command -v $LISP_INTERPRETER >/dev/null 2>&1; then
+    echo "sbcl could not be found"
+    echo "Please ensure it is installed before running"
+    exit 1
+fi
+
+
+if [ -z $1 ]; then
+    echo "Please provide a filename as the first argument"
+    exit 1
+fi
+
+if [ ! -f $1 ]; then
+    echo "Could not find the file named \"$1\""
+    exit 1
+fi
+
+# force sbcl to run in interpretter mode
+# this is 100% slower, but more in line with traditional lisp
+
+$LISP_INTERPRETER \
+--noinform \
+    --noprint \
+    --no-userinit \
+    --no-sysinit \
+    --disable-debugger \
+    --quit \
+    --eval '(setf sb-ext:*evaluator-mode* :interpret)' \
+    --load "$1" \
+    --end-toplevel-options
+    # this is not in the help menu, but is documented at https://linux.die.net/man/1/sbcl
+
+    </code></pre>
+</section>
+
+<section>
+    <h2><code>lisp.sh</code></h2>
+    <ul>
+        <li>Mostly to simplify the mental model</li>
+        <li>Lisp can be interpreted, but needs "macro expansion time"</li>
+        <li><code>./lisp.sh main.lisp</code></li>
+        <li>Instead of copy-pasting into a REPL</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lists</h2>
+    <ul>
+        <li><code>LISP</code> = <code>LIS</code>t <code>P</code>rocessor</li>
+        <li>EVERYTHING in Lisp is a list</li>
+        <li>The data AND the code</li>
+        <li>SBCL evaluates Lists</li>
+        <li>Dive into a Hello World</li>
+        <li>Including the set-up</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Running Lisp</h2>
+    <ul>
+        <li>I prefer <code>.lisp</code> extension</li>
+        <li>Also see <code>.lsp</code> or<code>.cl</code></li>
+        <li>Preferred setup:</li>
+        <pre><code class="language-bash"> MyProject
+├── lisp.sh
+└── src
+    └── Main.lisp
+        </code></pre>
+        <li><code class="language-bash">./lisp.sh src/Main.lisp</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Hello world</h2>
+    <ul>
+        <li>Parentheses are EXTREMELY important</li>
+        <li>Cannot use them wherever</li>
+        <li><code>format</code></li>
+        <li><code>t</code> for standard out</li>
+        <li><code>~%</code> for new line</li>
+    </ul>
+    <pre><code class="language-lisp">; semi-colon for comments :(
+; common lisp hello world
+(format t "Hello, world!~%")
+</code></pre>
+</section>
+
+<section>
+    <h2>Case Insensitivity</h2>
+    <ul>
+        <li>Casing doesn't matter in Lisp</li>
+        <li>Technically converts everything* to uppercase</li>
+        <li>I recommend lowercase</li>
+        <li>Make it easy on your syntax highlighter</li>
+    </ul>
+    <pre><code>
+(format t "Hello, world!~%")
+(FORMAT T "Hello, world!~%")
+(fOrMat T "Hello, world!~%")
+    </code></pre>
+</section>
+
+<section>
+    <h2>What's going on here?</h2>
+    <ul>
+        <li><code>t</code> is effectively a primitive type</li>
+        <li><code>t</code> and <code>nil</code> are the basic types</li>
+        <li>Most things are a list*</li>
+        <li>(Lisp actually has a much more interesting sub-typing system)</li>
+        <li>Lisp is strong and dynamically typed</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Prefix Notation</h2>
+    <ul>
+        <li>We commonly use <i>infix</i> notation</li>
+        <li>Operator is between values: </li>
+        <li><code>((1 * 3) + (2 + 2))</code></li>
+        <li>Lisp uses <i>prefix</i> notation:</li>
+        <li>Operator comes before the values</li>
+        <li><code>(+ (* 1 3) (+ 2 2))</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Code as Lists</h2>
+    <ul>
+        <li>Lisp code is a series of nested parentheses</li>
+        <li><code>~S</code> print in readable format</li> 
+        <li>Really pay attention to these parentheses</li>
+        <li>Cardinal sin of Lisp formatting: </li>
+        <li>"A line shall never consist of only parentheses" </li>
+    </ul>
+
+    <pre><code class="language-lisp">(format t "~S~%" 
+    (* (+ 1 3) 4))</code></pre>
+</section>
+
+<section>
+    <h2>Why???</h2>
+    <ul>
+        <li>Why on earth would you want this?</li>
+        <li>Less ambiguity:</li>
+        <li><code>8 / 2 ( 2 + 2)</code></li>
+        <li>All operators are functions</li>
+        <li>Much easier to parse</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Notes</h2>
+    <ul>
+        <li>Lisp doesn't really have reserved words</li>
+        <li>"Keywords" don't exist in the traditional sense</li>
+        <li>*Technically there are KEYWORDS, but those are loaded at runtime and not built into the spec.</li>
+        <li>Basically everything is a library function/macro</li>
+        <li>+, /, <, >, =</li>
+
+    </ul>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Lisp is a family of functional languages</li>
+        <li>CommonLisp is one specification</li>
+        <li>SBCL is the implementation</li>
+        <li>Lisp uses prefix notation</li>
+        <li>Basically everything is a function/macro</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions</h1>
+</section>
