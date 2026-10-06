@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-12-S-Expressions-Cons",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-22T12:07:12.881743092Z",
+  "color": "#0000FF",
+  "description": "Introduction to S-Expressions in Lisp, as well as common list processing functions",
+  "license": "Apache-2.0"
+}

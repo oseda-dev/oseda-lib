@@ -1,0 +1,276 @@
+<section>
+    <h1>S-Expressions + Cons</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Lisp Functions</h2>
+    <ul>
+        <li>We talked about how functions are called</li>
+        <li>Using <code>prefix</code> notation</li>
+        <li><code>(fn args...)</code></li>
+        <li>Consider this lisp code:</li>
+    </ul>
+    <pre><code class="language-lisp">
+(max 1 6)
+    </code></pre>
+</section>
+
+<section>
+    <h2>S-Expressions</h2>
+    <ul>
+        <li>All of Lisp code is made up of two parts</li>
+        <li>The "Literals"</li>
+        <li>The "Lists"</li>
+        <li>Call these two pieces together: S-Expressions</li>
+    </ul>
+    <pre><code class="language-lisp">
+    (max 1 6)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Atoms</h2>
+    <ul>
+        <li>Pieces of Lisp Code that evaluate to themselves</li>
+        <li><code>5</code> -> 5</li>
+        <li><code>"hello"</code> -> "hello"</li>
+        <li><code>'FOO</code> -> FOO</li>
+        <li>Even if FOO is a function, without a call, it evaluates to itself</li>
+        <li>You can test this in <code>sbcl</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lists</h2>
+    <ul>
+        <li>Defined via parentheses</li>
+        <li>Consists of Atoms OR other Lists</li>
+        <li>Outer S-Expression contains:</li>
+        <li><code>*</code> -> Atom</li>
+        <li><code>2</code> -> Atom</li>
+        <li><code>(...)</code> -> List</li>
+    </ul>
+    <pre><code class="language-lisp">
+    (* 2 (+ 3 4))
+    </code></pre>
+</section>
+
+<section>
+    <h2>S-Expressions</h2>
+    <div class="horizontal-container">
+        <ul>
+            <li>List is a series of Atoms or Lists</li>
+            <li>S-Expression is a series of atoms or list</li>
+            <li>An S-Expression is series of Atoms and S-Expressions</li>
+            <li>Defined <i>recursively</i></li>
+        </ul>
+        <img src="tree.png" width="250">
+    </div>
+    <br>
+    <br>
+    <div class="footer">https://en.wikipedia.org/wiki/S-expression</div>
+</section>
+
+<section>
+    <h2>List Execution</h2>
+    <ul>
+        <li>All the Lisp interpreter does is execute lists</li>
+        <li>The first value in a list is the function</li>
+        <li>Everything else is an argument</li>
+        <li>You CANNOT just put parentheses wherever</li>
+        <li>Could attempts to call a function called <code>1</code></li>
+        <pre><code class="language-lisp">(1)</code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Single Quote</h2>
+    <ul>
+        <li>Evalutes to the <code>quote</code> function</li>
+        <li>Tells the interpreter to "stop interpretting"</li>
+        <li>Treat the expression as data, instead of code</li>
+        <li>Often useful for literals</li>
+        <li>Note: these are not "string" literals</li>
+    </ul>
+    <pre><code class="language-lisp"> (A B C)  ; -> Call A(B, C)
+'(A B C)  ; -> Returns to me the list containing (A B C)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Usefulness</h2>
+    <ul>
+        <li>Benefits of this will come later</li>
+        <li>Helpful to know your code is in an easily parsable format</li>
+        <li>Much more structured than most languages</li>
+        <li>Lists (S-Expressions) are the fundamental data structure of your code</li>
+        <li>What other language has code as a DS like this?</li>
+        <li>Let's look at how to manipulate lists</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Creating Lists</h2>
+    <ul>
+        <li>Construct a node via:</li>
+        <li><code>(cons val1 val2)</code></li>
+        <li>A node consists of two pieces</li>
+        <li>Returns a cons cell</li>
+        <li>Denoted as <code>(THING1 . THING2)</code></li>
+        <pre><code class="language-lisp">
+(cons 'ALICE 'BOB) ; (ALICE . BOB)
+(cons 1 2) ; (1 . 2)
+        </code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Linked Lists</h2>
+    <ul>
+        <li>Use cons cells to make singly-linked lists</li>
+        <li>Really, all your Lisp IS a singly linked list literal</li>
+        <li>(This is part of why Lisp is slow)</li>
+        <li>Chain these values together</li>
+        <li>We will need to use <code>nil</code></li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="-1|1|2|3|4|-1">    (cons 'ALICE nil)
+    (cons 'ALICE (cons 'BOB nil))
+    (cons 'ALICE (cons 'BOB (cons 'CHARLIE nil))) 
+    ; what do these return?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Graphs</h2>
+    <ul>
+        <li>You are not limited to lists</li>
+        <li>Just directed graphs</li>
+        <li>Spend time visualizing what these are</li>
+        <li>See what they print/evaluate to</li>
+        <li>Work backwards</li>
+    </ul>
+
+    <pre><code>
+    (cons (cons 'ALICE 'BOB) (cons 'CHARLIE 'DEREK))
+    </code></pre>
+
+
+</section>
+
+
+<section>
+    <h2>Why?</h2>
+    <ul>
+        <li>Why does:</li>
+        <li><code>(cons (cons 'ALICE 'BOB) (cons 'CHARLIE 'DEREK))</code></li>
+        <li>Evaluate to:</li>
+        <li><code>((ALICE . BOB) CHARLIE . DEREK)</code></li>
+        <li>A singly linked list will print normally</li>
+        <li>Expects that notation</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Dissection</h2>
+    <ul>
+        <li>Now that we can create them</li>
+        <li>Talk about how to pull them apart</li>
+        <li>Since each cell is two pieces</li>
+        <li>Lisp provides us two functions to pull them apart</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CAR Function</h2>
+    <ul>
+        <li>Returns the first element from a list</li>
+        <li>Returns this as an element</li>
+        <li>Whatever that element (list or not) happens to be</li>
+        <li>Consider nested lists</li>
+    </ul>
+
+    <pre><code class="language-lisp" data-line-numbers="-1|1|2|3|4|-1">    (car '(A B C))              ; A
+    (car '((A B) C))            ; (A B)
+    (car '((A B C) Z))          ; ?
+    (car (car '((A B C) Z)))    ; ?
+    </code></pre>
+</section>
+
+<section>
+    <h2>CDR Function</h2>
+    <ul>
+        <li>Returns a list containing everything but the first element</li>
+        <li>ALWAYS returns as a list</li>
+        <li>Even when the "rest" is not</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="-1|1|2|3|4|-1">    (CDR '(A B C))     ; (B C)
+    (CDR '(A B))       ; (B)
+    (CDR (cons 'A (cons 'B (cons 'C nil)))) ; ?
+    (CDR (cons 'A (cons 'B (cons 'C 'D))))  ; ?
+    </code></pre>
+</section>
+
+
+<section>
+    <h2>Combine CAR, CDR, CONS</h2>
+    <ul>
+        <li>Evaluate some expressions</li>
+    </ul>
+    <pre><code class="language-lisp">(CDR (CAR (CONS 
+        (CONS 'A 'B) 
+        (CONS 'C 'D)))) ; ?
+    </code></pre>
+
+    <pre class="fragment move-up-2"><code class="language-lisp">(CAR (CDR (CDR 
+            (CONS 'A (CONS 'B (CONS 'C nil)))))) ; ?</code></pre>
+    <br>
+    <ul>
+        <li class="fragment">Note: "last" CAR turns (C) into C</li>
+    </ul>
+</section>
+
+<section>
+    <h2>LIST Function</h2>
+    <ul>
+        <li>Returns a (singly-linked) list of the elements</li>
+        <li>Shorthand for CONS</li>
+        <li>Evaluate all of its arguments</li>
+        <li>(unlike a quote)</li>
+    </ul>
+    <pre><code class="language-lisp">    (LIST 1 2 3)                ; (1 2 3)
+    (LIST (+ 1 2) (* 2 4) 9)    ; (3 8 9) 
+    (LIST (+ 1 1) (* 2 2) 'FOO) ; (2 4 FOO) 
+    </code></pre>
+</section>
+
+<section>
+    <!-- APPEND function -->
+    <h2>APPEND Function</h2>
+    <ul>
+        <li>Merges multiple lists into one</li>
+        <li>Generally, expects all list elements</li>
+        <li>Move the pointers around accordingly</li>
+        <li>Careful with this</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers="-1|1|2|3|4|-1">    (APPEND '(1 2) '(3 4))          ; (1 2 3 4) 
+    (APPEND '(1 2) '(3 4) '(5 6))   ; (1 2 3 4 5 6)
+    (APPEND '(A B C) 'D)            ; (A B C . D)
+    (APPEND '(A B C) (LIST 'D))     ; (A B C D) 
+    </code></pre>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Lisp is built through S-Expression</li>
+        <li>CONS for cell construction</li>
+        <li>CAR and CDR to pull them apart</li>
+        <li>LIST and APPEND for utility functions</li>
+    </ul>
+
+</section>
+
+<section>
+    <h1>Questions</h1>
+</section>
