@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-15-Lisp-Recursion",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-09-30T19:55:38.859172653Z",
+  "color": "#0000FF",
+  "description": "A discussion of scoped functions (both mutual and non-mutual) in Lisp, with a touch of Tail Call Optimization",
+  "license": "Apache-2.0"
+}

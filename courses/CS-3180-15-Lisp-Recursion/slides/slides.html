@@ -1,0 +1,237 @@
+
+<section>
+    <h1>Lisp Recursion</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Functional Programming</h2>
+    <ul>
+        <li>List is built for functional programming</li>
+        <li>Loops are inherently procedural</li>
+        <li>Lisp has "loop" style functions</li>
+        <li>That we will not cover</li>
+        <li>Everything is done via recursion</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Recursion</h2>
+    <ul>
+        <li>Do some simple recursive problem</li>
+        <li>Recursion takes a few forms:</li>
+        <li>Recursive Definitions (e.g. math problems)</li>
+        <li>Recursing over linear structures (e.g.<code>car</code>, <code>cdr</code>)</li>
+        <li>Recursing over self-similar structures (e.g. trees)</li>
+        <li class="fragment">We won't do a lot of this last one</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Factorial</h2>
+    <ul>
+        <li>You have likely seen factorial done before</li>
+        <li>Good practice to see</li>
+        <li>Get into the recursive mindset</li>
+    </ul>
+    <pre><code class="language-lisp" data-line-numbers>(defun factorial (n)
+  (if (<= n 1)
+      1
+      (* n (factorial (- n 1)))))
+
+(format t "N! was ~S~%" (factorial 3))</code></pre>
+</section>
+
+<section>
+    <h2>Get Penultimate</h2>
+    <ul>
+        <li>Missing some edge cases</li>
+        <li>No explicit returns</li>
+        <li>Can make guard clauses harder</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defun get-penultimate (s)
+    (let ((cur (car s)))
+        (if (null (cdr (cdr s)))
+            cur
+            (get-penultimate (cdr s)))))
+
+
+(format t "penultimate was ~S~%" (get-penultimate '(ALICE BOB CHARLIE DEREK ELI)))</code></pre>
+</section>
+
+<section>
+    <h2>Defun Namespace</h2>
+    <ul>
+        <li>Consider the namespace here</li>
+        <li><code>factorial</code> can call <code>factorial</code></li>
+        <li><code>factorial</code> is defined both within AND outside the function</li>
+        <li>Keep this scope in mind as we move forward</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Flet</h2>
+    <ul>
+        <li>Allows you to scope functions</li>
+        <li>First parameters is ALL your functions you want to scope</li>
+        <li>Body is the scope that allows you to call those functions</li>
+        <li>CANNOT be recursive</li>
+        <li>CANNOT call each other</li>
+        <pre><code class="language-lisp">
+(flet (functions...) (code that calls those functions))        
+</code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Flet</h2>
+    <ul>
+        <li>Entire form evaluates to the body</li>
+        <li>Which calls your local functions</li>
+    </ul>
+    <pre class="move-up-1"><code data-line-numbers="" class="language-lisp">(format t "~S~%" 
+  (flet ((double (value) 
+         (* value 2))
+       (square (value) 
+         (* value value))
+        (triple (value)
+            (* value value value)))
+  (triple (double (square 3)))))</code></pre>
+</section>
+
+<section>
+    <h2>Labels</h2>
+    <ul>
+        <li>Same as <code>flet</code></li>
+        <li>Except the functions can be recursive</li>
+        <li>They can also call each other</li>
+        <li>Often just used for simple recursive functions</li>
+
+<pre><code class="language-lisp" data-line-numbers="">(labels ((factorial (n)
+           (if (<= n 1)
+               1
+               (* n (factorial (- n 1))))))
+  (factorial 5))</code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Labels</h2>
+    <ul>
+        <li>Canonical example for labels</li>
+        <li>You'll likely need this on your project</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun parity (value)
+  (labels ((is-even (x)
+             (if (zerop x)
+                 t
+                 (is-odd (- x 1))))
+           (is-odd (x)
+             (if (zerop x)
+                 nil
+                 (is-even (- x 1)))))
+    (if (is-even value)
+        'even
+        'odd)))
+
+(format t "~S~%" (parity 9))
+</code></pre>
+</section>
+
+<section>
+    <h2>Tail Calls</h2>
+    <ul>
+        <li>Recursion is expensive</li>
+        <li>Every new call -> new stack frame</li>
+        <li>Load all the data each time</li>
+        <li>In most functional languages, some additional optimizations occur</li>
+        <li>Under specific conditions</li>
+        <li>Let's start in a non-FP language</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Tail Calls</h2>
+    <ul>
+        <li>Javascript Example</li>
+        <li>The last thing this function does is wait for <code>factorial</code> to finish</li>
+        <li>EVERY stack frame must resolve before we return</li>
+        <pre><code class="language-javascript" data-line-numbers="">function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+</code></pre>
+    </ul>
+</section>
+
+<section>
+    <h2>Tail Calls</h2>
+    <ul>
+        <li>If the LAST thing the function did</li>
+        <li>Was recursive call</li>
+        <li>We wouldn't need to return address of the previous function</li>
+        <li>We wouldn't have to wait</li>
+        <li>We would need a way to pass all the work forward</li>
+        <li>Commonly done via a parameter</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Tail Calls</h2>
+    <ul>
+        <li>VERY last thing we do is a recursive call</li>
+        <li>Executor can re-use the same stack frame</li>
+        <li>New parameter becomes previous return value</li>
+        <li>Make recursion as fast as iteration</li>
+    </ul>
+    <pre><code class="language-javascript" data-line-numbers="">function factorial(n, accumulator = 1) {
+  if (n === 0) return accumulator;
+  return factorial(n - 1, n * accumulator); // tail call
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Tail Calls in Lisp</h2>
+
+    <ul>
+        <li>This idea is critical for writing fast Lisp code</li>
+        <li>Prefer tail calls if possible</li>
+        <li>Harder to visualize</li>
+        <li>(<code>&optional</code> is special form that allows optional + default params)</li>
+        <li>Porting the code, you get something like this:</li>
+    </ul>
+    <pre class="move-up-2"><code class="language-lisp" data-line-numbers="">(defun factorial (n &optional (acc 1))
+  (if (= n 0)
+      acc
+      (factorial (- n 1) (* n acc))))</code></pre>
+</section>
+
+
+<section>
+    <h2>TCO in Lisp</h2>
+    <ul>
+        <li>TCO is not actually defined in the CommonLisp spec</li>
+        <li>Some dialects like Scheme require it</li>
+        <li>Needs enabled to require it</li>
+        <li>Done within the <code>defun</code></li>
+        <li>(first argument to <code>progn
+</code></li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp">(declare (optimize (speed 3) (debug 0)))</code></pre>
+</section>
+
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Functions are a little more complicated than just <code>defun</code></li>
+        <li>Scope function(s) with <code>flet</code></li>
+        <li>Use <code>labels</code> if you need them to see/call each other</li>
+        <li>Tail Call Optimization allows executors to reuse the last stack frame</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>
