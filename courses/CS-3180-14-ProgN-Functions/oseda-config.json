@@ -6,7 +6,7 @@
     "Engineering",
     "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-29T13:25:18.160302018Z",
+  "last_updated": "2026-10-06T21:35:14.756947129Z",
   "color": "#0000FF",
   "description": "A discussion of CommonLisp functions that implicitly use the progn function ",
   "license": "Apache-2.0"
