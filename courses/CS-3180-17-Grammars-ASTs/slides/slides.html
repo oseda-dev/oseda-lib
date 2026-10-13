@@ -1,0 +1,247 @@
+<section>
+    <h1>Grammars and ASTs</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Lisp</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Lisp is a very simple language (to parse)</li>
+            <li>Complexity arises out of it</li>
+            <li>We'll spend today talking about <i>how</i> languages are parsed</li>
+            <li>Deeper knowledge of Lisp opens the door to more complex features</li>
+        </ul>
+        <div style="width: 200px; height: 200px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div style="width: 200px; height: 200px; border: 2px dashed #bd93f9; border-radius: 50%; animation: pulse 4s infinite ease-in-out; position: absolute; box-sizing: border-box;"></div>
+            <div style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(189, 147, 249, 0.4) 0%, transparent 70%); border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                <svg viewBox="0 0 100 100" style="width: 100px; height: 100px; overflow: visible;">
+                    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="100">🖥️</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Language Parsing</h2>
+    <ul>
+        <li>When an executor ingest a source</li>
+        <li>Its fundamentally just a string parser</li>
+        <li>How do you usually parse strings?</li>
+        <li class="fragment">Sub-strings?</li>
+        <li class="fragment">Split?</li>
+        <li class="fragment">Regex!!!!!!</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Regex</h2>
+    <div class="horizontal-container">
+
+        <ul>
+            <li>Talk about regex in terms of "matches</li>
+            <li>This string is "accepted"</li>
+            <li>This string is "not accepted"</li>
+        </ul>
+        <div>
+
+            <pre><code class="language-bash"># \s: any lowercase
+# \S: any lowercase
+# +: 1 or more time (* for 0) 
+[\s\S]+@wright.edu</code></pre>
+            <pre><code class="language-bash">reese.hatfield@wright.edu</code></pre>
+            <pre><code class="language-bash"># random-non-email-fail</code></pre>
+            <pre><code class="language-bash">smith.2@wright.edu</code></pre>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Regex</h2>
+    <ul>
+        <li>You can parse a LOT of complex things with regex</li>
+        <li>Infamous SO post</li>
+        <li>But it has its limitations</li>
+        <li class="fragment">It's ugly</li>
+        <li class="fragment">It's hard to maintain</li>
+        <li class="fragment">There are simple strings it CANNOT parse</li>
+    </ul>
+    <p class="footer">https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression</p>
+</section>
+
+<section>
+    <h2>Regex Failures</h2>
+    <ul>
+        <li>Programming languages often have nested components</li>
+        <li><code>&lt; and &gt;</code> -> SGML languages</il>
+        <li><code>( and ) </code> -> Lisp Languages</li>
+        <li><code>{ and } </code> -> C-style languages</li>
+        <li>Mix these, but they must ALWAYS match</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Regex Parsing</h2>
+    <div class="horizontal-container">    
+        <ul>
+            <li>Consider a simplest possible example:</li>
+            <li>Detect matching parentheses</li>
+            <li>How would you do this with regex?</li>
+            <li>Regex can't "remember" how many parentheses came before</li>
+            <li>Limitation of state machines</li>
+        </ul>
+        <div>
+            <pre><code class="">((()())) # accept</code></pre>
+            <pre><code class="">(((() # fail</code></pre>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Better than Regex</h2>
+    <ul>
+        <li>Syntax is more expressive than regular languages</li>
+        <li>We need something more advanced than Regex</li>
+        <li>(Preferably more than a PDA)</li>
+        <li>Enter the (Context-Free) Grammar</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Context Free Grammars (CFGs)</h2>
+    <ul>
+        <li>A CFG is defined as a 4-tuple</li>
+        <li>V: Variables (non-terminal placeholders)</li>
+        <li>T: Terminals (concrete strings)</li>
+        <li>P: Productions (replacement mappings from Variables to Variables/Terminals)</li>
+        <li>S: Start (A beginning for strings to start deriving)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CFGs</h2>
+    <ul>
+        <li>Easier to see an example of</li>
+        <li>V = <code>{ S }</code></li>
+        <li>T = <code>EMPTY_STRING</code></li>
+        <li>P = <code>{ S -> (S)S | EMPTY_STRING } </code></li>
+        <li>S = <code>S</code></li>
+        <li>Start with S, replace S with production rules</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>CFG Derivations</h2>
+    <ul>
+        <li>Using that grammar let's test some things</li>
+        <li>P = <code>{ S -> (S)S | EMPTY_STRING } </code></li>
+        <li><code>(((()())))</code></li>
+        <li><code>(((()()</code></li>
+        <li>Proving this is much trickier</li>
+        <li>Many formal definitions of this (we're skipping)</li>
+        <li>Let's look at one more slightly bigger example</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CFG Continued</h2>
+    <ul>
+        <li>What "language" does this accept?</li>
+        <li>V = <code>{ S, P }</code></li>
+        <li>T = <code>{0, 1}</code></li>
+        <li>P = <code> S -> 0P | EMPTY_STRING </code></li>
+        <li><code>&nbsp;&nbsp; P -> S11 </code></li>
+        <li>S = <code>S</code></li>
+        <li class="fragment">Any amount of 0s, followed by twice that many 1s</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lisp's Grammar</h2>
+    <ul>
+        <li>Very simple</li>
+        <li>"Backus-Naur Form" is a grammar "notation" that makes this easy to see</li>
+        <li>Mix of Regex (*, +, etc) with formal CFG</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-bash">1. s-expr  ::= atom | list
+2. list   ::= "(" s-expr* ")"</code></pre>
+    <ul>
+        <li>Procedural languages have more complex grammars</li>
+        <li>When you go on to parse Lisp, this will be useful</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Parsing</h2>
+    <ul>
+        <li>Once the rules are defined</li>
+        <li>Source is "lexed" into tokens/symbols (!)</li>
+        <li>Symbols are then parsed into a tree</li>
+        <li>Production rules in the grammar</li>
+        <li>Map directly to nodes in the tree</li>
+        <li>Terminals map to leaf nodes</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Syntax Trees</h2>
+    <ul>
+        <li>Concrete Syntax Trees represent the raw source</li>
+        <li>Usually converted to an Abstract Syntax Tree</li>
+        <li>(dropping non-essential information like {, }, ;, etc)</li>
+        <li>Optimizations usually occur at the AST level</li>
+    </ul>
+</section>
+
+<section>
+    <h2>AST example</h2>
+    
+    <ul>
+        <li>Euclidean Algorithm</li>
+        <li>Straight from Wikipedia</li>
+    </ul>
+    <div class="horizontal-container">
+        <pre><code data-line-numbers="" class="language-python">while b != 0:
+    if a > b:
+        a := a - b
+    else:
+        b := b - a
+return a
+        </code></pre>
+        <img class="move-up-3" src="ast.png" width="400">
+    </div>
+</section>
+
+<section>
+    <h2>Execution</h2>
+    <ul>
+        <li>Once you have a syntax tree, you can start parsing the code</li>
+        <li>Walk the AST (pre-order or post-order)</li>
+        <li>Simple AST walking is slow, but it IS how CommonLisp handles this</li>
+        <li>Each Node is a <code>cons</code> cell</li>
+        <li>You could compile into a lower representation</li>
+        <li>Or attempt to optimize AST walking</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>This is a generalized process</li>
+        <li>Most languages tweaks a few ideas about how parsing/execution works</li>
+        <li>ALL* of them at least need:</li>
+        <li class="fragment">Lexed into tokens/symbols</li>
+        <li class="fragment">Built into an AST</li>
+        <li class="fragment">Executed (at some level)</li>
+        <li>"Symbols step" will be important for next time</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions</h1>
+</section>
