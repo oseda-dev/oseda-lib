@@ -6,7 +6,7 @@
     "Education",
     "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-15T14:27:09.255594035Z",
+  "last_updated": "2026-10-06T21:32:28.446615723Z",
   "color": "#000080",
   "description": "A discussion of dynamic code execution with eval() and compiler optimizations.",
   "license": "Apache-2.0"

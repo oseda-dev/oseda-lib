@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-17-Grammars-ASTs",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-10-11T17:46:02.343933547Z",
+  "color": "#0000FF",
+  "description": "A gentle introduction to language grammars and syntax trees.",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,364 @@
+<section>
+    <h1>Macros + Homoiconicity</h1>
+    <h2>CS-3180</h2>
+</section>
+
+<section>
+    <h2>Macros</h2>
+    <ul>
+        <li>Macros are just code that writes code</li>
+        <li>Usually we think about code compiling into a lower level</li>
+        <li>A type of <i>metaprogramming</i></li>
+        <li>Where a program can treat programs as data</li>
+        <li>Supported in: Lisp, Rust, C/++, most ASM</li>
+        <li>Unsupported in: Java, Python, JS, etc</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Expansion</h2>
+    <ul>
+        <li>Macros are code that <i>expand</i> into other code</li>
+        <li>Expansions must be completed prior to execution</li>
+        <li>Call this "Macro Expansion Time"</li>
+    </ul>
+    <img class="move-up-1" src="ExecutorProcess.png">
+</section>
+
+<section>
+    <h2>Types of Macros</h2>
+    <ul>
+        <li>Two* main types of macros:</li>
+        <li><i>Textual Macros</i></li>
+        <li>Much simpler</li>
+        <li><i>Procedural Macros</i></li>
+        <li>Much more rich</li>
+        <li>Take a look at both types today</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Textual Macros</h2>
+    <ul>
+        <li>Map a pattern to a predefined set of characters</li>
+        <li>Text expansion via copy-paste</li>
+        <li>Most commonly seen in C and C++</li>
+        <li>Define a simple constants via <code>define</code></li>
+        <li># for a <i>preprocessor directive</i></li>
+    </ul>
+
+    <pre><code class="language-c">#define NAME value</code></pre>
+    
+</section>
+
+<section>
+    <h2>Textual Macros</h2>
+    <ul>
+        <li>Every reference to <code>PI</code> gets <code>3.1415</code> copy-pasted into it</li>
+        <li>(C devs call this an object-like macro 🙄)</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-c">#include &lt;stdio.h>
+#define PI 3.14159
+// pre-expansion main 
+int main() {
+    float radius = 5.0;
+    float area = PI * radius * radius;
+
+    printf("Area of the circle: %.2f\n", area);
+    return 0;
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Textual Macros</h2>
+    <ul>
+        <li><code>PI</code> has been replaced</li>
+        <li>Constant Propagation!</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-c">#include &lt;stdio.h>
+#define PI 3.14159
+// post-expansion main 
+int main() {
+    float radius = 5.0;
+    float area = 3.1415 * radius * radius;
+
+    printf("Area of the circle: %.2f\n", area);
+    return 0;
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Textual Macro Arguments</h2>
+    <ul>
+        <li>Textual macros can often take arguments</li>
+        <li>This allowed them to act like inline functions</li>
+        <li>But it is not actually a function</li>
+        <li>Just a macro with a parameter</li>
+        <li>Let's see that:</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Function-Like Macro</h2>
+    <ul>
+        <li>Still a copy-paste (no function calling)</li>
+        <li>(C devs call these function-like macros)</li>
+    </ul>
+<pre class="move-up-1"><code class="language-c">#include &lt;stdio.h>
+
+#define SQUARE(x) ((x) * (x))
+//pre-expansion main
+int main() {
+    int num = 5;
+    int squaredNum = SQUARE(num);
+
+    printf("Square of 5: %d\n", squaredNum); // 25    
+    
+    return 0;
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Function-Like Macro</h2>
+    <ul>
+        <li>Convention is to put everything in parentheses</li>
+        <li>Help reduce bugs in replacement</li>
+    </ul>
+<pre class="move-up-1"><code class="language-c">#include &lt;stdio.h>
+
+#define SQUARE(x) ((x) * (x))
+//post-expansion main
+int main() {
+    int num = 5;
+    int squaredNum = ((num) * (num));
+
+    printf("Square of 5: %d\n", squaredNum); // 25    
+    
+    return 0;
+}
+</code></pre>
+</section>
+
+<section>
+    <h2>Limitations</h2>
+    <ul>
+        <li>Find-Replace is a useful idea</li>
+        <li>Adds a layer of complexity to programs</li>
+        <li>Copy-Paste is a very limited process</li>
+        <li>Let's really dive into what macros can do beyond this</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Procedural Macros</h2>
+    <ul>
+        <li>Proc Macros: Operate <i>directly on the AST</i></li>
+        <li>In Lisp, your code basically just is already an AST</li>
+        <li>Features comes for free</li>
+        <li>Enable much richer metaprogramming than simple replacement</li>
+        <li>Terrible name ("Procedural" comes from "Procedures/Subroutines")</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Quasi-Quoting</h2>
+    <ul>
+        <li>To write richer macros, we need a way of separating:</li>
+        <li>Code we want to take the value of</li>
+        <li>Code we want to replace directly</li>
+        <li>So we can properly mix them</li>
+        <li>Enter the <code>quasiquote</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Quasi-Quoting</h2>
+    <ul>
+        <li>The regular quote <code>'</code> expands to <code>quote</code></li>
+        <li>Allowed us to prevent evaluation, mostly to pass literals around</li>
+        <li>The backtick <code>`</code> expands <code>quasiquote</code></li>
+        <li>Works like <code>quote</code>, but data be <i>unquoted</i> later if needed</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Quasi-Quoting</h2>
+    <ul>
+        <li>The backtick <code>`</code> un-evaluates</li>
+        <li>The comma <code>,</code> re-evaluates </li>
+        <li>Turns evaluation back on for whatever its in front of</li>
+        <li>Return a literal list via <code>`</code></li>
+        <li>But evaluate <code>user</code> (get its value)</li>
+    </ul>
+
+    <pre class="move-up-1"><code class="language-lisp">(let ((user "Reese"))
+  `("hello" ,user)) ; ("hello" "Reese")</code></pre>
+</section>
+
+<section>
+    <h2>Splicing</h2>
+    <ul>
+        <li>Data that you want to evaluate</li>
+        <li>is often given in list form</li>
+        <li>You can "unpack" it from a list form using <code>,@</code></li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp">(let ((value '(2 3)))
+    `(1 ,value 4)) ; (1 (2 3) 4)
+
+(let ((value '(2 3)))
+    `(1 ,@value 4)) ; (1 2 3 4)</code></pre>
+
+</section>
+
+<!-- simple macro -->
+<!-- greet? -->
+<section>
+    <h2>Lisp Macros</h2>
+    <ul>
+        <li>With that separation, we can start writing macros</li>
+        <li><code>defmacro</code> function</li>
+        <li><code>(greet "Reese")</code> gets expanded before evaluation</li>
+    </ul>
+
+    <pre><code class="language-lisp" data-line-numbers="">(defmacro greet (name)
+  `(format t "Hello, ~a!~%" ',name))
+
+(greet "Reese")
+    </code></pre>
+</section>
+
+<!-- small example with &body -->
+
+<section>
+    <h2>Lisp Macros</h2>
+    <ul>
+        <li>We can use the <code>&body</code> construct</li>
+        <li>Wraps all remaining arguments in a list</li>
+        <li><code>with-...</code> is a very common macro pattern</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defmacro with-logging (&body body)
+  `(progn
+     (format t "Starting code block...~%")
+     ,@body ; unpack body, so we don't execute as a list
+     (format t "Finished code block!~%")))
+
+(with-logging 
+    (let ((name "Reese"))
+        (format t "Hi ~S~%" name)))
+
+</code></pre>
+</section>
+
+<section>
+    <h2>Macro Expansion</h2>
+    <ul>
+        <li><code>macroexpand-1</code> function to see what a macro expands to</li>
+        <li>(<code>macroexpand</code> was already taken by std. lib.)</li>
+        <li>Useful for demo, not really for actual code</li>
+        <li>Need a quote so it doesn't evaluate it</li>
+    </ul>
+    <pre class="move-up-1"><code class="language-lisp">(format t "Macro expanded to ~S~%"
+    (macroexpand-1 '(greet "Reese")))
+</code></pre>
+
+</section>
+
+<!-- write a mywhen -->
+<!-- write a my-while -->
+
+<section>
+    <h2>Macros Simplification</h2>
+    <ul>
+        <li>That's cool</li>
+        <li>How would you do this with pure textual macros?</li>
+        <li>Wrap your code in a lambda?</li>
+        <li>Pass higher order functions, <code>funcall</code> later</li>
+        <li>Macros allow for native support for things without needing to do that</li>
+        <li>Let's see two more examples</li>
+    </ul>
+</section>
+
+<section>
+    <h2>My-When</h2>
+    <ul>
+        <li>Many things in Lisp are secretly macros </li>
+        <li>Including <code>when</code>, lets write it!</li>
+    </ul>
+<pre class="move-up-1"><code class="language-lisp" data-line-numbers="">; test is a specific arg
+; all other args are collected a (LIST ...) body
+(defmacro my-when (test &body body)
+  `(if ,test
+       (progn
+         ,@body)))
+
+(let ((input (read)))
+    (my-when (eq input 'TRUE)
+        (format t "You entered true")))
+
+</code></pre>
+
+</section>
+
+<section>
+    <h2>While</h2>
+    <ul>
+        <li>Macros let you re-invent imperative paradigms</li>
+        <li>In a functional way, lets write a <code>while</code></li>
+    </ul>
+
+    <pre class="move-up-1"><code class="language-lisp" data-line-numbers="">(defmacro while (test &body body)
+    `(if ,test
+        (progn
+            ,@body
+            ; while expends body as list args
+            ; so we still need an unpack
+            (while ,test ,@body))
+        nil)) ; when test fails, evaluate to nil ;-;
+
+(let ((i 0))
+    (while (< i 10)
+        (format t "i was: ~S~%" i)
+        (setf i (+ i 1))))</code></pre>
+</section>
+
+<section>
+    <h2>Homoiconicity</h2>
+    <ul>
+        <li>Lisp can only get away this because code and data</li>
+        <li><i>share the same representation</i></li>
+        <li>Lisp Data = Cons Cells</li>
+        <li>Lisp Code = Cons Cells in the AST</li>
+        <li>This property is known as <i>homoiconicity</i></li>
+        <li>Mostly unique to Lisp</li> 
+        <li>Some languages can encode code as data via other methods</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Lisp Executor</h2>
+    <ul>
+        <li>Lisp specification doesn't state whether:</li>
+        <li>Lisp should be compiled</li>
+        <li>or Lisp should be interpreted</li>
+        <li>Just that it needs a <i>macro-expansion time</i></li>
+        <li>Usually implemented via a compiler</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Summary</h2>
+    <ul>
+        <li>Macros are code that write code</li>
+        <li>Simple textual macros are mostly find+replace</li>
+        <li>Some can even take arguments</li>
+        <li>Procedural macros are much more powerful</li>
+        <li>Accomplish this by directly changing the AST</li>
+    </ul>
+</section>
+
+<section>
+    <h1>Questions?</h1>
+</section>

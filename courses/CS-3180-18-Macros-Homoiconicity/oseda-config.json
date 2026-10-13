@@ -1,0 +1,13 @@
+{
+  "title": "CS-3180-18-Macros-Homoiconicity",
+  "author": "ReeseHatfield",
+  "tags": [
+    "ComputerScience",
+    "Engineering",
+    "WSU-CS-3180"
+  ],
+  "last_updated": "2026-10-12T17:31:29.340102865Z",
+  "color": "#0000FF",
+  "description": "An introduction to macros, their different types, and their implementations in C and CommonLisp",
+  "license": "Apache-2.0"
+}
