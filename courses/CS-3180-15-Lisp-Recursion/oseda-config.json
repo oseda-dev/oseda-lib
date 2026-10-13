@@ -6,7 +6,7 @@
     "Engineering",
     "WSU-CS-3180"
   ],
-  "last_updated": "2026-09-30T19:55:38.859172653Z",
+  "last_updated": "2026-10-06T21:35:37.499163129Z",
   "color": "#0000FF",
   "description": "A discussion of scoped functions (both mutual and non-mutual) in Lisp, with a touch of Tail Call Optimization",
   "license": "Apache-2.0"
